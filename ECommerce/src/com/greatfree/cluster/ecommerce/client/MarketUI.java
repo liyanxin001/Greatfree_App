@@ -1,4 +1,4 @@
-package edu.greatfree.cluster.ecommerce.client;
+package com.greatfree.cluster.ecommerce.client;
 
 public class MarketUI {
 

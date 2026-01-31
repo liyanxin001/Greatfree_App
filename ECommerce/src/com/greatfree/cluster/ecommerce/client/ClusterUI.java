@@ -1,4 +1,4 @@
-package edu.greatfree.cluster.ecommerce.client;
+package com.greatfree.cluster.ecommerce.client;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,13 +8,14 @@ import org.greatfree.exceptions.RemoteReadException;
 import org.greatfree.util.IPAddress;
 import org.greatfree.util.Tools;
 
-import edu.greatfree.cluster.ecommerce.data.Product;
-import edu.greatfree.cluster.ecommerce.message.CreateStoreRequest;
-import edu.greatfree.cluster.ecommerce.message.CreateStoreResponse;
-import edu.greatfree.cluster.ecommerce.message.GetAllProductsRequest;
-import edu.greatfree.cluster.ecommerce.message.GetAllProductsResponse;
-import edu.greatfree.cluster.ecommerce.message.GetStoreRequest;
-import edu.greatfree.cluster.ecommerce.message.GetStoreResponse;
+import com.greatfree.cluster.ecommerce.data.Product;
+import com.greatfree.cluster.ecommerce.message.CreateStoreRequest;
+import com.greatfree.cluster.ecommerce.message.CreateStoreResponse;
+import com.greatfree.cluster.ecommerce.message.GetAllProductsRequest;
+import com.greatfree.cluster.ecommerce.message.GetAllProductsResponse;
+import com.greatfree.cluster.ecommerce.message.GetStoreRequest;
+import com.greatfree.cluster.ecommerce.message.GetStoreResponse;
+
 import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
 
 final class ClusterUI {

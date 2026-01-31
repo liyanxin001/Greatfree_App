@@ -1,4 +1,4 @@
-package edu.greatfree.cluster.ecommerce.child;
+package com.greatfree.cluster.ecommerce.child;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -7,27 +7,28 @@ import java.util.logging.Logger;
 
 import org.greatfree.exceptions.RemoteReadException;
 
+import com.greatfree.cluster.ecommerce.child.app.CartRegistry;
+import com.greatfree.cluster.ecommerce.child.app.StoreRegistry;
+import com.greatfree.cluster.ecommerce.message.AddToCartRequest;
+import com.greatfree.cluster.ecommerce.message.AddToCartResponse;
+import com.greatfree.cluster.ecommerce.message.AppID;
+import com.greatfree.cluster.ecommerce.message.CreateStoreRequest;
+import com.greatfree.cluster.ecommerce.message.CreateStoreResponse;
+import com.greatfree.cluster.ecommerce.message.GetAllProductsRequest;
+import com.greatfree.cluster.ecommerce.message.GetAllProductsResponse;
+import com.greatfree.cluster.ecommerce.message.GetCartRequest;
+import com.greatfree.cluster.ecommerce.message.GetCartResponse;
+import com.greatfree.cluster.ecommerce.message.GetStoreRequest;
+import com.greatfree.cluster.ecommerce.message.GetStoreResponse;
+import com.greatfree.cluster.ecommerce.message.PayRequest;
+import com.greatfree.cluster.ecommerce.message.PayResponse;
+import com.greatfree.cluster.ecommerce.message.PutOnSaleNotification;
+import com.greatfree.cluster.ecommerce.message.RemoveFromSaleNotification;
+import com.greatfree.cluster.ecommerce.message.UpdateQuantityRequest;
+import com.greatfree.cluster.ecommerce.message.UpdateQuantityResponse;
+import com.greatfree.cluster.ecommerce.message.UpdateStockQuantityNotification;
+
 import edu.greatfree.cluster.child.ChildTask;
-import edu.greatfree.cluster.ecommerce.child.app.CartRegistry;
-import edu.greatfree.cluster.ecommerce.child.app.StoreRegistry;
-import edu.greatfree.cluster.ecommerce.message.AddToCartRequest;
-import edu.greatfree.cluster.ecommerce.message.AddToCartResponse;
-import edu.greatfree.cluster.ecommerce.message.AppID;
-import edu.greatfree.cluster.ecommerce.message.CreateStoreRequest;
-import edu.greatfree.cluster.ecommerce.message.CreateStoreResponse;
-import edu.greatfree.cluster.ecommerce.message.GetAllProductsRequest;
-import edu.greatfree.cluster.ecommerce.message.GetAllProductsResponse;
-import edu.greatfree.cluster.ecommerce.message.GetCartRequest;
-import edu.greatfree.cluster.ecommerce.message.GetCartResponse;
-import edu.greatfree.cluster.ecommerce.message.GetStoreRequest;
-import edu.greatfree.cluster.ecommerce.message.GetStoreResponse;
-import edu.greatfree.cluster.ecommerce.message.PayRequest;
-import edu.greatfree.cluster.ecommerce.message.PayResponse;
-import edu.greatfree.cluster.ecommerce.message.PutOnSaleNotification;
-import edu.greatfree.cluster.ecommerce.message.RemoveFromSaleNotification;
-import edu.greatfree.cluster.ecommerce.message.UpdateQuantityRequest;
-import edu.greatfree.cluster.ecommerce.message.UpdateQuantityResponse;
-import edu.greatfree.cluster.ecommerce.message.UpdateStockQuantityNotification;
 import edu.greatfree.cluster.message.ClusterNotification;
 import edu.greatfree.cluster.message.ClusterRequest;
 import edu.greatfree.cluster.message.ClusterResponse;

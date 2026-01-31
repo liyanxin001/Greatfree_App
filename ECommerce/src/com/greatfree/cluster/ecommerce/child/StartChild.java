@@ -1,4 +1,4 @@
-package edu.greatfree.cluster.ecommerce.child;
+package com.greatfree.cluster.ecommerce.child;
 
 import java.io.IOException;
 import java.util.logging.Logger;

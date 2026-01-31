@@ -1,4 +1,4 @@
-package edu.greatfree.cluster.ecommerce.message;
+package com.greatfree.cluster.ecommerce.message;
 
 
 

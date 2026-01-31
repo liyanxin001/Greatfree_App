@@ -1,4 +1,4 @@
-package edu.greatfree.cluster.ecommerce.client;
+package com.greatfree.cluster.ecommerce.client;
 
 import java.io.IOException;
 import java.util.List;
@@ -7,14 +7,15 @@ import org.greatfree.exceptions.NullClassConversionException;
 import org.greatfree.exceptions.RemoteReadException;
 import org.greatfree.util.Tools;
 
-import edu.greatfree.cluster.ecommerce.message.AddToCartRequest;
-import edu.greatfree.cluster.ecommerce.message.AddToCartResponse;
-import edu.greatfree.cluster.ecommerce.message.GetCartRequest;
-import edu.greatfree.cluster.ecommerce.message.GetCartResponse;
-import edu.greatfree.cluster.ecommerce.message.PayRequest;
-import edu.greatfree.cluster.ecommerce.message.PayResponse;
-import edu.greatfree.cluster.ecommerce.message.UpdateQuantityRequest;
-import edu.greatfree.cluster.ecommerce.message.UpdateQuantityResponse;
+import com.greatfree.cluster.ecommerce.message.AddToCartRequest;
+import com.greatfree.cluster.ecommerce.message.AddToCartResponse;
+import com.greatfree.cluster.ecommerce.message.GetCartRequest;
+import com.greatfree.cluster.ecommerce.message.GetCartResponse;
+import com.greatfree.cluster.ecommerce.message.PayRequest;
+import com.greatfree.cluster.ecommerce.message.PayResponse;
+import com.greatfree.cluster.ecommerce.message.UpdateQuantityRequest;
+import com.greatfree.cluster.ecommerce.message.UpdateQuantityResponse;
+
 import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
 
 final class ShoppingUI {

@@ -1,6 +1,7 @@
-package edu.greatfree.cluster.ecommerce.message;
+package com.greatfree.cluster.ecommerce.message;
 
-import edu.greatfree.cluster.ecommerce.data.Product;
+import com.greatfree.cluster.ecommerce.data.Product;
+
 import edu.greatfree.cluster.message.ClusterNotification;
 import edu.greatfree.cluster.message.NotificationType;
 

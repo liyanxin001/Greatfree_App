@@ -1,4 +1,4 @@
-package edu.greatfree.cluster.ecommerce.root;
+package com.greatfree.cluster.ecommerce.root;
 
  import edu.greatfree.cluster.ClusterProfile;
  import edu.greatfree.cluster.root.RootTask;

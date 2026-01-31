@@ -1,4 +1,4 @@
-package edu.greatfree.cluster.ecommerce.child.app;
+package com.greatfree.cluster.ecommerce.child.app;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import edu.greatfree.cluster.ecommerce.data.Product;
-import edu.greatfree.cluster.ecommerce.data.Store;
+import com.greatfree.cluster.ecommerce.data.Product;
+import com.greatfree.cluster.ecommerce.data.Store;
 
 
 public class StoreRegistry {

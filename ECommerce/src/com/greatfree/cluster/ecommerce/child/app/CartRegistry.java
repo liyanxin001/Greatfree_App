@@ -1,11 +1,11 @@
-package edu.greatfree.cluster.ecommerce.child.app;
+package com.greatfree.cluster.ecommerce.child.app;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import edu.greatfree.cluster.ecommerce.data.Cart;
+import com.greatfree.cluster.ecommerce.data.Cart;
 
 public class CartRegistry {
   

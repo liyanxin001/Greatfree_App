@@ -1,4 +1,4 @@
-package edu.greatfree.cluster.ecommerce.message;
+package com.greatfree.cluster.ecommerce.message;
 
 
 import edu.greatfree.cluster.message.ClusterNotification;

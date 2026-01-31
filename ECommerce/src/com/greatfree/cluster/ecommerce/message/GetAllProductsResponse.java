@@ -1,9 +1,9 @@
-package edu.greatfree.cluster.ecommerce.message;
+package com.greatfree.cluster.ecommerce.message;
 
 import java.util.List;
 
+import com.greatfree.cluster.ecommerce.data.Product;
 
-import edu.greatfree.cluster.ecommerce.data.Product;
 import edu.greatfree.multicast.message.MulticastResponse;
 
 public class GetAllProductsResponse extends MulticastResponse{

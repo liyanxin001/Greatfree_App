@@ -1,4 +1,4 @@
-package edu.greatfree.cluster.ecommerce.root;
+package com.greatfree.cluster.ecommerce.root;
 
 import java.io.IOException;
 import java.util.Calendar;

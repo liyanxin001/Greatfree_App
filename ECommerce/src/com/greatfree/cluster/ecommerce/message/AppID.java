@@ -1,4 +1,4 @@
-package edu.greatfree.cluster.ecommerce.message;
+package com.greatfree.cluster.ecommerce.message;
 
 public class AppID {
 	public final static int ADD_TO_CART_REQUEST = 80000;

@@ -1,13 +1,14 @@
-package edu.greatfree.cluster.ecommerce.client;
+package com.greatfree.cluster.ecommerce.client;
 
 import java.io.IOException;
 
 import org.greatfree.util.Tools;
 
-import edu.greatfree.cluster.ecommerce.data.Product;
-import edu.greatfree.cluster.ecommerce.message.PutOnSaleNotification;
-import edu.greatfree.cluster.ecommerce.message.RemoveFromSaleNotification;
-import edu.greatfree.cluster.ecommerce.message.UpdateStockQuantityNotification;
+import com.greatfree.cluster.ecommerce.data.Product;
+import com.greatfree.cluster.ecommerce.message.PutOnSaleNotification;
+import com.greatfree.cluster.ecommerce.message.RemoveFromSaleNotification;
+import com.greatfree.cluster.ecommerce.message.UpdateStockQuantityNotification;
+
 import edu.greatfree.framework.cluster.group.client.MenuOptions;
 import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
 

@@ -1,6 +1,7 @@
-package edu.greatfree.cluster.ecommerce.message;
+package com.greatfree.cluster.ecommerce.message;
 
-import edu.greatfree.cluster.ecommerce.data.Cart;
+import com.greatfree.cluster.ecommerce.data.Cart;
+
 import edu.greatfree.multicast.message.MulticastResponse;
 
 public class GetCartResponse extends MulticastResponse {
