@@ -29,6 +29,7 @@ import com.greatfree.cluster.ecommerce.message.UpdateQuantityResponse;
 import com.greatfree.cluster.ecommerce.message.UpdateStockQuantityNotification;
 
 import edu.greatfree.cluster.child.ChildTask;
+import edu.greatfree.cluster.child.UnaryChild;
 import edu.greatfree.cluster.message.ClusterNotification;
 import edu.greatfree.cluster.message.ClusterRequest;
 import edu.greatfree.cluster.message.ClusterResponse;
@@ -70,7 +71,7 @@ final class MarketChildTask extends ChildTask{
 			   log.info("SHUTDOWN_ROOT_NOTIFICATION received @" +Calendar.getInstance().getTime());
 			   try 
 			   {
-				StartChild.CLUSTER().stop();
+				  UnaryChild.CLUSTER().stop();
 			   } 
 			   catch (ClassNotFoundException | IOException | InterruptedException | RemoteReadException e) 
 			   {
