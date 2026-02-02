@@ -18,7 +18,7 @@ package com.greatfree.cluster.ecommerce.root;
  {
    public static void main(String[] args) throws ClassNotFoundException, IOException, TaskAlreadyExistedException, RemoteReadException, NoChildrenAvailableException {
      System.out.println("Root starting up ...");
-     UnaryRoot.CLUSTER().start(ClusterProfile.getLightRootSpec("Root", 8000, "192.168.101.17", 8941), new RootTask[] { new ChatRootTask() });
+     UnaryRoot.CLUSTER().start(ClusterProfile.getLightRootSpec("Root", 8000, "192.168.1.25", 8941), new RootTask[] { new ChatRootTask() });
      System.out.println("Root started ...");
      TerminateSignal.SIGNAL().waitTermination();
    }
