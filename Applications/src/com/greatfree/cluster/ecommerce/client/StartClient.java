@@ -8,13 +8,13 @@ import org.greatfree.util.Tools;
 
 import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
 
-public class StartClient {
+final class StartClient {
 
 	public static void main(String[] args)throws ClassNotFoundException, RemoteReadException, IOException,InterruptedException
 	{	
-		System.out.print("Enter your user name:");
+		System.out.println("Enter your user name:");
 		String userName = Tools.INPUT.nextLine();
-		System.out.print("Enter your store name:");
+		System.out.println("Enter your store name:");
 		String storeName = Tools.INPUT.nextLine();
 		
 		
