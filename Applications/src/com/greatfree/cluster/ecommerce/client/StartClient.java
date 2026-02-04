@@ -29,11 +29,12 @@ final class StartClient {
 		while(option != HomeMenuOptions.QUIT)
 		{
 			ClusterUI.CL().printMenu(storeName);
-			optionStr = Tools.INPUT.nextLine();
-			option = Integer.parseInt(optionStr);
-			System.out.println("Your choice:" + option);
+			
 			try 
 			{
+				optionStr = Tools.INPUT.nextLine();
+				option = Integer.parseInt(optionStr);
+				System.out.println("Your choice:" + option);
 				ClusterUI.CL().execute(userName, storeName, option);
 			} 
 			catch (ClassNotFoundException | RemoteReadException | IOException | NullClassConversionException

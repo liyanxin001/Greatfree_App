@@ -43,8 +43,7 @@ final class ShoppingUI {
 		    	System.out.println("which store does this item belongs?");
 		    	String storeName = Tools.INPUT.nextLine();
 		    	System.out.println("How many do you want?");
-		        int quantity = Tools.INPUT.nextInt();
-		        Tools.INPUT.nextLine();
+		        int quantity = Integer.parseInt(Tools.INPUT.nextLine());
 		    	List<AddToCartResponse> atcr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
 		    		 ClusterUI.CL().getRootAddress().getPort(), new AddToCartRequest(productName_1, storeName, quantity ,userName),
 		    		 AddToCartResponse.class); 
@@ -63,8 +62,7 @@ final class ShoppingUI {
 		    	System.out.println("Upate quantity for which item?");
 		    	String productName_2 = Tools.INPUT.nextLine();
 		    	System.out.println("What's the new quantity?");
-		    	int newQuantity = Tools.INPUT.nextInt();
-		    	Tools.INPUT.nextLine();
+		    	int newQuantity = Integer.parseInt(Tools.INPUT.nextLine());
 		    	List<UpdateQuantityResponse> uqr  = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
 		    		 ClusterUI.CL().getRootAddress().getPort(), new UpdateQuantityRequest(userName, productName_2, newQuantity),
 		    		 UpdateQuantityResponse.class);

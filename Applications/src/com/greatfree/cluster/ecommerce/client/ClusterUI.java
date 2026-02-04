@@ -75,6 +75,7 @@ final class ClusterUI {
 		    	 
 		     case HomeMenuOptions.GO_TO_STORE:
 		    	 int storeOption = StoreMenuOptions.NO_OPTION;
+		    	 String optionStr;
 		    	 List<GetStoreResponse> gsr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
 		    	      this.rootAddress.getPort(), new GetStoreRequest(storeName),
 		    	      GetStoreResponse.class);
@@ -87,11 +88,12 @@ final class ClusterUI {
 			    		  break;
 			    	 }
 			    	 StoreUI.printMenu(storeName);
-			    	 storeOption = Tools.INPUT.nextInt();
-			    	 System.out.println("Your choice: option");
+			    	 optionStr = Tools.INPUT.nextLine();
 			    	 try 
 			    	 {
-						StoreUI.execute(storeName, userName, storeOption);
+			    		 storeOption = Integer.parseInt(optionStr);
+				    	 System.out.println("Your choice:" + option);
+						 StoreUI.execute(storeName, userName, storeOption);
 					 } 
 			    	 catch (NumberFormatException e) 
 			    	 {
@@ -117,10 +119,10 @@ final class ClusterUI {
 		    			 break;
 		    		 }
 		    		 ShoppingUI.printMenu();
-		    		 shopOption = Tools.INPUT.nextInt();
-		    		 Tools.INPUT.nextLine();
 		    		 try 
 		    		 {
+			    		 shopOption = Integer.parseInt(Tools.INPUT.nextLine());
+			    		 System.out.println("Your choice:" + option);
 			    		 ShoppingUI.execute(userName, shopOption);	 
 		    		 }
 		    		 catch(NumberFormatException e)

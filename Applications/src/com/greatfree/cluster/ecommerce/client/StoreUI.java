@@ -36,10 +36,9 @@ final class StoreUI
 		    	System.out.println("What product do you want to add to store?");
 		    	String productName_1 = Tools.INPUT.nextLine();
 		    	System.out.println("How many do you want to add?");
-		    	int quantity = Tools.INPUT.nextInt();
+		    	int quantity = Integer.parseInt(Tools.INPUT.nextLine());
 		    	System.out.println("What's the price?");
-		    	double price = Tools.INPUT.nextDouble();
-		    	Tools.INPUT.nextLine(); 
+		    	double price = Double.parseDouble(Tools.INPUT.nextLine());
 		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
 		    		  CL().getRootAddress().getPort(), new PutOnSaleNotification(new Product(productName_1, 
 		    		  quantity, price, storeName), storeName));
