@@ -34,6 +34,19 @@ public class CartRegistry {
         return carts.get(ClientID);
     }
     
+    public void createCart(String userName) {
+    	carts.put(userName, new Cart(userName));
+    }
+    
+    public Cart getOrCreateCart(String userName) {
+        Cart cart = carts.get(userName);
+        if (cart == null) {
+            cart = new Cart(userName);
+            carts.put(userName, cart);
+        }
+        return cart;
+    }
+    
     // Check if cart exists on this node
     public boolean hasCart(String ClientID) {
         return carts.containsKey(ClientID);

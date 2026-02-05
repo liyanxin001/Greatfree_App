@@ -104,7 +104,7 @@ final class MarketChildTask extends ChildTask{
 		    case AppID.ADD_TO_CART_REQUEST:
 		    	log.info("ADD_TO_CART_REQUEST received @" + Calendar.getInstance().getTime());
 		    	AddToCartRequest atcr = (AddToCartRequest) request;
-		    	CartRegistry.CR().getCart(atcr.getUserName()).addItem(StoreRegistry.SR().getStore(atcr.getStoreName()).getProductByName(atcr.getProductName()),atcr.getQuantity());
+		    	CartRegistry.CR().getOrCreateCart(atcr.getUserName()).addItem(StoreRegistry.SR().getStore(atcr.getStoreName()).getProductByName(atcr.getProductName()),atcr.getQuantity());
 		    	return new AddToCartResponse(true, atcr.getCollaboratorKey());
 		    	
 		    case AppID.GET_CART_REQUEST:

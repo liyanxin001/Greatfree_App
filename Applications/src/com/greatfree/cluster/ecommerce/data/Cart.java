@@ -11,8 +11,9 @@ public class Cart implements Serializable {
 	private Map<String, CartItem> items;
 	private String userName;
 	
-	public Cart() {
+	public Cart(String userName) {
 		this.items = new HashMap<>();
+		this.userName = userName;
 	}
 	
 	// Add product to cart
