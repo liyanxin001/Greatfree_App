@@ -72,6 +72,7 @@ final class ClusterUI {
 		    		 System.out.println("Creating Store status:" + entry.isSucceeded());
 		    		 break; 
 		    	 }
+		    	 break;
 		    	 
 		     case HomeMenuOptions.GO_TO_STORE:
 		    	 int storeOption = StoreMenuOptions.NO_OPTION;
@@ -79,7 +80,6 @@ final class ClusterUI {
 		    	 List<GetStoreResponse> gsr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
 		    	      this.rootAddress.getPort(), new GetStoreRequest(storeName),
 		    	      GetStoreResponse.class);
-
 		    	 while (storeOption != StoreMenuOptions.QUIT)
 		    	 {
 			    	 for(GetStoreResponse entry: gsr)
