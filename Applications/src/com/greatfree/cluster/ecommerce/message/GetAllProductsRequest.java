@@ -12,7 +12,7 @@ public class GetAllProductsRequest extends ClusterRequest{
 	String userName;
 
 	public GetAllProductsRequest(String userName) {
-		super(RequestType.UNICAST_REQUEST, AppID.GET_ALL_PRODUCTS_RESPONSE);
+		super(RequestType.UNICAST_REQUEST, AppID.GET_ALL_PRODUCTS_REQUEST);
 		this.userName = userName;
 	}
 	
