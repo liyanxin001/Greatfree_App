@@ -77,11 +77,12 @@ final class ClusterUI {
 		     case HomeMenuOptions.GO_TO_STORE:
 		    	 int storeOption = StoreMenuOptions.NO_OPTION;
 		    	 String optionStr;
-		    	 List<GetStoreResponse> gsr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
-		    	      this.rootAddress.getPort(), new GetStoreRequest(storeName),
-		    	      GetStoreResponse.class);
+		    	 
 		    	 while (storeOption != StoreMenuOptions.QUIT)
 		    	 {
+		    		 List<GetStoreResponse> gsr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
+				    	      this.rootAddress.getPort(), new GetStoreRequest(storeName),
+				    	      GetStoreResponse.class);
 			    	 for(GetStoreResponse entry: gsr)
 			    	 {
 			    		  entry.getStore().displayStore();
@@ -105,11 +106,12 @@ final class ClusterUI {
 		    	 
 		     case HomeMenuOptions.START_SHOPPING:
 		    	 int shopOption = ShoppingMenuOptions.NO_OPTION;
-		    	 List<GetAllProductsResponse> gapr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
-		    		  this.rootAddress.getPort(), new GetAllProductsRequest(userName),
-		    		  GetAllProductsResponse.class);
+		    	 
 		    	 while(shopOption != ShoppingMenuOptions.QUIT)
 		    	 {
+		    		 List<GetAllProductsResponse> gapr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
+				    		  this.rootAddress.getPort(), new GetAllProductsRequest(userName),
+				    		  GetAllProductsResponse.class);
 		    		 for(GetAllProductsResponse entry: gapr) 
 		    		 {
 		    			 List<Product> allProducts = entry.getAllProducts();
