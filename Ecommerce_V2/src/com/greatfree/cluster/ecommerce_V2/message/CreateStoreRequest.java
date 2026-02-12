@@ -2,7 +2,7 @@ package com.greatfree.cluster.ecommerce_V2.message;
 
 import edu.greatfree.cluster.message.ClusterRequest;
 
-public class CreatStoreRequest extends ClusterRequest{
+public class CreateStoreRequest extends ClusterRequest{
 
 	private static final long serialVersionUID = -4578503194680002353L;
 	
@@ -11,7 +11,7 @@ public class CreatStoreRequest extends ClusterRequest{
 	private String storeName;
 	private String owner;
 
-	public CreatStoreRequest(String storeName, String owner) {
+	public CreateStoreRequest(String storeName, String owner) {
 		super(storeName, AppID.CREATE_STORE_REQUEST);
 		this.setStoreName(storeName);
 		this.setOwner(owner);
