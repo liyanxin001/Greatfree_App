@@ -67,7 +67,7 @@ import java.net.SocketException;
 /*     */   
 /*     */   public static void unregister() {
 /*  68 */     PeerRegistry.SYSTEM().dispose();
-/*     */     
+/*     */ 
 /*  70 */     AccountRegistry.APP().dispose();
 /*     */   }
 /*     */ 

@@ -1,6 +1,6 @@
 package com.greatfree.cluster.ecommerce.v2.message;
 
-final class AppID {
+public final class AppID {
 	
 	public static final int CREATE_STORE_REQUEST = 80000;
 	public static final int CREATE_STORE_RESPONSE = 80001;

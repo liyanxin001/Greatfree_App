@@ -3,6 +3,8 @@ package com.greatfree.cluster.ecommerce.v2.child;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.greatfree.cluster.ecommerce.v2.message.AppID;
+
 import edu.greatfree.cluster.child.ChildTask;
 import edu.greatfree.cluster.message.ClusterNotification;
 import edu.greatfree.cluster.message.ClusterRequest;
@@ -24,8 +26,14 @@ final class MarketChildTask extends ChildTask{
 	}
 
 	@Override
-	public MulticastResponse processRequest(ClusterRequest paramClusterRequest) {
-		// TODO Auto-generated method stub
+	public MulticastResponse processRequest(ClusterRequest request) {
+		switch(request.getAppID())
+		{
+		    case AppID.CREATE_STORE_REQUEST:
+		    	
+		    	
+		    	
+		}
 		return null;
 	}
 
