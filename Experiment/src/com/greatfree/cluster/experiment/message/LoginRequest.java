@@ -1,17 +1,19 @@
 package com.greatfree.cluster.experiment.message;
 
-import org.greatfree.message.ServerMessage;
 
-public class LoginRequest extends ServerMessage {
+import edu.greatfree.cluster.message.ClusterRequest;
+
+public class LoginRequest extends ClusterRequest {
 
 	private static final long serialVersionUID = -6753626455211866466L;
 	
 	private String username;
 	private String password;
 
-	public LoginRequest(int type, String key) {
-		super(type, key);
-		// TODO Auto-generated constructor stub
+	public LoginRequest(String username, String password) {
+		super(username, AppID.LOGIN_REQUEST);
+		this.username = username;
+		this.password = password;
 	}
 
 	public String getUsername() {
