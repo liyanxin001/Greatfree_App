@@ -14,6 +14,8 @@ public class StudentInfo implements Serializable{
 	private Gender gender;
 	private String phoneNumber;
 	
+
+	
 	public StudentInfo(boolean isInSchool, String major, String className, String realName, int age, Gender gender, String phoneNumber) {
 		this.isInSchool = isInSchool;
 		this.major = major;
@@ -22,6 +24,19 @@ public class StudentInfo implements Serializable{
 		this.age = age;
 		this.gender = gender;
 		this.phoneNumber = phoneNumber;
+	}
+	
+	@Override
+	public String toString() {
+	    return "StudentInfo{" +
+	           ", isInSchool=" + isInSchool +
+	           ", major='" + major + '\'' +
+	           ", className='" + className + '\'' +
+	           ", realName='" + realName + '\'' +
+	           ", age=" + age +
+	           ", gender=" + gender +
+	           ", phoneNumber='" + phoneNumber + '\'' +
+	           '}';
 	}
 
 	public boolean isInSchool() {
