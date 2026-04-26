@@ -15,7 +15,7 @@ public class RegistryRequest extends ClusterRequest{
 	
 
 	public RegistryRequest(String username, String password, StudentInfo studentInfo) {
-		super(username, AppID.REGISTRY_REQUEST);
+		super(studentInfo.getRealName(), AppID.REGISTRY_REQUEST);
 		this.username = username;
 		this.password = password;
 
