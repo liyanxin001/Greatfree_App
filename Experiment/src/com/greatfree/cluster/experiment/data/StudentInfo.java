@@ -6,17 +6,19 @@ public class StudentInfo implements Serializable{
 	
 	private static final long serialVersionUID = -4255686103524614332L;
 	
+	private String realName;
+	private String studentId;
 	private boolean isInSchool;
 	private String major;
 	private String className;
-	private String realName;
 	private int age;
 	private Gender gender;
 	private String phoneNumber;
 	
 
 	
-	public StudentInfo(boolean isInSchool, String major, String className, String realName, int age, Gender gender, String phoneNumber) {
+	public StudentInfo(String realName, String studentId, boolean isInSchool, String major, String className, int age, Gender gender, String phoneNumber) {
+		this.studentId = studentId;
 		this.isInSchool = isInSchool;
 		this.major = major;
 		this.className = className;
@@ -93,6 +95,14 @@ public class StudentInfo implements Serializable{
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public String getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
 	}
 
 }
