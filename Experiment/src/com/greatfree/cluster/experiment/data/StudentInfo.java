@@ -31,6 +31,8 @@ public class StudentInfo implements Serializable{
 	@Override
 	public String toString() {
 	    return "StudentInfo{" +
+	           ", realName=" + realName +
+	           ", studentId=" + studentId +
 	           ", isInSchool=" + isInSchool +
 	           ", major='" + major + '\'' +
 	           ", className='" + className + '\'' +
