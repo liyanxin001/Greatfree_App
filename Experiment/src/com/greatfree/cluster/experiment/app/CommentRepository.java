@@ -3,6 +3,7 @@ package com.greatfree.cluster.experiment.app;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+
 public class CommentRepository {
 	
 	private static CommentRepository instance;
@@ -22,8 +23,11 @@ public class CommentRepository {
 		return comments;
 	}
 	
-	public void AddComment(String studentId, String comment) {
+	public void addComment(String studentId, String comment) {
 		this.comments.put(studentId, comment);
 	}
-
+    
+	public String getComment(String studentId) {
+		return this.comments.get(studentId);
+	}
 }
