@@ -7,4 +7,7 @@ public final class AppID {
 	public static final int REGISTRY_REQUEST = 80003;
 	public static final int REGISTRY_RESPONSE = 80004;
 	public static final int COMMENT_NOTIFICATION = 80005;
+	public static final int UPLOAD_PROCEDURE_REQUEST = 80006;
+	public static final int UPLOAD_PROCEDURE_RESPONSE = 80007;
+	
 }

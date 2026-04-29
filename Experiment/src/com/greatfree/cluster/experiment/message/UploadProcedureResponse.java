@@ -2,15 +2,13 @@ package com.greatfree.cluster.experiment.message;
 
 import edu.greatfree.multicast.message.MulticastResponse;
 
-public class LoginResponse extends MulticastResponse{
-	
+public class UploadProcedureResponse extends MulticastResponse{
 
-	private static final long serialVersionUID = -6347048710731017996L;
-	
+	private static final long serialVersionUID = -8978578616963390512L;
 	private boolean isSucceeded;
-	
-	public LoginResponse(boolean isSucceeded, String collaboratorKey) {
-		super(AppID.LOGIN_RESPONSE, collaboratorKey);
+
+	public UploadProcedureResponse(boolean isSucceeded, String collaboratorKey) {
+		super(AppID.UPLOAD_PROCEDURE_RESPONSE, collaboratorKey);
 		this.setSucceeded(isSucceeded);
 	}
 
