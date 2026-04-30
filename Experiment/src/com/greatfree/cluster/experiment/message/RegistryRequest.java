@@ -9,6 +9,7 @@ public class RegistryRequest extends ClusterRequest{
 	
 	
 	private static final long serialVersionUID = 7679786456746488160L;
+	
 	private String username;
 	private String password;
     private StudentInfo studentInfo;

@@ -1,27 +1,37 @@
 package com.greatfree.cluster.experiment.app;
 
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.greatfree.cluster.experiment.data.StudentInfo;
 
-public class StudentInfoRepository{ 
+public class AccountRegistry {
 	
-	private static StudentInfoRepository instance;
+	public static AccountRegistry instance;
 	
-	
+	private final Map<String, String> accounts = new ConcurrentHashMap<>();
 	private final Map<String, StudentInfo> infos = new ConcurrentHashMap<>();
-
-    public static StudentInfoRepository SIP() {
+	
+	public static AccountRegistry AR() {
         if (instance == null) {
         	
-            instance = new StudentInfoRepository();
+            instance = new AccountRegistry();
             return instance;
         }
         return instance;
     }
+
+	public Map<String, String> getAccounts() {
+		return accounts;
+	}
 	
+	public void addAccount(String username, String password) {
+		this.accounts.put(username, password);
+	}
+	
+	public void getPassword(String username, String password) {
+		this.accounts.get(username);
+	}
 	public Map<String, StudentInfo> getInfos() {
 		return infos;
 	}

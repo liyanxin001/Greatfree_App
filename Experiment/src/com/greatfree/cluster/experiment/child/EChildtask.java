@@ -4,11 +4,14 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.greatfree.cluster.experiment.app.AccountRegistry;
 import com.greatfree.cluster.experiment.app.CommentRepository;
 import com.greatfree.cluster.experiment.message.AppID;
 import com.greatfree.cluster.experiment.message.CommentNotification;
 import com.greatfree.cluster.experiment.message.GetCommentRequest;
 import com.greatfree.cluster.experiment.message.GetCommentResponse;
+import com.greatfree.cluster.experiment.message.RegistryRequest;
+import com.greatfree.cluster.experiment.message.RegistryResponse;
 
 import edu.greatfree.cluster.child.ChildTask;
 import edu.greatfree.cluster.message.ClusterNotification;
@@ -41,11 +44,22 @@ public class EChildtask extends ChildTask{
 	public MulticastResponse processRequest(ClusterRequest request) {
 		switch (request.getAppID()) 
 		{
-		    case AppID.COMMENT_NOTIFICATION:
-		    	log.info("COMMENT_NOTIFICATION received @" + Calendar.getInstance().getTime());
+		
+		    case AppID.GET_COMMENT_REQUEST:
+		    	log.info("GET_COMMENT_REQUEST received @" + Calendar.getInstance().getTime());
 			    GetCommentRequest gcr = (GetCommentRequest) request;
-			    return new GetCommentResponse(CommentRepository.CR().getComment(gcr.getStudentId()), gcr.getCollaboratorKey());
-			
+			    return new GetCommentResponse(CommentRepository.CR().getComment(gcr.getStudentId()), gcr.getCollaboratorKey());	
+		    
+		    case AppID.REGISTRY_REQUEST:
+		    	log.info("REGISTRY_REQUEST received @" +Calendar.getInstance().getTime());
+		    	RegistryRequest rp = (RegistryRequest) request;
+		        AccountRegistry.AR().addAccount(rp.getUsername(), rp.getPassword());
+		        AccountRegistry.AR().addInfo(rp.getStudentInfo().getRealName(), rp.getStudentInfo());
+		        return new RegistryResponse(true, rp.getCollaboratorKey());
+		   
+		    case AppID.LOGIN_REQUEST:
+		    	
+		    	
 		}
 		return null;
 	}

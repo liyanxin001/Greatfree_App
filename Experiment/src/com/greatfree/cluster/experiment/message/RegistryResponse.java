@@ -2,13 +2,13 @@ package com.greatfree.cluster.experiment.message;
 
 import edu.greatfree.multicast.message.MulticastResponse;
 
-public class RegsitryResponse extends MulticastResponse{
+public class RegistryResponse extends MulticastResponse{
 
 	private static final long serialVersionUID = -6591345225537034585L;
 	
 	private boolean isSucceeded;
 
-	public RegsitryResponse(boolean isSucceeded, String collaboratorKey) {
+	public RegistryResponse(boolean isSucceeded, String collaboratorKey) {
 		super(AppID.REGISTRY_RESPONSE, collaboratorKey);
 		this.isSucceeded = isSucceeded;
 	}

@@ -12,5 +12,8 @@ public final class AppID {
 	public static final int GET_COMMENT_REQUEST = 80008;
 	public static final int GET_COMMENT_RESPONSE = 80009;
 	public static final int GET_STUDENTLIST_REQUEST = 80010;
-	public static final int GET_STUDENTLIST_RESPONSE = 80011;	
+	public static final int GET_STUDENTLIST_RESPONSE = 80011;
+	public static final int GET_PROCEDURELIST_REQUEST = 80012;
+	public static final int GET_PROCEDURELIST_RESPONSE = 80013;
+	
 }
