@@ -53,8 +53,7 @@ public class EChildtask extends ChildTask{
 		    case AppID.REGISTRY_REQUEST:
 		    	log.info("REGISTRY_REQUEST received @" +Calendar.getInstance().getTime());
 		    	RegistryRequest rp = (RegistryRequest) request;
-		        AccountRegistry.AR().addAccount(rp.getUsername(), rp.getPassword());
-		        AccountRegistry.AR().addInfo(rp.getStudentInfo().getRealName(), rp.getStudentInfo());
+		        AccountRegistry.AR().addStudent(rp.getUsername(), rp.getPassword(), rp.getStudentInfo());
 		        return new RegistryResponse(true, rp.getCollaboratorKey());
 		   
 		    case AppID.LOGIN_REQUEST:
