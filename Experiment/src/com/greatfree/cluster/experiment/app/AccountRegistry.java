@@ -40,6 +40,11 @@ public class AccountRegistry {
 		this.infos.put(studentId, studentInfo);
 	}
 	
+	public void addStudent(String username, String password, StudentInfo studentInfo) {
+		this.accounts.put(username, password);
+		this.infos.put(studentInfo.getStudentId(), studentInfo);
+	}
+	
 	public StudentInfo getInfo(String studentId) {
 		return this.infos.get(studentId);
 		
