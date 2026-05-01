@@ -49,5 +49,13 @@ public class AccountRegistry {
 		return this.infos.get(studentId);
 		
 	}
+	
+	public boolean login(String username, String password) {
+		if(accounts.get(username) == password) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 }

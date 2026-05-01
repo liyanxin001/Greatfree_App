@@ -57,6 +57,7 @@ public class EChildtask extends ChildTask{
 		        return new RegistryResponse(true, rp.getCollaboratorKey());
 		   
 		    case AppID.LOGIN_REQUEST:
+		    	log.info("LOGIN_REQUEST received @" + Calendar.getInstance().getTime());
 		    	
 		    	
 		}
