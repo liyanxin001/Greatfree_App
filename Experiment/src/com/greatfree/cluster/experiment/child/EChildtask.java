@@ -10,6 +10,8 @@ import com.greatfree.cluster.experiment.message.AppID;
 import com.greatfree.cluster.experiment.message.CommentNotification;
 import com.greatfree.cluster.experiment.message.GetCommentRequest;
 import com.greatfree.cluster.experiment.message.GetCommentResponse;
+import com.greatfree.cluster.experiment.message.LoginRequest;
+import com.greatfree.cluster.experiment.message.LoginResponse;
 import com.greatfree.cluster.experiment.message.RegistryRequest;
 import com.greatfree.cluster.experiment.message.RegistryResponse;
 
@@ -58,7 +60,8 @@ public class EChildtask extends ChildTask{
 		   
 		    case AppID.LOGIN_REQUEST:
 		    	log.info("LOGIN_REQUEST received @" + Calendar.getInstance().getTime());
-		    	
+		    	LoginRequest lr = (LoginRequest) request;
+		    	return new LoginResponse(AccountRegistry.AR().login(lr.getUsername(), lr.getPassword()), lr.getCollaboratorKey());
 		    	
 		}
 		return null;

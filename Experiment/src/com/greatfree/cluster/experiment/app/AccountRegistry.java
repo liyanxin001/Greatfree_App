@@ -29,13 +29,14 @@ public class AccountRegistry {
 		this.accounts.put(username, password);
 	}
 	
-	public void getPassword(String username, String password) {
-		this.accounts.get(username);
-	}
 	public Map<String, StudentInfo> getInfos() {
 		return infos;
 	}
 	
+	public StudentInfo getInfo(String studentId) {
+		return this.infos.get(studentId);
+		
+	}
 	public void addInfo(String studentId, StudentInfo studentInfo) {
 		this.infos.put(studentId, studentInfo);
 	}
@@ -45,10 +46,7 @@ public class AccountRegistry {
 		this.infos.put(studentInfo.getStudentId(), studentInfo);
 	}
 	
-	public StudentInfo getInfo(String studentId) {
-		return this.infos.get(studentId);
-		
-	}
+	
 	
 	public boolean login(String username, String password) {
 		if(accounts.get(username) == password) {
@@ -56,6 +54,16 @@ public class AccountRegistry {
 		}else {
 			return false;
 		}
+	}
+	
+	public boolean register(String username, String password, StudentInfo studentInfo) {
+		if(accounts.containsKey(username)) {
+			return false;
+		}else {
+			this.addStudent(username, password, studentInfo);
+			return true;
+		}
+		
 	}
 
 }
