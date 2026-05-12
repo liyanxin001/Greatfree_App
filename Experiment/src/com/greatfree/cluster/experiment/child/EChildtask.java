@@ -51,7 +51,7 @@ public class EChildtask extends ChildTask{
 		    	log.info("GET_COMMENT_REQUEST received @" + Calendar.getInstance().getTime());
 			    GetCommentRequest gcr = (GetCommentRequest) request;
 			    return new GetCommentResponse(CommentRepository.CR().getComment(gcr.getStudentId()), gcr.getCollaboratorKey());	
-		    
+		    //needs modification
 		    case AppID.REGISTRY_REQUEST:
 		    	log.info("REGISTRY_REQUEST received @" +Calendar.getInstance().getTime());
 		    	RegistryRequest rp = (RegistryRequest) request;
@@ -62,7 +62,9 @@ public class EChildtask extends ChildTask{
 		    	log.info("LOGIN_REQUEST received @" + Calendar.getInstance().getTime());
 		    	LoginRequest lr = (LoginRequest) request;
 		    	return new LoginResponse(AccountRegistry.AR().login(lr.getUsername(), lr.getPassword()), lr.getCollaboratorKey());
-		    	
+		    
+		    case AppID.UPLOAD_PROCEDURE_REQUEST:
+		    	log.info("UPLOAD_PROCEDURE_REQUEST received @" + Calendar.getInstance().getTime());
 		}
 		return null;
 	}
