@@ -54,7 +54,7 @@ public class EChildtask extends ChildTask{
 		    	log.info("GET_COMMENT_REQUEST received @" + Calendar.getInstance().getTime());
 			    GetCommentRequest gcr = (GetCommentRequest) request;
 			    return new GetCommentResponse(CommentRepository.CR().getComment(gcr.getStudentId()), gcr.getCollaboratorKey());	
-		    //needs modification
+		    
 		    case AppID.REGISTRY_REQUEST:
 		    	log.info("REGISTRY_REQUEST received @" +Calendar.getInstance().getTime());
 		    	RegistryRequest rp = (RegistryRequest) request;
@@ -70,6 +70,7 @@ public class EChildtask extends ChildTask{
 		        UploadProcedureRequest upr = (UploadProcedureRequest) request;
 		        ProcedureRepository.PR().addProcedure(upr.getStudentId(), upr.getProcedure());
 		        return new UploadProcedureResponse(true, upr.getCollaboratorKey());
+		     //2026.5.13
 		}
 		return null;
 	}
