@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import com.greatfree.cluster.experiment.app.AccountRegistry;
 import com.greatfree.cluster.experiment.app.CommentRepository;
+import com.greatfree.cluster.experiment.app.ProcedureRepository;
 import com.greatfree.cluster.experiment.message.AppID;
 import com.greatfree.cluster.experiment.message.CommentNotification;
 import com.greatfree.cluster.experiment.message.GetCommentRequest;
@@ -14,6 +15,8 @@ import com.greatfree.cluster.experiment.message.LoginRequest;
 import com.greatfree.cluster.experiment.message.LoginResponse;
 import com.greatfree.cluster.experiment.message.RegistryRequest;
 import com.greatfree.cluster.experiment.message.RegistryResponse;
+import com.greatfree.cluster.experiment.message.UploadProcedureRequest;
+import com.greatfree.cluster.experiment.message.UploadProcedureResponse;
 
 import edu.greatfree.cluster.child.ChildTask;
 import edu.greatfree.cluster.message.ClusterNotification;
@@ -55,8 +58,7 @@ public class EChildtask extends ChildTask{
 		    case AppID.REGISTRY_REQUEST:
 		    	log.info("REGISTRY_REQUEST received @" +Calendar.getInstance().getTime());
 		    	RegistryRequest rp = (RegistryRequest) request;
-		        AccountRegistry.AR().addStudent(rp.getUsername(), rp.getPassword(), rp.getStudentInfo());
-		        return new RegistryResponse(true, rp.getCollaboratorKey());
+		        return new RegistryResponse(AccountRegistry.AR().register(rp.getUsername(),rp.getPassword(), rp.getStudentInfo()), rp.getCollaboratorKey());
 		   
 		    case AppID.LOGIN_REQUEST:
 		    	log.info("LOGIN_REQUEST received @" + Calendar.getInstance().getTime());
@@ -65,6 +67,9 @@ public class EChildtask extends ChildTask{
 		    
 		    case AppID.UPLOAD_PROCEDURE_REQUEST:
 		    	log.info("UPLOAD_PROCEDURE_REQUEST received @" + Calendar.getInstance().getTime());
+		        UploadProcedureRequest upr = (UploadProcedureRequest) request;
+		        ProcedureRepository.PR().addProcedure(upr.getStudentId(), upr.getProcedure());
+		        return new UploadProcedureResponse(true, upr.getCollaboratorKey());
 		}
 		return null;
 	}

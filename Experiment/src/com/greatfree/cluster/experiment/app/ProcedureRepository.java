@@ -25,12 +25,15 @@ public class ProcedureRepository {
 		return procedureLists;
 	}
 	
-	public void addProcedureList(String realName, ProcedureList procedureList) {
-		this.procedureLists.put(realName, procedureList);
+	public void addProcedureList(String studentId, ProcedureList procedureList) {
+		this.procedureLists.put(studentId, procedureList);
 	}
 	
-	public void addProcedure(String realName, Procedure procedure) {
-		this.procedureLists.get(realName).addProcedure(procedure.getId(), procedure);
+	public void addProcedure(String studentId, Procedure procedure) {
+		if(this.procedureLists.get(studentId) == null) {
+			this.addProcedureList(studentId, new ProcedureList());
+		}
+		this.procedureLists.get(studentId).addProcedure(studentId, procedure);
 	}
 
 }
