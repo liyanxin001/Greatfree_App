@@ -71,7 +71,15 @@ public class EChildtask extends ChildTask{
 		        ProcedureRepository.PR().addProcedure(upr.getStudentId(), upr.getProcedure());
 		        return new UploadProcedureResponse(true, upr.getCollaboratorKey());
 		     //2026.5.13
+		        
+		    case AppID.GET_PROCEDURELIST_REQUEST:
+		    	log.info("GET_PROCEDURE_REQUEST received @" + Calendar.getInstance().getTime());
+		    	
+		    	
+		    case AppID.GET_STUDENTLIST_REQUEST:
+		    	log.info("GET_STUDENTLIST_REQUEST received @" + Calendar.getInstance().getTime());
 		}
+		
 		return null;
 	}
 
