@@ -21,8 +21,8 @@ public class ProcedureRepository {
         return instance;
     }
 
-	public Map<String, ProcedureList> getProcedureList() {
-		return procedureLists;
+	public ProcedureList getProcedureList(String studentId) {
+		return this.procedureLists.get(studentId);
 	}
 	
 	public void addProcedureList(String studentId, ProcedureList procedureList) {

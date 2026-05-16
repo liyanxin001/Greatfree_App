@@ -11,6 +11,8 @@ import com.greatfree.cluster.experiment.message.AppID;
 import com.greatfree.cluster.experiment.message.CommentNotification;
 import com.greatfree.cluster.experiment.message.GetCommentRequest;
 import com.greatfree.cluster.experiment.message.GetCommentResponse;
+import com.greatfree.cluster.experiment.message.GetProcedureListRequest;
+import com.greatfree.cluster.experiment.message.GetProcedureListResponse;
 import com.greatfree.cluster.experiment.message.LoginRequest;
 import com.greatfree.cluster.experiment.message.LoginResponse;
 import com.greatfree.cluster.experiment.message.RegistryRequest;
@@ -74,7 +76,8 @@ public class EChildtask extends ChildTask{
 		        
 		    case AppID.GET_PROCEDURELIST_REQUEST:
 		    	log.info("GET_PROCEDURE_REQUEST received @" + Calendar.getInstance().getTime());
-		    	
+		    	GetProcedureListRequest gplr = (GetProcedureListRequest) request;
+		    	return new GetProcedureListResponse(ProcedureRepository.PR().getProcedureList(gplr.getStudentId()), gplr.getCollaboratorKey());
 		    	
 		    case AppID.GET_STUDENTLIST_REQUEST:
 		    	log.info("GET_STUDENTLIST_REQUEST received @" + Calendar.getInstance().getTime());
