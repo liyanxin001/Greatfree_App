@@ -85,6 +85,10 @@ public class EChildtask extends ChildTask{
 		    	log.info("GET_STUDENTLIST_REQUEST received @" + Calendar.getInstance().getTime());
 		    	GetStudentListRequest gslp = (GetStudentListRequest) request;
 		    	return new GetStudentListResponse(AccountRegistry.AR().getInfos(), gslp.getCollaboratorKey());
+		    	
+		    case AppID.UPLOAD_IMAGE_REQUEST:
+		    	log.info("GET_IMAGE_REQUEST received @" + Calendar.getInstance().getTime());
+		    	
 		}
 		
 		return null;

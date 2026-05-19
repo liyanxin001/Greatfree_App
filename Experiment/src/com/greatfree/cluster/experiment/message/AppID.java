@@ -15,5 +15,7 @@ public final class AppID {
 	public static final int GET_STUDENTLIST_RESPONSE = 80011;
 	public static final int GET_PROCEDURELIST_REQUEST = 80012;
 	public static final int GET_PROCEDURELIST_RESPONSE = 80013;
+	public static final int UPLOAD_IMAGE_REQUEST = 80014;
+	public static final int UPLOAD_IMAGE_RESPONSE = 80015;
 	
 }
