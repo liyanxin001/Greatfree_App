@@ -19,6 +19,8 @@ import com.greatfree.cluster.experiment.message.LoginRequest;
 import com.greatfree.cluster.experiment.message.LoginResponse;
 import com.greatfree.cluster.experiment.message.RegistryRequest;
 import com.greatfree.cluster.experiment.message.RegistryResponse;
+import com.greatfree.cluster.experiment.message.UploadImageRequest;
+import com.greatfree.cluster.experiment.message.UploadImageResponse;
 import com.greatfree.cluster.experiment.message.UploadProcedureRequest;
 import com.greatfree.cluster.experiment.message.UploadProcedureResponse;
 
@@ -72,8 +74,7 @@ public class EChildtask extends ChildTask{
 		    case AppID.UPLOAD_PROCEDURE_REQUEST:
 		    	log.info("UPLOAD_PROCEDURE_REQUEST received @" + Calendar.getInstance().getTime());
 		        UploadProcedureRequest upr = (UploadProcedureRequest) request;
-		        ProcedureRepository.PR().addProcedure(upr.getStudentId(), upr.getProcedure());
-		        return new UploadProcedureResponse(true, upr.getCollaboratorKey());
+		        return new UploadProcedureResponse(ProcedureRepository.PR().addProcedure(upr.getStudentId(), upr.getProcedure()), upr.getCollaboratorKey());
 		     //2026.5.13
 		        
 		    case AppID.GET_PROCEDURELIST_REQUEST:
@@ -88,7 +89,8 @@ public class EChildtask extends ChildTask{
 		    	
 		    case AppID.UPLOAD_IMAGE_REQUEST:
 		    	log.info("GET_IMAGE_REQUEST received @" + Calendar.getInstance().getTime());
-		    	
+		    	UploadImageRequest  uir = (UploadImageRequest) request;
+		    	return new UploadImageResponse(AccountRegistry.AR().addImageUrl(uir.getStudentId(), uir.getImgUrl()), uir.getCollaboratorKey());
 		}
 		
 		return null;

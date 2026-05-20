@@ -9,8 +9,8 @@ public class UploadImageRequest extends ClusterRequest{
 	private String studentId;
 	private String imgUrl;
 
-	public UploadImageRequest(int requestType, int appID) {
-		super(requestType, appID);
+	public UploadImageRequest(String studentId, String imgUrl) {
+		super(studentId, AppID.UPLOAD_IMAGE_REQUEST);
 		// TODO Auto-generated constructor stub
 	}
 

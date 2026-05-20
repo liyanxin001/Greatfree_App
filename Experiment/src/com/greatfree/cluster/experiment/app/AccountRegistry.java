@@ -11,6 +11,7 @@ public class AccountRegistry {
 	
 	private final Map<String, String> accounts = new ConcurrentHashMap<>();
 	private final Map<String, StudentInfo> infos = new ConcurrentHashMap<>();
+	private final Map<String, String> imageUrls = new ConcurrentHashMap<>();
 	
 	public static AccountRegistry AR() {
         if (instance == null) {
@@ -64,6 +65,15 @@ public class AccountRegistry {
 			return true;
 		}
 		
+	}
+
+	public Map<String, String> getImageUrls() {
+		return imageUrls;
+	}
+	
+	public boolean addImageUrl(String studentId, String imgUrl) {
+		this.imageUrls.put(studentId, imgUrl);
+		return true;
 	}
 
 }

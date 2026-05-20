@@ -29,11 +29,12 @@ public class ProcedureRepository {
 		this.procedureLists.put(studentId, procedureList);
 	}
 	
-	public void addProcedure(String studentId, Procedure procedure) {
+	public boolean addProcedure(String studentId, Procedure procedure) {
 		if(this.procedureLists.get(studentId) == null) {
 			this.addProcedureList(studentId, new ProcedureList());
 		}
 		this.procedureLists.get(studentId).addProcedure(studentId, procedure);
+		return true;
 	}
 
 }
