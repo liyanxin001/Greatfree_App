@@ -12,5 +12,10 @@ public final class AppID {
 	public static final int CART_REGISTRY_RESPONSE = 80007;
 	public static final int ADD_TO_STORE_REQUEST = 80008;
 	public static final int ADD_TO_STORE_RESPONSE = 80009;
+	public static final int GET_CART_REQUEST = 80010;
+	public static final int GET_CART_RESPONSE = 80011;
+	public static final int PUT_ON_SALE_NOTIFICATION = 80012;
+	public static final int REMOVE_FROM_SALE_NOTIFICATION = 80013;
+
 
 }
