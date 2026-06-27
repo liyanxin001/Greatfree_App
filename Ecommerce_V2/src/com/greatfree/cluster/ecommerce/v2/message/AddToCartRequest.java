@@ -1,8 +1,9 @@
 package com.greatfree.cluster.ecommerce.v2.message;
 
-import edu.greatfree.cluster.message.IntercastRequest;
+import edu.greatfree.cluster.message.ClusterRequest;
 
-public class AddToCartRequest extends IntercastRequest{
+
+public class AddToCartRequest extends ClusterRequest{
 	
 	
 	
@@ -15,7 +16,7 @@ public class AddToCartRequest extends IntercastRequest{
 	
 
 	public AddToCartRequest(String username, String storeName, String productName, int quantity) {
-		super(username, storeName, AppID.ADD_TO_CART_REQUEST);
+		super(username, AppID.ADD_TO_CART_REQUEST);
 		this.username = username;
 		this.storeName = storeName;
 		this.setProductName(productName);
