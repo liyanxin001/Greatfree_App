@@ -6,19 +6,19 @@ public class CartRegistryRequest extends ClusterRequest{
 	
 	
 	private static final long serialVersionUID = -2213335248527667441L;
-	private String username;
+	private String userName;
 
 	public CartRegistryRequest(String username) {
 		super(username, AppID.CART_REGISTRY_REQUEST);
-		this.setUsername(username);
+		this.setUserName(username);
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String username) {
+		this.userName = username;
 	}
 
 }

@@ -36,6 +36,9 @@ public final class AppID {
 	public static final int GET_ALL_PRODUCTS_REQUEST = 80021;
 	public static final int GET_ALL_PRODUCTS_RESPONSE = 80022;
 	
+	public static final int GET_STORE_REQUEST = 80023;
+	public static final int GET_STORE_RESPONSE = 80024;
+	
 
 
 }

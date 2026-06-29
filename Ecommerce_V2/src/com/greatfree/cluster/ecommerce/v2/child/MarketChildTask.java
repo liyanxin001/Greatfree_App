@@ -7,9 +7,12 @@ import java.util.logging.Logger;
 
 import org.greatfree.exceptions.RemoteReadException;
 
+
 import com.greatfree.cluster.ecommerce.v2.app.StoreRegistry;
 import com.greatfree.cluster.ecommerce.v2.message.AddStockQuantityNotification;
 import com.greatfree.cluster.ecommerce.v2.message.AppID;
+import com.greatfree.cluster.ecommerce.v2.message.CreateStoreRequest;
+import com.greatfree.cluster.ecommerce.v2.message.CreateStoreResponse;
 import com.greatfree.cluster.ecommerce.v2.message.PutOnSaleNotification;
 import com.greatfree.cluster.ecommerce.v2.message.RemoveFromSaleNotification;
 
@@ -71,6 +74,10 @@ final class MarketChildTask extends ChildTask{
 		switch(request.getAppID())
 		{
 		    case AppID.CREATE_STORE_REQUEST:
+		    	log.info("CREATE_STORE_REQUEST @" + Calendar.getInstance().getTime());
+		    	CreateStoreRequest csr = (CreateStoreRequest) request;
+		    	StoreRegistry.SR().addStore(csr.getOwner(), csr.getStoreName());
+		    	return new CreateStoreResponse(true, csr.getCollaboratorKey());
 		    	
 		    	
 		    	
