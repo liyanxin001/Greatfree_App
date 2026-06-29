@@ -9,11 +9,11 @@ public final class AppID {
 	
 	public static final int ADD_TO_CART_REQUEST = 80004;
 	public static final int ADD_TO_CART_RESPONSE = 80005;
-	public static final int REMOVE_FROM_CART_REQUEST = 80018;
-	public static final int REMOVE_FROM_CART_RESPONSE = 80019;
+	public static final int REMOVE_FROM_CART_REQUEST = 80006;
+	public static final int REMOVE_FROM_CART_RESPONSE = 80007;
 	
-	public static final int CART_REGISTRY_REQUEST = 80006;	
-	public static final int CART_REGISTRY_RESPONSE = 80007;
+	public static final int CART_REGISTRY_REQUEST = 80008;	
+	public static final int CART_REGISTRY_RESPONSE = 80009;
 	
 	public static final int GET_CART_REQUEST = 80010;
 	public static final int GET_CART_RESPONSE = 80011;
@@ -24,11 +24,17 @@ public final class AppID {
 
 
 	
-	public static final int ADD_TO_STORE_REQUEST = 80008;
-	public static final int ADD_TO_STORE_RESPONSE = 80009;
+	public static final int ADD_TO_STORE_NOTIFICATION = 80015;
+
 	
 	public static final int WITHDRAW_FROM_STORE_REQUEST = 80016;
 	public static final int WITHDRAW_FROM_STORE_RESPONSE = 80017;
+	
+	public static final int PAY_REQUEST = 80019;
+	public static final int PAY_RESPONSE = 80020;
+	
+	public static final int GET_ALL_PRODUCTS_REQUEST = 80021;
+	public static final int GET_ALL_PRODUCTS_RESPONSE = 80022;
 	
 
 
