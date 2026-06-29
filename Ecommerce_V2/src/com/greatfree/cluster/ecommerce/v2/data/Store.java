@@ -51,18 +51,27 @@ public class Store implements Serializable {
 	    return List.copyOf(products.values()); // Java 10+ immutable list
 	}
 	
-    public Product getProductByName(String productName) {
+    public Product getProductByName(String productName) 
+    {
         return products.get(productName);
     }
 	
-	public void addProduct(Product product) {
+	public void addProduct(Product product) 
+	{
 		
 	    String productName = product.getProductName();
 	        
 	        products.put(productName, product);		
 	}
 	
-    public void removeProduct(String productName) {
+	public void addProductQuantity(String productName, int quantity) 
+	{
+		int newQuantity = products.get(productName).getStockQuantity() + quantity;
+		products.get(productName).setStockQuantity(newQuantity);
+	}
+	
+    public void removeProduct(String productName) 
+    {
         if (products.containsKey(productName)) {
          
             products.remove(productName);

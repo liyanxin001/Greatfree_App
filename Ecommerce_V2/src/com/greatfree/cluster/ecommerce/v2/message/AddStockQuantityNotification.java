@@ -2,15 +2,16 @@ package com.greatfree.cluster.ecommerce.v2.message;
 
 import edu.greatfree.cluster.message.ClusterNotification;
 
-public class AddToStoreNotification extends ClusterNotification{
+public class AddStockQuantityNotification extends ClusterNotification{
 	
 	
 	private static final long serialVersionUID = 3104517154402159452L;
 	private int quantity;
 	private String storeName;
+	private String productName;
 
-	public AddToStoreNotification(int quantity, String storeName) {
-		super(storeName, AppID.ADD_TO_STORE_NOTIFICATION);
+	public AddStockQuantityNotification(int quantity, String storeName, String productName) {
+		super(storeName, AppID.ADD_STOCK_QUANTITY_NOTIFICATION);
 		this.quantity = quantity;
 		this.storeName = storeName;
 	}
@@ -29,6 +30,14 @@ public class AddToStoreNotification extends ClusterNotification{
 
 	public void setStoreName(String storeName) {
 		this.storeName = storeName;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 }

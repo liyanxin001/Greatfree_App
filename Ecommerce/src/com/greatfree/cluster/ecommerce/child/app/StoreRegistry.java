@@ -74,6 +74,8 @@ public class StoreRegistry {
     	
     	
     }
+    
+ 
 
 	public Map<String, String> getUserTostore() {
 		return userToStore;

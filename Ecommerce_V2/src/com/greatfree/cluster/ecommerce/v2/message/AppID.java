@@ -24,7 +24,7 @@ public final class AppID {
 
 
 	
-	public static final int ADD_TO_STORE_NOTIFICATION = 80015;
+	public static final int ADD_STOCK_QUANTITY_NOTIFICATION = 80015;
 
 	
 	public static final int WITHDRAW_FROM_STORE_REQUEST = 80016;
