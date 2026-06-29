@@ -9,7 +9,7 @@ public class CartRegistryResponse extends MulticastResponse{
 
 	public CartRegistryResponse(boolean isSucceeded, String collaboratorKey) {
 		super(AppID.CART_REGISTRY_RESPONSE, collaboratorKey);
-		// TODO Auto-generated constructor stub
+		this.isSucceeded = isSucceeded;
 	}
 
 	public boolean isSucceeded() {

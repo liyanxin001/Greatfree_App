@@ -11,7 +11,8 @@ public class AddToStoreNotification extends ClusterNotification{
 
 	public AddToStoreNotification(int quantity, String storeName) {
 		super(storeName, AppID.ADD_TO_STORE_NOTIFICATION);
-		// TODO Auto-generated constructor stub
+		this.quantity = quantity;
+		this.storeName = storeName;
 	}
 
 	public int getQuantity() {
