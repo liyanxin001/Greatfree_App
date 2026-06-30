@@ -78,6 +78,17 @@ public class Store implements Serializable {
         }
     }
     
+    public boolean withdarwProduct(String productName, int quantity) 
+    {
+    	int newQuantity = products.get(productName).getStockQuantity() - quantity;
+    	if(newQuantity < 0) {
+    		return false;
+    	}else {
+    		products.get(productName).setStockQuantity(newQuantity);
+    		return true;
+    	}
+    }
+    
     public void updateStockQuantity(String productName, int newQuantity) {
         if (!products.containsKey(productName)) {
             throw new IllegalArgumentException("Product not in store");

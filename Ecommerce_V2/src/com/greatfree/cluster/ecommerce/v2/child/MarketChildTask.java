@@ -13,8 +13,11 @@ import com.greatfree.cluster.ecommerce.v2.message.AddStockQuantityNotification;
 import com.greatfree.cluster.ecommerce.v2.message.AppID;
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreResponse;
+import com.greatfree.cluster.ecommerce.v2.message.GetStoreRequest;
+import com.greatfree.cluster.ecommerce.v2.message.GetStoreResponse;
 import com.greatfree.cluster.ecommerce.v2.message.PutOnSaleNotification;
 import com.greatfree.cluster.ecommerce.v2.message.RemoveFromSaleNotification;
+import com.greatfree.cluster.ecommerce.v2.message.WithdrawFromStoreRequest;
 
 import edu.greatfree.cluster.child.ChildTask;
 import edu.greatfree.cluster.child.UnaryChild;
@@ -79,7 +82,15 @@ final class MarketChildTask extends ChildTask{
 		    	StoreRegistry.SR().addStore(csr.getOwner(), csr.getStoreName());
 		    	return new CreateStoreResponse(true, csr.getCollaboratorKey());
 		    	
+		    case AppID.GET_STORE_REQUEST:	
+		    	log.info("GET_STORE_REQUEST @" + Calendar.getInstance().getTime());
+		    	GetStoreRequest getsr = (GetStoreRequest) request;
+		    	return new GetStoreResponse(StoreRegistry.SR().getStore(getsr.getStoreName()),getsr.getCollaboratorKey());
 		    	
+		    case AppID.WITHDRAW_FROM_STORE_REQUEST:
+		    	log.info("WITHDRAW_FROM_STORE @" + Calendar.getInstance().getTime());
+		    	WithdrawFromStoreRequest wfsr =  (WithdrawFromStoreRequest) request;
+		    	//2026/6/29
 		    	
 		}
 		return null;
