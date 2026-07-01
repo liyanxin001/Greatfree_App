@@ -66,13 +66,17 @@ public class StoreRegistry {
         
         return allProducts;
     }
-    public void addStore(String userName, String storeName) {
-    	
- 
+    public boolean addStore(String userName, String storeName) {
+    	if(stores.containsKey(storeName)) {
+    		return false;
+    	}else 
+    	{
     	   userToStore.put(userName, storeName);
     	    Store store = new Store(storeName);
     	    stores.put(storeName, store);	
-    	
+    	    
+    	    return true;
+    	}
     	
     }
 

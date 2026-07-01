@@ -35,8 +35,10 @@ public class CartRegistry {
         return carts.get(ClientID);
     }
     
-    public void createCart(String userName) {
+    public boolean createCart(String userName) {
+
     	carts.put(userName, new Cart(userName));
+    	return true;
     }
     
     public Cart getOrCreateCart(String userName) {

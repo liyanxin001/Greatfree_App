@@ -5,6 +5,7 @@ import edu.greatfree.cluster.message.ClusterRequest;
 public class WithdrawFromStoreRequest extends ClusterRequest{
 	
 	private static final long serialVersionUID = 2082783540379937014L;
+	
 	private int quantity;
 	private String storeName;
 	private String productName;

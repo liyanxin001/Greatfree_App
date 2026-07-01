@@ -1,25 +1,28 @@
 package com.greatfree.cluster.ecommerce.v2.message;
 
+import com.greatfree.cluster.ecommerce.v2.data.CartItem;
+
 import edu.greatfree.multicast.message.MulticastResponse;
 
 public class WithdrawFromStoreResponse extends MulticastResponse{
 	
 	
 	private static final long serialVersionUID = -1948179343069080736L;
-	private boolean isSucceeded;
+	private CartItem item;
 
-	public WithdrawFromStoreResponse(boolean isSucceeded, String collaboratorKey) {
+	public WithdrawFromStoreResponse(CartItem item, String collaboratorKey) {
 		super(AppID.WITHDRAW_FROM_STORE_RESPONSE, collaboratorKey);
-		this.setSucceeded(isSucceeded);
+		this.setItem(item);
 		
 	}
 
-	public boolean isSucceeded() {
-		return isSucceeded;
+	public CartItem getItem() {
+		return item;
 	}
 
-	public void setSucceeded(boolean isSucceeded) {
-		this.isSucceeded = isSucceeded;
+	public void setItem(CartItem item) {
+		this.item = item;
 	}
+
 
 }

@@ -78,14 +78,16 @@ public class Store implements Serializable {
         }
     }
     
-    public boolean withdarwProduct(String productName, int quantity) 
+
+    
+    public CartItem withdarwProduct(String productName, int quantity) 
     {
     	int newQuantity = products.get(productName).getStockQuantity() - quantity;
     	if(newQuantity < 0) {
-    		return false;
+    		return null;
     	}else {
     		products.get(productName).setStockQuantity(newQuantity);
-    		return true;
+    		return new CartItem(products.get(productName), quantity)  ;
     	}
     }
     

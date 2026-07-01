@@ -6,21 +6,21 @@ public class RemoveFromCartRequest extends ClusterRequest{
 	
 	private static final long serialVersionUID = 7616443523024569212L;
 	
-	private String username;
+	private String userName;
 	private String productName;
 
 	public RemoveFromCartRequest(String username, String productName) {
 		super(username, AppID.REMOVE_FROM_CART_REQUEST);
-		this.username = username;
+		this.userName = username;
 		this.productName = productName;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String username) {
+		this.userName = username;
 	}
 
 	public String getProductName() {
