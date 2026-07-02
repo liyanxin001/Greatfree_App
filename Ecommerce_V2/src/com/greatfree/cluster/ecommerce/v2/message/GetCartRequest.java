@@ -1,0 +1,5 @@
+package com.greatfree.cluster.ecommerce.v2.message;
+
+public class GetCartRequest {
+
+}

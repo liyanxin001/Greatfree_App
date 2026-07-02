@@ -19,6 +19,8 @@ import com.greatfree.cluster.ecommerce.v2.message.CreateStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreResponse;
 import com.greatfree.cluster.ecommerce.v2.message.GetStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.GetStoreResponse;
+import com.greatfree.cluster.ecommerce.v2.message.PayRequest;
+import com.greatfree.cluster.ecommerce.v2.message.PayResponse;
 import com.greatfree.cluster.ecommerce.v2.message.PutOnSaleNotification;
 import com.greatfree.cluster.ecommerce.v2.message.RemoveFromCartRequest;
 import com.greatfree.cluster.ecommerce.v2.message.RemoveFromCartResponse;
@@ -126,7 +128,8 @@ final class MarketChildTask extends ChildTask{
 		    	
 		    case AppID.PAY_REQUEST:
 		    	log.info("PAY_REQUEST @" + Calendar.getInstance().getTime());
-		    	
+		    	PayRequest pr = (PayRequest) request;
+		    	return new PayResponse(CartRegistry.CR().getCart(pr.getUserName()).checkout(), pr.getCollaboratorKey());
 		}
 		return null;
 	}
