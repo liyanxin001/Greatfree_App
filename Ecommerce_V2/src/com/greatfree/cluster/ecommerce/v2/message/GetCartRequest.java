@@ -1,5 +1,16 @@
 package com.greatfree.cluster.ecommerce.v2.message;
 
-public class GetCartRequest {
+import edu.greatfree.cluster.message.ClusterRequest;
+
+public class GetCartRequest extends ClusterRequest{
+	
+	
+	private String username;
+	
+
+	public GetCartRequest(int appID) {
+		super(appID);
+		// TODO Auto-generated constructor stub
+	}
 
 }
