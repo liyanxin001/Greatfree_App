@@ -8,11 +8,10 @@ import org.greatfree.exceptions.RemoteReadException;
 import org.greatfree.util.IPAddress;
 import org.greatfree.util.Tools;
 
-import com.greatfree.cluster.ecommerce.v2.data.Product;
+
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreResponse;
-import com.greatfree.cluster.ecommerce.v2.message.GetAllProductsRequest;
-import com.greatfree.cluster.ecommerce.v2.message.GetAllProductsResponse;
+
 import com.greatfree.cluster.ecommerce.v2.message.GetStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.GetStoreResponse;
 
@@ -51,9 +50,9 @@ final class ClusterUI {
 	
 	public void printMenu(String storeName) {
 		System.out.println(HomeMenu.MENU_HEAD);
+		System.out.println(HomeMenu.SEARCH_FOR_PRODUCTS);
 		System.out.println(HomeMenu.CREATE_STORE + storeName);
 		System.out.println(HomeMenu.GO_TO_STORE + storeName);
-		System.out.println(HomeMenu.SEARCH_FOR_PRODUCTS);
 		System.out.println(HomeMenu.QUIT);
 		System.out.println(HomeMenu.MENU_TAIL);
 		System.out.println(HomeMenu.INPUT_PROMPT);
@@ -107,7 +106,7 @@ final class ClusterUI {
 		     case HomeMenuOptions.SEARCH_FOR_PRODUCTS:
 		    	 System.out.println("Enter the keyword:");
 		    	 String Keyword = Tools.INPUT.nextLine();
-
+		    	 
 		    	 break;
 		}
 		

@@ -7,8 +7,8 @@ public final class AppID {
 	public static final int SEARCH_FOR_PRODUCTS_REQUEST = 80002;
 	public static final int SEARCH_FOR_PRODUCTS_RESPONSE = 80003;
 	
-	public static final int ADD_TO_CART_REQUEST = 80004;
-	public static final int ADD_TO_CART_RESPONSE = 80005;
+	public static final int ADD_TO_CART_NOTIFICATION = 80004;
+	
 	public static final int REMOVE_FROM_CART_REQUEST = 80006;
 	public static final int REMOVE_FROM_CART_RESPONSE = 80007;
 	

@@ -2,10 +2,11 @@ package com.greatfree.cluster.ecommerce.v2.message;
 
 import com.greatfree.cluster.ecommerce.v2.data.CartItem;
 
-import edu.greatfree.cluster.message.ClusterRequest;
+import edu.greatfree.cluster.message.ClusterNotification;
 
 
-public class AddToCartRequest extends ClusterRequest{
+
+public class AddToCartNotification extends ClusterNotification{
 	
 	
 	
@@ -16,8 +17,8 @@ public class AddToCartRequest extends ClusterRequest{
 	private String productName;
 	
 
-	public AddToCartRequest(CartItem item, String userName, String productName) {
-		super(userName, AppID.ADD_TO_CART_REQUEST);
+	public AddToCartNotification(CartItem item, String userName, String productName) {
+		super(userName, AppID.ADD_TO_CART_NOTIFICATION);
 		this.item = item;
 		this.userName = userName;
 		this.productName = productName;

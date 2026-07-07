@@ -94,6 +94,48 @@ public class StoreRegistry {
 
 	public void setUserToStore(Map<String, String> userToStore) {
 		this.userToStore = userToStore;
-	}    
+	}
+	
+	public List<Product> searchProductsByKeyword(String keyword) {
+	    List<Product> matchingProducts = new ArrayList<>();
+	    
+	    if (keyword == null || keyword.trim().isEmpty()) {
+	        return matchingProducts; // Return empty list for null or empty keyword
+	    }
+	    
+	    String searchKeyword = keyword.trim().toLowerCase();
+	    
+	    for (Store store :stores.values()) {
+	        if (store.getProducts() != null) {
+	            for (Product product : store.getProducts()) {
+	                if (matchesKeyword(product, searchKeyword)) {
+	                    matchingProducts.add(product);
+	                }
+	            }
+	        }
+	    }
+	    
+	    return matchingProducts;
+	}
+
+	private boolean matchesKeyword(Product product, String keyword) {
+	    if (product == null) {
+	        return false;
+	    }
+	    
+	    // Search in product name
+	    if (product.getProductName() != null && 
+	        product.getProductName().toLowerCase().contains(keyword)) {
+	        return true;
+	    }
+	    
+	    // Search in store name (if you want to include this)
+	    if (product.getStoreName() != null && 
+	        product.getStoreName().toLowerCase().contains(keyword)) {
+	        return true;
+	    }
+	    
+	    return false;
+	}
 
 }

@@ -8,6 +8,7 @@ public class WithdrawFromStoreResponse extends MulticastResponse{
 	
 	
 	private static final long serialVersionUID = -1948179343069080736L;
+	
 	private CartItem item;
 
 	public WithdrawFromStoreResponse(CartItem item, String collaboratorKey) {

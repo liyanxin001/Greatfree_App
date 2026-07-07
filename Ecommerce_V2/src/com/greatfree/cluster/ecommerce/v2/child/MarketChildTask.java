@@ -10,8 +10,8 @@ import org.greatfree.exceptions.RemoteReadException;
 import com.greatfree.cluster.ecommerce.v2.app.CartRegistry;
 import com.greatfree.cluster.ecommerce.v2.app.StoreRegistry;
 import com.greatfree.cluster.ecommerce.v2.message.AddStockQuantityNotification;
-import com.greatfree.cluster.ecommerce.v2.message.AddToCartRequest;
-import com.greatfree.cluster.ecommerce.v2.message.AddToCartResponse;
+import com.greatfree.cluster.ecommerce.v2.message.AddToCartNotification;
+
 import com.greatfree.cluster.ecommerce.v2.message.AppID;
 import com.greatfree.cluster.ecommerce.v2.message.CartRegistryRequest;
 import com.greatfree.cluster.ecommerce.v2.message.CartRegistryResponse;
@@ -72,6 +72,12 @@ final class MarketChildTask extends ChildTask{
 		    	UpdateStockQuantityNotification usqn = (UpdateStockQuantityNotification) notification;
 		    	StoreRegistry.SR().getStore(usqn.getStoreName()).getProductByName(usqn.getProductName()).setStockQuantity(usqn.getNewStockQuantity());
 		    	break;
+		    	
+		    case AppID.ADD_TO_CART_NOTIFICATION:
+		    	log.info("ADD_TO_CART_NOTIFICATION received @" + Calendar.getInstance().getTime());
+		        AddToCartNotification atcn = (AddToCartNotification) notification;
+		        CartRegistry.CR().getCart(atcn.getUserName()).addItem(atcn.getProductName(), atcn.getItem());
+		        break;
 		    
 		    case ClusterAppID.SHUTDOWN_ROOT_NOTIFICATION:
 				log.info("SHUTDOWN_ROOT_NOTIFICATION received @" +Calendar.getInstance().getTime());
@@ -114,12 +120,7 @@ final class MarketChildTask extends ChildTask{
 		    
 		    case AppID.SEARCH_FOR_PRODUCTS_REQUEST:
 		    	log.info("SEARCH_FOR_PRODUCTS_REQUEST @" + Calendar.getInstance().getTime());
-		    	
-		    
-		    case AppID.ADD_TO_CART_REQUEST:
-		    	log.info("ADD_TO_CART_REQUEST @" + Calendar.getInstance().getTime());
-		    	AddToCartRequest atcr = (AddToCartRequest) request;
-		    	return new AddToCartResponse(CartRegistry.CR().getCart(atcr.getUserName()).addItem(atcr.getProductName(), atcr.getItem()), atcr.getCollaboratorKey());
+		        
 		    	
 		    case AppID.REMOVE_FROM_CART_REQUEST:
 		    	log.info("REMOVE_FROM_CART_REQUEST @" + Calendar.getInstance().getTime());

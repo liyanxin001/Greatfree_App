@@ -58,7 +58,7 @@ final class StoreUI
 		    	int newStockQuantity = Tools.INPUT.nextInt();
 		    	Tools.INPUT.nextLine();
 		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
-		    		  CL().getRootAddress().getPort(), new UpdateStockQuantityNotification(productName_3, storeName, newStockQuantity));
+		    		  CL().getRootAddress().getPort(), new UpdateStockQuantityNotification(newStockQuantity, storeName, productName_3));
 		    	break;
 		    	
 		    case MenuOptions.QUIT:

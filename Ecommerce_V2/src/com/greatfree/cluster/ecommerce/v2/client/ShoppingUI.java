@@ -7,11 +7,18 @@ import org.greatfree.exceptions.NullClassConversionException;
 import org.greatfree.exceptions.RemoteReadException;
 import org.greatfree.util.Tools;
 
-import com.greatfree.cluster.ecommerce.v2.message.AddToCartRequest;
-import com.greatfree.cluster.ecommerce.v2.message.AddToCartResponse;
 
+import com.greatfree.cluster.ecommerce.v2.message.AddToCartNotification;
+
+import com.greatfree.cluster.ecommerce.v2.message.WithdrawFromStoreResponse;
+import com.greatfree.cluster.ecommerce.v2.message.GetCartRequest;
+import com.greatfree.cluster.ecommerce.v2.message.GetCartResponse;
 import com.greatfree.cluster.ecommerce.v2.message.PayRequest;
 import com.greatfree.cluster.ecommerce.v2.message.PayResponse;
+
+import com.greatfree.cluster.ecommerce.v2.message.RemoveFromCartRequest;
+import com.greatfree.cluster.ecommerce.v2.message.RemoveFromCartResponse;
+import com.greatfree.cluster.ecommerce.v2.message.WithdrawFromStoreRequest;
 
 import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
 
@@ -22,7 +29,7 @@ final class ShoppingUI {
 	{
 		 System.out.println("\n========== Menu Head ===========");
 	     System.out.println("\t1) Add item to your cart:");
-	     System.out.println("\t2) Update item quantity ");
+	     System.out.println("\t2) Remove item from your cart ");
 	     System.out.println("\t3) Check your cart");
 	     System.out.println("\t4) Check out");
 	     System.out.println("\t0) Quit");
@@ -30,7 +37,7 @@ final class ShoppingUI {
 	     System.out.println("Input an option:");			
 	}
 	
-	public static void execute(String userName, int option) throws ClassNotFoundException, RemoteReadException, IOException, NullClassConversionException
+	public static void execute(String userName, int option) throws ClassNotFoundException, RemoteReadException, IOException, NullClassConversionException, InterruptedException
 	{
 		switch(option)
 		{
@@ -41,13 +48,17 @@ final class ShoppingUI {
 		    	String storeName = Tools.INPUT.nextLine();
 		    	System.out.println("How many do you want?");
 		        int quantity = Integer.parseInt(Tools.INPUT.nextLine());
-		    	List<AddToCartResponse> atcr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
-		    		 ClusterUI.CL().getRootAddress().getPort(), new AddToCartRequest(productName_1, storeName, quantity ,userName),
-		    		 AddToCartResponse.class); 
-		    	for(AddToCartResponse entry: atcr) 
+		       
+		    	List<WithdrawFromStoreResponse> wfsr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
+		    		 ClusterUI.CL().getRootAddress().getPort(), new WithdrawFromStoreRequest(quantity, storeName, productName_1),
+		    		 WithdrawFromStoreResponse.class); 
+		    	for(WithdrawFromStoreResponse entry: wfsr) 
 		    	{
-		    		if(entry.IsSuccessed()) {
-		    			System.out.println("Added to cart successfully!");
+		    		if(entry.getItem() != null) {
+		    			ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
+		  		    		  CL().getRootAddress().getPort(), new AddToCartNotification(entry.getItem(), storeName, productName_1));
+		    			System.out.println("Added to cart successfully");
+
 		    		}else {
 		    			System.out.println("Failed to add to cart");
 		    		}
@@ -55,20 +66,18 @@ final class ShoppingUI {
 		    	}
 		    	break;
 		    	
-		    case ShoppingMenuOptions.UPATE_QUANTITY:
-		    	System.out.println("Upate quantity for which item?");
+		    case ShoppingMenuOptions.REMOVE_FROM_CART:
+		    	System.out.println("Which item do you want to remove?");
 		    	String productName_2 = Tools.INPUT.nextLine();
-		    	System.out.println("What's the new quantity?");
-		    	int newQuantity = Integer.parseInt(Tools.INPUT.nextLine());
-		    	List<UpdateQuantityResponse> uqr  = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
-		    		 ClusterUI.CL().getRootAddress().getPort(), new UpdateQuantityRequest(userName, productName_2, newQuantity),
-		    		 UpdateQuantityResponse.class);
-		    	for(UpdateQuantityResponse entry : uqr) 
+		    	List<RemoveFromCartResponse> uqr  = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
+		    		 ClusterUI.CL().getRootAddress().getPort(), new RemoveFromCartRequest(userName, productName_2),
+		    		 RemoveFromCartResponse.class);
+		    	for(RemoveFromCartResponse entry : uqr) 
 		    	{
 		    		if(entry.isSucceeded()) {
-		    			System.out.println("Updated quantity sucessfully!");
+		    			System.out.println("Item has been removed!");
 		    		}else {
-		    			System.out.println("Failed to update quantity");
+		    			System.out.println("Failed to remove the item.");
 		    		}
 		    		break;
 		    	}
