@@ -136,8 +136,7 @@ final class ClusterUI {
 		    			 shoppingOption = ShoppingMenuOptions.NO_OPTION;
 		    			 System.out.println("Wrong Option");
 		    		 }
-		    	 }
-		    	 
+		    	 }		    	 
 		    	 break;
 		}
 		
