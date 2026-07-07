@@ -9,11 +9,14 @@ import org.greatfree.util.IPAddress;
 import org.greatfree.util.Tools;
 
 
+import com.greatfree.cluster.ecommerce.v2.data.Product;
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreResponse;
 
 import com.greatfree.cluster.ecommerce.v2.message.GetStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.GetStoreResponse;
+import com.greatfree.cluster.ecommerce.v2.message.SearchForProductsRequest;
+import com.greatfree.cluster.ecommerce.v2.message.SearchForProductsResponse;
 
 import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
 
@@ -105,7 +108,35 @@ final class ClusterUI {
 		    	 
 		     case HomeMenuOptions.SEARCH_FOR_PRODUCTS:
 		    	 System.out.println("Enter the keyword:");
-		    	 String Keyword = Tools.INPUT.nextLine();
+		    	 String keyword = Tools.INPUT.nextLine();
+		    	 int shoppingOption = ShoppingMenuOptions.NO_OPTION;
+		    	
+		    	 
+		    	 while(shoppingOption != ShoppingMenuOptions.QUIT) 
+		    	 {
+		    		 List<SearchForProductsResponse> sfpr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
+				    	      this.rootAddress.getPort(), new SearchForProductsRequest(userName, keyword),
+				    	      SearchForProductsResponse.class);
+		    		 for(SearchForProductsResponse entry: sfpr) 
+		    		 {
+		    			 List<Product> Products = entry.getProducts();
+			    		 for(Product product: Products) {
+			    			 System.out.println(product.toString());	 
+			    		 }
+		    		 }
+		    		 ShoppingUI.printMenu();
+		    		 try 
+		    		 {
+			    		 shoppingOption = Integer.parseInt(Tools.INPUT.nextLine());
+			    		 System.out.println("Your choice:" + option);
+			    		 ShoppingUI.execute(userName, shoppingOption);	 
+		    		 }
+		    		 catch(NumberFormatException e)
+		    		 {
+		    			 shoppingOption = ShoppingMenuOptions.NO_OPTION;
+		    			 System.out.println("Wrong Option");
+		    		 }
+		    	 }
 		    	 
 		    	 break;
 		}

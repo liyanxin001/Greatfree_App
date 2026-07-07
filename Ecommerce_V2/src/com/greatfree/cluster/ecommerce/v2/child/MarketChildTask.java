@@ -25,6 +25,8 @@ import com.greatfree.cluster.ecommerce.v2.message.PutOnSaleNotification;
 import com.greatfree.cluster.ecommerce.v2.message.RemoveFromCartRequest;
 import com.greatfree.cluster.ecommerce.v2.message.RemoveFromCartResponse;
 import com.greatfree.cluster.ecommerce.v2.message.RemoveFromSaleNotification;
+import com.greatfree.cluster.ecommerce.v2.message.SearchForProductsRequest;
+import com.greatfree.cluster.ecommerce.v2.message.SearchForProductsResponse;
 import com.greatfree.cluster.ecommerce.v2.message.UpdateStockQuantityNotification;
 import com.greatfree.cluster.ecommerce.v2.message.WithdrawFromStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.WithdrawFromStoreResponse;
@@ -120,7 +122,8 @@ final class MarketChildTask extends ChildTask{
 		    
 		    case AppID.SEARCH_FOR_PRODUCTS_REQUEST:
 		    	log.info("SEARCH_FOR_PRODUCTS_REQUEST @" + Calendar.getInstance().getTime());
-		        
+		        SearchForProductsRequest sfpr = (SearchForProductsRequest) request;
+		        return new SearchForProductsResponse(StoreRegistry.SR().searchProductsByKeyword(sfpr.getKeyword()), sfpr.getCollaboratorKey());
 		    	
 		    case AppID.REMOVE_FROM_CART_REQUEST:
 		    	log.info("REMOVE_FROM_CART_REQUEST @" + Calendar.getInstance().getTime());
