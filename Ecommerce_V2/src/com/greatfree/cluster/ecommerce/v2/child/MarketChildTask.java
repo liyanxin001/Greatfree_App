@@ -17,6 +17,8 @@ import com.greatfree.cluster.ecommerce.v2.message.CartRegistryRequest;
 import com.greatfree.cluster.ecommerce.v2.message.CartRegistryResponse;
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreResponse;
+import com.greatfree.cluster.ecommerce.v2.message.GetCartRequest;
+import com.greatfree.cluster.ecommerce.v2.message.GetCartResponse;
 import com.greatfree.cluster.ecommerce.v2.message.GetStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.GetStoreResponse;
 import com.greatfree.cluster.ecommerce.v2.message.PayRequest;
@@ -129,6 +131,11 @@ final class MarketChildTask extends ChildTask{
 		    	log.info("REMOVE_FROM_CART_REQUEST @" + Calendar.getInstance().getTime());
 		    	RemoveFromCartRequest rfcr = (RemoveFromCartRequest) request;
 		    	return new RemoveFromCartResponse(CartRegistry.CR().getCart(rfcr.getUserName()).removeItem(rfcr.getProductName()), rfcr.getCollaboratorKey());
+		    	
+		    case AppID.GET_CART_REQUEST:
+		    	log.info("GET_CART_REQUEST @" + Calendar.getInstance().getTime());
+		    	GetCartRequest gcr = (GetCartRequest) request;
+		    	return new GetCartResponse(CartRegistry.CR().getCart(gcr.getUserName()), gcr.getCollaboratorKey());
 		    	
 		    case AppID.PAY_REQUEST:
 		    	log.info("PAY_REQUEST @" + Calendar.getInstance().getTime());
