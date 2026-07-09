@@ -120,6 +120,7 @@ final class ClusterUI {
 		    		 for(SearchForProductsResponse entry: sfpr) 
 		    		 {
 		    			 List<Product> Products = entry.getProducts();
+		    			 System.out.println("\n==========SEARCH RESULTS==========");
 			    		 for(Product product: Products) {
 			    			 System.out.println(product.toString());	 
 			    		 }
