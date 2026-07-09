@@ -13,8 +13,7 @@ import com.greatfree.cluster.ecommerce.v2.message.AddStockQuantityNotification;
 import com.greatfree.cluster.ecommerce.v2.message.AddToCartNotification;
 
 import com.greatfree.cluster.ecommerce.v2.message.AppID;
-import com.greatfree.cluster.ecommerce.v2.message.CartRegistryRequest;
-import com.greatfree.cluster.ecommerce.v2.message.CartRegistryResponse;
+
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreResponse;
 import com.greatfree.cluster.ecommerce.v2.message.GetCartRequest;
@@ -80,7 +79,7 @@ final class MarketChildTask extends ChildTask{
 		    case AppID.ADD_TO_CART_NOTIFICATION:
 		    	log.info("ADD_TO_CART_NOTIFICATION received @" + Calendar.getInstance().getTime());
 		        AddToCartNotification atcn = (AddToCartNotification) notification;
-		        CartRegistry.CR().getCart(atcn.getUserName()).addItem(atcn.getProductName(), atcn.getItem());
+		        CartRegistry.CR().getOrCreateCart(atcn.getUserName()).addItem(atcn.getProductName(), atcn.getItem());
 		        break;
 		    
 		    case ClusterAppID.SHUTDOWN_ROOT_NOTIFICATION:
@@ -110,13 +109,8 @@ final class MarketChildTask extends ChildTask{
 		    case AppID.GET_STORE_REQUEST:	
 		    	log.info("GET_STORE_REQUEST @" + Calendar.getInstance().getTime());
 		    	GetStoreRequest getsr = (GetStoreRequest) request;
-		    	return new GetStoreResponse(StoreRegistry.SR().getStore(getsr.getStoreName()),getsr.getCollaboratorKey());
-		    	
-		    case AppID.CART_REGISTRY_REQUEST:
-		    	log.info("CART_REGISTRY_REQUEST @" + Calendar.getInstance().getTime());
-		    	CartRegistryRequest crr = (CartRegistryRequest) request;
-		    	return new CartRegistryResponse(CartRegistry.CR().createCart(crr.getUserName()), crr.getCollaboratorKey());
-		    		    	
+		    	return new GetStoreResponse(StoreRegistry.SR().getStore(getsr.getStoreName()),getsr.getCollaboratorKey());	    	
+
 		    case AppID.WITHDRAW_FROM_STORE_REQUEST:
 		    	log.info("WITHDRAW_FROM_STORE @" + Calendar.getInstance().getTime());
 		    	WithdrawFromStoreRequest wfsr =  (WithdrawFromStoreRequest) request;

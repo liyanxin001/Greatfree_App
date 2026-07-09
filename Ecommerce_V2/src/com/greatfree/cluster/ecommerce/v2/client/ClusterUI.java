@@ -106,7 +106,8 @@ final class ClusterUI {
 		    	 }
 		    	 break;
 		    	 
-		     case HomeMenuOptions.SEARCH_FOR_PRODUCTS:
+		     case HomeMenuOptions.START_SHOPPING:
+		    	 System.out.println("\n==========SEARCH BAR==========");
 		    	 System.out.println("Enter the keyword:");
 		    	 String keyword = Tools.INPUT.nextLine();
 		    	 int shoppingOption = ShoppingMenuOptions.NO_OPTION;
@@ -117,10 +118,10 @@ final class ClusterUI {
 		    		 List<SearchForProductsResponse> sfpr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
 				    	      this.rootAddress.getPort(), new SearchForProductsRequest(userName, keyword),
 				    	      SearchForProductsResponse.class);
+		    		 System.out.println("\n==========SEARCH RESULTS==========");
 		    		 for(SearchForProductsResponse entry: sfpr) 
 		    		 {
-		    			 List<Product> Products = entry.getProducts();
-		    			 System.out.println("\n==========SEARCH RESULTS==========");
+		    			 List<Product> Products = entry.getProducts();		    			
 			    		 for(Product product: Products) {
 			    			 System.out.println(product.toString());	 
 			    		 }
