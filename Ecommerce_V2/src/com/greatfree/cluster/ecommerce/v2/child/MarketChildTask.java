@@ -23,8 +23,7 @@ import com.greatfree.cluster.ecommerce.v2.message.GetStoreResponse;
 import com.greatfree.cluster.ecommerce.v2.message.PayRequest;
 import com.greatfree.cluster.ecommerce.v2.message.PayResponse;
 import com.greatfree.cluster.ecommerce.v2.message.PutOnSaleNotification;
-import com.greatfree.cluster.ecommerce.v2.message.RemoveFromCartRequest;
-import com.greatfree.cluster.ecommerce.v2.message.RemoveFromCartResponse;
+import com.greatfree.cluster.ecommerce.v2.message.RemoveFromCartNotification;
 import com.greatfree.cluster.ecommerce.v2.message.RemoveFromSaleNotification;
 import com.greatfree.cluster.ecommerce.v2.message.SearchForProductsRequest;
 import com.greatfree.cluster.ecommerce.v2.message.SearchForProductsResponse;
@@ -41,6 +40,7 @@ import edu.greatfree.cluster.message.InterChildrenNotification;
 import edu.greatfree.cluster.message.InterChildrenRequest;
 import edu.greatfree.cluster.message.IntercastNotification;
 import edu.greatfree.cluster.message.IntercastRequest;
+import edu.greatfree.framework.cluster.group.message.GroupAppID;
 import edu.greatfree.framework.cluster.multicast.message.ClusterAppID;
 import edu.greatfree.multicast.message.MulticastResponse;
 
@@ -121,11 +121,6 @@ final class MarketChildTask extends ChildTask{
 		        SearchForProductsRequest sfpr = (SearchForProductsRequest) request;
 		        return new SearchForProductsResponse(StoreRegistry.SR().searchProductsByKeyword(sfpr.getKeyword()), sfpr.getCollaboratorKey());
 		    	
-		    case AppID.REMOVE_FROM_CART_REQUEST:
-		    	log.info("REMOVE_FROM_CART_REQUEST @" + Calendar.getInstance().getTime());
-		    	RemoveFromCartRequest rfcr = (RemoveFromCartRequest) request;
-		    	return new RemoveFromCartResponse(CartRegistry.CR().getCart(rfcr.getUserName()).removeItem(rfcr.getProductName()), rfcr.getCollaboratorKey());
-		    	
 		    case AppID.GET_CART_REQUEST:
 		    	log.info("GET_CART_REQUEST @" + Calendar.getInstance().getTime());
 		    	GetCartRequest gcr = (GetCartRequest) request;
@@ -140,8 +135,13 @@ final class MarketChildTask extends ChildTask{
 	}
 
 	@Override
-	public InterChildrenNotification prepareNotification(IntercastNotification paramIntercastNotification) {
-		// TODO Auto-generated method stub
+	public InterChildrenNotification prepareNotification(IntercastNotification notification) {
+		switch(notification.getAppID()) 
+		{
+		    case AppID.REMOVE_FROM_CART_NOTIFICATION:
+		    	log.info("REMOVE_FORM_CART_NOTIFICTAION received @" + Calendar.getInstance().getTime());
+		    	RemoveFromCartNotification rfcn  = notification
+		}
 		return null;
 	}
 

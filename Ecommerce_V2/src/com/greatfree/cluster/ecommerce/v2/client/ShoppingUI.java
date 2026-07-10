@@ -7,7 +7,8 @@ import org.greatfree.exceptions.NullClassConversionException;
 import org.greatfree.exceptions.RemoteReadException;
 import org.greatfree.util.Tools;
 
-
+import com.greatfree.cluster.ecommerce.v2.data.Product;
+import com.greatfree.cluster.ecommerce.v2.message.AddStockQuantityNotification;
 import com.greatfree.cluster.ecommerce.v2.message.AddToCartNotification;
 
 import com.greatfree.cluster.ecommerce.v2.message.WithdrawFromStoreResponse;
@@ -15,7 +16,7 @@ import com.greatfree.cluster.ecommerce.v2.message.GetCartRequest;
 import com.greatfree.cluster.ecommerce.v2.message.GetCartResponse;
 import com.greatfree.cluster.ecommerce.v2.message.PayRequest;
 import com.greatfree.cluster.ecommerce.v2.message.PayResponse;
-
+import com.greatfree.cluster.ecommerce.v2.message.PutOnSaleNotification;
 import com.greatfree.cluster.ecommerce.v2.message.RemoveFromCartRequest;
 import com.greatfree.cluster.ecommerce.v2.message.RemoveFromCartResponse;
 import com.greatfree.cluster.ecommerce.v2.message.WithdrawFromStoreRequest;
@@ -76,6 +77,8 @@ final class ShoppingUI {
 		    	{
 		    		if(entry.isSucceeded()) {
 		    			System.out.println("Item has been removed!");
+		    			ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
+		  		    		  CL().getRootAddress().getPort(), new AddStockQuantityNotification(quantity, productName_1, productName_1));
 		    		}else {
 		    			System.out.println("Failed to remove the item.");
 		    		}

@@ -9,8 +9,8 @@ public final class AppID {
 	
 	public static final int ADD_TO_CART_NOTIFICATION = 80004;
 	
-	public static final int REMOVE_FROM_CART_REQUEST = 80006;
-	public static final int REMOVE_FROM_CART_RESPONSE = 80007;
+	public static final int REMOVE_FROM_CART_NOTIFICATION = 80006;
+	
 	
 	public static final int CART_REGISTRY_REQUEST = 80008;	
 	public static final int CART_REGISTRY_RESPONSE = 80009;
