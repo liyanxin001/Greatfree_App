@@ -43,6 +43,10 @@ public class Cart implements Serializable {
         return true;
     }
     
+    public int getItemQuantity(String productName) {
+    	return items.get(productName).getQuantity();
+    }
+    
     // Update item quantity
     public void updateQuantity(String productName, int newQuantity) {
         if (!items.containsKey(productName)) {

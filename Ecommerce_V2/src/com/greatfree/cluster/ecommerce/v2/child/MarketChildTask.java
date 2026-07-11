@@ -20,6 +20,7 @@ import com.greatfree.cluster.ecommerce.v2.message.GetCartRequest;
 import com.greatfree.cluster.ecommerce.v2.message.GetCartResponse;
 import com.greatfree.cluster.ecommerce.v2.message.GetStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.GetStoreResponse;
+import com.greatfree.cluster.ecommerce.v2.message.InterRemoveFromCartNotification;
 import com.greatfree.cluster.ecommerce.v2.message.PayRequest;
 import com.greatfree.cluster.ecommerce.v2.message.PayResponse;
 import com.greatfree.cluster.ecommerce.v2.message.PutOnSaleNotification;
@@ -40,7 +41,7 @@ import edu.greatfree.cluster.message.InterChildrenNotification;
 import edu.greatfree.cluster.message.InterChildrenRequest;
 import edu.greatfree.cluster.message.IntercastNotification;
 import edu.greatfree.cluster.message.IntercastRequest;
-import edu.greatfree.framework.cluster.group.message.GroupAppID;
+
 import edu.greatfree.framework.cluster.multicast.message.ClusterAppID;
 import edu.greatfree.multicast.message.MulticastResponse;
 
@@ -140,7 +141,9 @@ final class MarketChildTask extends ChildTask{
 		{
 		    case AppID.REMOVE_FROM_CART_NOTIFICATION:
 		    	log.info("REMOVE_FORM_CART_NOTIFICTAION received @" + Calendar.getInstance().getTime());
-		    	RemoveFromCartNotification rfcn  = notification
+		    	RemoveFromCartNotification rfcn  = (RemoveFromCartNotification) notification;
+		    	CartRegistry.CR().getCart(rfcn.getUserName()).removeItem(rfcn.getProductName());
+		    	return new InterRemoveFromCartNotification(rfcn, CartRegistry.CR().getCart(rfcn.getUserName()).getItemQuantity(rfcn.getProductName()));
 		}
 		return null;
 	}
@@ -152,8 +155,16 @@ final class MarketChildTask extends ChildTask{
 	}
 
 	@Override
-	public void processNotification(InterChildrenNotification paramInterChildrenNotification) {
-		// TODO Auto-generated method stub
+	public void processNotification(InterChildrenNotification notification) {
+		switch(notification.getAppID()) 
+		{
+		    case AppID.REMOVE_FROM_CART_NOTIFICATION:
+		    	log.info("REMOVE_FROM_CART_NOTIFICATION received @" + Calendar.getInstance().getTime());
+		        InterRemoveFromCartNotification irfcn = (InterRemoveFromCartNotification) notification;
+		        RemoveFromCartNotification rfcn = (RemoveFromCartNotification) irfcn.getNotification();
+		        StoreRegistry.SR().getStore(rfcn.getStoreName()).addProductQuantity(rfcn.getProductName(), irfcn.getQuantity());
+		        break;
+		}
 		
 	}
 

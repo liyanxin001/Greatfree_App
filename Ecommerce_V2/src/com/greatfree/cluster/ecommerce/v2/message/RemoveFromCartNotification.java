@@ -8,26 +8,26 @@ public class RemoveFromCartNotification extends IntercastNotification{
 
 	private static final long serialVersionUID = 7483239669723031050L;
 	
-	private String username;
+	private String userName;
     private String storeName;
     private String productName;
     
     
-    public RemoveFromCartNotification(String username, String storeName, String productName) {
-		super(username, storeName, AppID.REMOVE_FROM_CART_NOTIFICATION);
-		this.username = username;
+    public RemoveFromCartNotification(String userName, String storeName, String productName) {
+		super(userName, storeName, AppID.REMOVE_FROM_CART_NOTIFICATION);
+		this.userName = userName;
 		this.storeName = storeName;
 		this.productName = productName;
 	}
 
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 
