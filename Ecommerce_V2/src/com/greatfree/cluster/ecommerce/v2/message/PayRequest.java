@@ -1,7 +1,7 @@
 package com.greatfree.cluster.ecommerce.v2.message;
 
 import edu.greatfree.cluster.message.ClusterRequest;
-import edu.greatfree.cluster.message.RequestType;
+
 
 public class PayRequest extends ClusterRequest{
 	
@@ -11,7 +11,7 @@ public class PayRequest extends ClusterRequest{
 	private String userName;
 
 	public PayRequest(String userName) {
-		super(RequestType.BROADCAST_REQUEST, AppID.PAY_REQUEST);
+		super(userName, AppID.PAY_REQUEST);
 		this.setUserName(userName);
 	}
 

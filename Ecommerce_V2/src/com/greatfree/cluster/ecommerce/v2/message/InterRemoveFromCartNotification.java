@@ -8,7 +8,7 @@ public class InterRemoveFromCartNotification extends InterChildrenNotification{
 	
 	private static final long serialVersionUID = 7827647751933467150L;
 
-
+     
 
 	private int quantity;
 

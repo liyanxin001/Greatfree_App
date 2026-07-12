@@ -21,9 +21,6 @@ public final class AppID {
 	public static final int REMOVE_FROM_SALE_NOTIFICATION = 80013;
 	
 	public static final int UPDATE_STOCK_QUANTITY_NOTIFICATION = 80014;
-
-
-	
 	public static final int ADD_STOCK_QUANTITY_NOTIFICATION = 80015;
 
 	
