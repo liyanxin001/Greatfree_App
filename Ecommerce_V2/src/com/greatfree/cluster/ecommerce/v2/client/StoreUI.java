@@ -41,7 +41,7 @@ final class StoreUI
 		    	double price = Double.parseDouble(Tools.INPUT.nextLine());
 		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
 		    		  CL().getRootAddress().getPort(), new PutOnSaleNotification(new Product(productName_1, 
-		    		  quantity, price, storeName), storeName));
+		    		  quantity, price, storeName)));
 		    	break;
 		    	
 		    case StoreMenuOptions.REMOVE_FROM_SALE:

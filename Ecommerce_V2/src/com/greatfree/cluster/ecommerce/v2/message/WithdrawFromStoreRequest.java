@@ -11,7 +11,7 @@ public class WithdrawFromStoreRequest extends ClusterRequest{
 	private String productName;
 
 	public WithdrawFromStoreRequest(int quantity, String storeName, String productName) {
-		super(storeName, AppID.WITHDRAW_FROM_STORE_REQUEST);
+		super(productName, AppID.WITHDRAW_FROM_STORE_REQUEST);
 		this.productName = productName;
 		this.storeName = storeName;
 		this.quantity = quantity;

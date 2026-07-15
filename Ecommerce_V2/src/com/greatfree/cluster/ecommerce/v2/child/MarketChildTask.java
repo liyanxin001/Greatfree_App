@@ -9,7 +9,7 @@ import org.greatfree.exceptions.RemoteReadException;
 
 import com.greatfree.cluster.ecommerce.v2.app.CartRegistry;
 import com.greatfree.cluster.ecommerce.v2.app.StoreRegistry;
-import com.greatfree.cluster.ecommerce.v2.message.AddStockQuantityNotification;
+
 import com.greatfree.cluster.ecommerce.v2.message.AddToCartNotification;
 
 import com.greatfree.cluster.ecommerce.v2.message.AppID;
@@ -52,17 +52,11 @@ final class MarketChildTask extends ChildTask{
 	@Override
 	public void processNotification(ClusterNotification notification) {
 		switch(notification.getAppID()) 
-		{
-		    case AppID.ADD_STOCK_QUANTITY_NOTIFICATION:
-			    log.info("ADD_TO_STORE_NOTIFICATION received @" + Calendar.getInstance().getTime());
-			    AddStockQuantityNotification asqn = (AddStockQuantityNotification) notification;
-			    StoreRegistry.SR().getStore(asqn.getStoreName()).addProductQuantity(asqn.getProductName(), asqn.getQuantity());
-			    break;
-			    
+		{    
 		    case AppID.PUT_ON_SALE_NOTIFICATION:
 		    	log.info("PUT_ON_SALE_NOTIFICATION received @" + Calendar.getInstance().getTime());
 				PutOnSaleNotification posn = (PutOnSaleNotification) notification;
-				StoreRegistry.SR().getStore(posn.getStoreName()).addProduct(posn.getProduct());
+				StoreRegistry.SR().getStore(posn.getProduct().getStoreName()).addProduct(posn.getProduct());
 	            break;
 	            
 		    case AppID.REMOVE_FROM_SALE_NOTIFICATION:

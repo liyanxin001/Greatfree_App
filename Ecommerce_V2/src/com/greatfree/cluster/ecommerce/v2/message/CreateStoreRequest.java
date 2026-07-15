@@ -1,6 +1,7 @@
 package com.greatfree.cluster.ecommerce.v2.message;
 
 import edu.greatfree.cluster.message.ClusterRequest;
+import edu.greatfree.cluster.message.RequestType;
 
 public class CreateStoreRequest extends ClusterRequest{
 
@@ -12,7 +13,7 @@ public class CreateStoreRequest extends ClusterRequest{
 	private String owner;
 
 	public CreateStoreRequest(String storeName, String owner) {
-		super(storeName, AppID.CREATE_STORE_REQUEST);
+		super(RequestType.BROADCAST_REQUEST, AppID.CREATE_STORE_REQUEST);
 		this.setStoreName(storeName);
 		this.setOwner(owner);
 		

@@ -13,7 +13,7 @@ public class GetStoreRequest extends ClusterRequest{
 	private String storeName;
 
 	public GetStoreRequest(String storeName) {
-		super(RequestType.UNICAST_REQUEST, AppID.GET_STORE_REQUEST);
+		super(RequestType.BROADCAST_REQUEST, AppID.GET_STORE_REQUEST);
 		this.storeName = storeName;
 	}
 

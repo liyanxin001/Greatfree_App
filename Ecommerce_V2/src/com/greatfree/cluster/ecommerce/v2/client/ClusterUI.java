@@ -10,6 +10,7 @@ import org.greatfree.util.Tools;
 
 
 import com.greatfree.cluster.ecommerce.v2.data.Product;
+import com.greatfree.cluster.ecommerce.v2.data.Store;
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreResponse;
 
@@ -85,11 +86,12 @@ final class ClusterUI {
 		    		 List<GetStoreResponse> gsr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
 				    	      this.rootAddress.getPort(), new GetStoreRequest(storeName),
 				    	      GetStoreResponse.class);
+		    		 Store store = new Store();
 			    	 for(GetStoreResponse entry: gsr)
 			    	 {
-			    		  entry.getStore().displayStore();
-			    		  break;
+			    		  store.getProducts().addAll(entry.getStore().getProducts());
 			    	 }
+			    	 store.displayStore();
 			    	 StoreUI.printMenu(storeName);
 			    	 optionStr = Tools.INPUT.nextLine();
 			    	 try 

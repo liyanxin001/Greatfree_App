@@ -12,7 +12,7 @@ final class StartClient {
 
 	public static void main(String[] args)throws ClassNotFoundException, RemoteReadException, IOException,InterruptedException
 	{	
-		System.out.println("Enter your username:");
+		System.out.println("Your username:");
 		String userName = Tools.INPUT.nextLine();
 		System.out.println("Name your store:");
 		String storeName = Tools.INPUT.nextLine();

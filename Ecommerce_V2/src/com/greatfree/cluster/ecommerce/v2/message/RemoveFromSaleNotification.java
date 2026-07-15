@@ -16,7 +16,7 @@ public class RemoveFromSaleNotification extends ClusterNotification {
 	
 
 	public RemoveFromSaleNotification( String productName, String storeName) {
-		super(NotificationType.BROADCAST_NOTIFICATION, AppID.REMOVE_FROM_SALE_NOTIFICATION);
+		super(productName, AppID.REMOVE_FROM_SALE_NOTIFICATION);
 		this.storeName = storeName;
 		this.productName = productName;
 		

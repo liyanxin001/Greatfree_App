@@ -14,7 +14,7 @@ public class UpdateStockQuantityNotification extends ClusterNotification{
 	private String productName;
 
 	public UpdateStockQuantityNotification(int newStockQuantity, String storeName, String productName) {
-		super(storeName, AppID.UPDATE_STOCK_QUANTITY_NOTIFICATION);
+		super(productName, AppID.UPDATE_STOCK_QUANTITY_NOTIFICATION);
 		this.newStockQuantity = newStockQuantity;
 		this.productName = productName;
 		this.storeName = storeName;
