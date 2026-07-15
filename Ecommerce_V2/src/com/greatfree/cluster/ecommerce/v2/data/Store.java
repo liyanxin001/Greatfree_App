@@ -44,11 +44,15 @@ public class Store implements Serializable {
 		
 	}
 	
-	public List<Product> getProducts() {
+	public List<Product> getProductList() {
 	    if (products == null || products.isEmpty()) {
 	        return Collections.emptyList();
 	    }
-	    return List.copyOf(products.values()); // Java 10+ immutable list
+	    return List.copyOf(products.values()); 
+	}
+	
+	public Map<String, Product> getProducts(){
+		return products;
 	}
 	
     public Product getProductByName(String productName) 

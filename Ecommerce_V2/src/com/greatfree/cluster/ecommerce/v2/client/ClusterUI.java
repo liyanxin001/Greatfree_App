@@ -89,7 +89,7 @@ final class ClusterUI {
 		    		 Store store = new Store();
 			    	 for(GetStoreResponse entry: gsr)
 			    	 {
-			    		  store.getProducts().addAll(entry.getStore().getProducts());
+			    		  store.getProducts().putAll(entry.getStore().getProducts());
 			    	 }
 			    	 store.displayStore();
 			    	 StoreUI.printMenu(storeName);
