@@ -54,7 +54,7 @@ public class StoreRegistry {
         
         for (Store store : stores.values()) {
             try {
-                List<Product> storeProducts = store.getProducts();
+                List<Product> storeProducts = store.getProductList();
                 if (storeProducts != null && !storeProducts.isEmpty()) {
                     allProducts.addAll(storeProducts);
                 }
@@ -107,7 +107,7 @@ public class StoreRegistry {
 	    
 	    for (Store store :stores.values()) {
 	        if (store.getProducts() != null) {
-	            for (Product product : store.getProducts()) {
+	            for (Product product : store.getProductList()) {
 	                if (matchesKeyword(product, searchKeyword)) {
 	                    matchingProducts.add(product);
 	                }
