@@ -9,8 +9,8 @@ import org.greatfree.util.IPAddress;
 import org.greatfree.util.Tools;
 
 import com.greatfree.cluster.ecommerce.v1.data.Product;
-import com.greatfree.cluster.ecommerce.v1.message.CreateStoreRequest;
-import com.greatfree.cluster.ecommerce.v1.message.CreateStoreResponse;
+
+
 import com.greatfree.cluster.ecommerce.v1.message.GetAllProductsRequest;
 import com.greatfree.cluster.ecommerce.v1.message.GetAllProductsResponse;
 import com.greatfree.cluster.ecommerce.v1.message.GetStoreRequest;
@@ -21,6 +21,7 @@ import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
 final class ClusterUI {
 	
 	private IPAddress rootAddress;
+	
 	
     private ClusterUI() {
     	
@@ -64,14 +65,7 @@ final class ClusterUI {
 		switch(option)		
 		{
 		     case HomeMenuOptions.CREATE_STORE:
-		    	 List<CreateStoreResponse> csr = ClusterClient.MULTI().read(this.rootAddress.getIP(), 
-		    		  this.rootAddress.getPort(), new CreateStoreRequest(userName, storeName), 
-		    		  CreateStoreResponse.class);
-		    	 for(CreateStoreResponse entry : csr)
-		    	 {
-		    		 System.out.println("Creating Store status:" + entry.isSucceeded());
-		    		 break; 
-		    	 }
+
 		    	 break;
 		    	 
 		     case HomeMenuOptions.GO_TO_STORE:
@@ -81,7 +75,7 @@ final class ClusterUI {
 		    	 while (storeOption != StoreMenuOptions.QUIT)
 		    	 {
 		    		 List<GetStoreResponse> gsr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
-				    	      this.rootAddress.getPort(), new GetStoreRequest(storeName),
+				    	      this.rootAddress.getPort(), new GetStoreRequest(storeName,null),
 				    	      GetStoreResponse.class);
 			    	 for(GetStoreResponse entry: gsr)
 			    	 {

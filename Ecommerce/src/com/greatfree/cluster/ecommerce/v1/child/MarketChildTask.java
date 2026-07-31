@@ -9,11 +9,10 @@ import org.greatfree.exceptions.RemoteReadException;
 
 import com.greatfree.cluster.ecommerce.v1.child.app.CartRegistry;
 import com.greatfree.cluster.ecommerce.v1.child.app.StoreRegistry;
-import com.greatfree.cluster.ecommerce.v1.message.AddToCartRequest;
-import com.greatfree.cluster.ecommerce.v1.message.AddToCartResponse;
+
 import com.greatfree.cluster.ecommerce.v1.message.AppID;
-import com.greatfree.cluster.ecommerce.v1.message.CreateStoreRequest;
-import com.greatfree.cluster.ecommerce.v1.message.CreateStoreResponse;
+import com.greatfree.cluster.ecommerce.v1.message.CreateStoreNotification;
+
 import com.greatfree.cluster.ecommerce.v1.message.GetAllProductsRequest;
 import com.greatfree.cluster.ecommerce.v1.message.GetAllProductsResponse;
 import com.greatfree.cluster.ecommerce.v1.message.GetCartRequest;
@@ -67,6 +66,12 @@ final class MarketChildTask extends ChildTask{
 			   StoreRegistry.SR().getStore(usqn.getStoreName()).updateStockQuantity(usqn.getProductName(),usqn.getNewStockQuantity());			      
 			   break;
 			   
+		   case AppID.CREATE_STORE_NOTIFICATION:
+			   log.info("CREATE_STORE_NOTIFICATION received @" + Calendar.getInstance().getTime());
+			   CreateStoreNotification csn = (CreateStoreNotification) notification;
+			   StoreRegistry.SR().addStore(csn.getUserName(), csn.getStoreName());
+			   break;
+			   
 		   case ClusterAppID.SHUTDOWN_ROOT_NOTIFICATION:
 			   log.info("SHUTDOWN_ROOT_NOTIFICATION received @" +Calendar.getInstance().getTime());
 			   try 
@@ -89,23 +94,12 @@ final class MarketChildTask extends ChildTask{
 		    	log.info("GET_ALL_PRODUCTS_REQUEST @" + Calendar.getInstance().getTime());
 		    	GetAllProductsRequest gapr = (GetAllProductsRequest) request;
 		    	return new GetAllProductsResponse(StoreRegistry.SR().getAllProducts(),gapr.getCollaboratorKey());
-		    	
-		    case AppID.CREATE_STORE_REQUEST:
-		    	log.info("CREATE_STORE_REQUEST @" + Calendar.getInstance().getTime());
-		    	CreateStoreRequest csr = (CreateStoreRequest) request;
-		    	StoreRegistry.SR().addStore(csr.getUserName(), csr.getStoreName());
-		    	return new CreateStoreResponse(true, csr.getCollaboratorKey());
-		    	
+		    			    	
 		    case AppID.GET_STORE_REQUEST:
 		    	log.info("GET_STORE_REQUEST @" + Calendar.getInstance().getTime());
 		    	GetStoreRequest getsr = (GetStoreRequest) request;
 		    	return new GetStoreResponse(StoreRegistry.SR().getStore(getsr.getStoreName()),getsr.getCollaboratorKey());
-		    	
-		    case AppID.ADD_TO_CART_REQUEST:
-		    	log.info("ADD_TO_CART_REQUEST received @" + Calendar.getInstance().getTime());
-		    	AddToCartRequest atcr = (AddToCartRequest) request;
-		    	CartRegistry.CR().getOrCreateCart(atcr.getUserName()).addItem(StoreRegistry.SR().getStore(atcr.getStoreName()).getProductByName(atcr.getProductName()),atcr.getQuantity());
-		    	return new AddToCartResponse(true, atcr.getCollaboratorKey());
+
 		    	
 		    case AppID.GET_CART_REQUEST:
 		    	log.info("GET_CART_REQUEST received @" + Calendar.getInstance().getTime());

@@ -1,7 +1,7 @@
 package com.greatfree.cluster.ecommerce.v1.message;
 
 import edu.greatfree.cluster.message.ClusterRequest;
-import edu.greatfree.cluster.message.RequestType;
+
 
 public class GetStoreRequest extends ClusterRequest{
 	
@@ -11,8 +11,8 @@ public class GetStoreRequest extends ClusterRequest{
 
 	private String storeName;
 
-	public GetStoreRequest(String storeName) {
-		super(RequestType.UNICAST_REQUEST, AppID.GET_STORE_REQUEST);
+	public GetStoreRequest(String storeName, String randomDestination) {
+		super(randomDestination,  AppID.GET_STORE_REQUEST);
 		this.storeName = storeName;
 	}
 

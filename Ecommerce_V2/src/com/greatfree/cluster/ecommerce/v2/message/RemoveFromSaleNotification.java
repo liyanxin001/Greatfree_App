@@ -2,7 +2,7 @@ package com.greatfree.cluster.ecommerce.v2.message;
 
 
 import edu.greatfree.cluster.message.ClusterNotification;
-import edu.greatfree.cluster.message.NotificationType;
+
 
 public class RemoveFromSaleNotification extends ClusterNotification {
 	
