@@ -7,14 +7,18 @@ import org.greatfree.exceptions.NullClassConversionException;
 import org.greatfree.exceptions.RemoteReadException;
 import org.greatfree.util.Tools;
 
-import com.greatfree.cluster.ecommerce.v1.message.AddToCartRequest;
-import com.greatfree.cluster.ecommerce.v1.message.AddToCartResponse;
+
 import com.greatfree.cluster.ecommerce.v1.message.GetCartRequest;
 import com.greatfree.cluster.ecommerce.v1.message.GetCartResponse;
 import com.greatfree.cluster.ecommerce.v1.message.PayRequest;
 import com.greatfree.cluster.ecommerce.v1.message.PayResponse;
 import com.greatfree.cluster.ecommerce.v1.message.UpdateQuantityRequest;
 import com.greatfree.cluster.ecommerce.v1.message.UpdateQuantityResponse;
+import com.greatfree.cluster.ecommerce.v1.message.UpdateStockQuantityNotification;
+
+import com.greatfree.cluster.ecommerce.v1.message.AddToCartNotification;
+import com.greatfree.cluster.ecommerce.v1.message.WithdrawFromStoreRequest;
+import com.greatfree.cluster.ecommerce.v1.message.WithdrawFromStoreResponse;
 
 import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
 
@@ -33,7 +37,7 @@ final class ShoppingUI {
 	     System.out.println("Input an option:");			
 	}
 	
-	public static void execute(String userName, int option) throws ClassNotFoundException, RemoteReadException, IOException, NullClassConversionException
+	public static void execute(String userName, int option) throws ClassNotFoundException, RemoteReadException, IOException, NullClassConversionException, InterruptedException
 	{
 		switch(option)
 		{
@@ -44,18 +48,24 @@ final class ShoppingUI {
 		    	String storeName = Tools.INPUT.nextLine();
 		    	System.out.println("How many do you want?");
 		        int quantity = Integer.parseInt(Tools.INPUT.nextLine());
-		    	List<AddToCartResponse> atcr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
-		    		 ClusterUI.CL().getRootAddress().getPort(), new AddToCartRequest(productName_1, storeName, quantity ,userName),
-		    		 AddToCartResponse.class); 
-		    	for(AddToCartResponse entry: atcr) 
-		    	{
-		    		if(entry.IsSuccessed()) {
-		    			System.out.println("Added to cart successfully!");
-		    		}else {
-		    			System.out.println("Failed to add to cart");
-		    		}
-		    		break;
-		    	}
+		        
+		        List<WithdrawFromStoreResponse> wfsr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
+			    		 ClusterUI.CL().getRootAddress().getPort(), new WithdrawFromStoreRequest(quantity, storeName, productName_1),
+			    		 WithdrawFromStoreResponse.class); 
+			    	for(WithdrawFromStoreResponse entry: wfsr) 
+			    	{
+			    		if(entry.getItem() != null) {
+			    			ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
+			  		    		  CL().getRootAddress().getPort(), new AddToCartNotification(entry.getItem(), storeName, productName_1));
+			    			ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
+			  		    		  CL().getRootAddress().getPort(), new UpdateStockQuantityNotification(storeName,  productName_1, entry.getItem().getProduct().getStockQuantity() - quantity));
+			    			System.out.println("Added to cart successfully");
+
+			    		}else {
+			    			System.out.println("Failed to add to cart");
+			    		}
+			    		break;
+			    	}
 		    	break;
 		    	
 		    case ShoppingMenuOptions.UPATE_QUANTITY:
