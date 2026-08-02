@@ -1,4 +1,4 @@
-package com.greatfree.cluster.ecommerce.v1.data;
+package com.greatfree.cluster.ecommerce.data;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -44,29 +44,55 @@ public class Store implements Serializable {
 		
 	}
 	
-	public List<Product> getProducts() {
+	public List<Product> getProductList() {
 	    if (products == null || products.isEmpty()) {
 	        return Collections.emptyList();
 	    }
-	    return List.copyOf(products.values()); // Java 10+ immutable list
+	    return List.copyOf(products.values()); 
 	}
 	
-    public Product getProductByName(String productName) {
+	public Map<String, Product> getProducts(){
+		return products;
+	}
+	
+    public Product getProductByName(String productName) 
+    {
         return products.get(productName);
     }
 	
-	public void addProduct(Product product) {
+	public void addProduct(Product product) 
+	{
 		
 	    String productName = product.getProductName();
 	        
 	        products.put(productName, product);		
 	}
 	
-    public void removeProduct(String productName) {
+	public void addProductQuantity(String productName, int quantity) 
+	{
+		int newQuantity = products.get(productName).getStockQuantity() + quantity;
+		products.get(productName).setStockQuantity(newQuantity);
+	}
+	
+    public void removeProduct(String productName) 
+    {
         if (products.containsKey(productName)) {
          
             products.remove(productName);
         }
+    }
+    
+
+    
+    public CartItem withdarwProduct(String productName, int quantity) 
+    {
+    	int newQuantity = products.get(productName).getStockQuantity() - quantity;
+    	if(newQuantity < 0) {
+    		return null;
+    	}else {
+    		products.get(productName).setStockQuantity(newQuantity);
+    		return new CartItem(products.get(productName), quantity)  ;
+    	}
     }
     
     public void updateStockQuantity(String productName, int newQuantity) {

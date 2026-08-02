@@ -2,7 +2,7 @@ package com.greatfree.cluster.ecommerce.v1.message;
 
 import java.util.List;
 
-import com.greatfree.cluster.ecommerce.v1.data.Product;
+import com.greatfree.cluster.ecommerce.data.Product;
 
 import edu.greatfree.multicast.message.MulticastResponse;
 

@@ -7,9 +7,9 @@ import java.util.logging.Logger;
 
 import org.greatfree.exceptions.RemoteReadException;
 
-import com.greatfree.cluster.ecommerce.v1.child.app.CartRegistry;
-import com.greatfree.cluster.ecommerce.v1.child.app.StoreRegistry;
-
+import com.greatfree.cluster.ecommerce.app.CartRegistry;
+import com.greatfree.cluster.ecommerce.app.StoreRegistry;
+import com.greatfree.cluster.ecommerce.v1.message.AddToCartNotification;
 import com.greatfree.cluster.ecommerce.v1.message.AppID;
 import com.greatfree.cluster.ecommerce.v1.message.CreateStoreNotification;
 
@@ -59,6 +59,13 @@ final class MarketChildTask extends ChildTask{
 			   RemoveFromSaleNotification rfsn = (RemoveFromSaleNotification) notification;
 			   StoreRegistry.SR().getStore(rfsn.getStoreName()).removeProduct(rfsn.getProductName());
 			   break;
+			   
+		   case AppID.ADD_TO_CART_NOTIFICATION:
+			   log.info("ADD_TO_CART_NOTIFICATION received @" + Calendar.getInstance().getTime());
+			   AddToCartNotification atcr = (AddToCartNotification) notification;
+			   CartRegistry.CR().getOrCreateCart(atcr.getUserName()).addItem(atcr.getProductName(), atcr.getItem());
+			   
+			   
 			   
 		   case AppID.UPDATE_STOCK_QUANTITY_NOTIFICATION:
 			   log.info("UPDATE_STOCK_QUANTITY_NOTIFICATION received @" + Calendar.getInstance().getTime());

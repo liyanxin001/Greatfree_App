@@ -1,4 +1,4 @@
-package com.greatfree.cluster.ecommerce.v1.child.app;
+package com.greatfree.cluster.ecommerce.app;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.greatfree.cluster.ecommerce.v1.data.Product;
-import com.greatfree.cluster.ecommerce.v1.data.Store;
+import com.greatfree.cluster.ecommerce.data.Product;
+import com.greatfree.cluster.ecommerce.data.Store;
+
 
 
 public class StoreRegistry {
@@ -53,7 +54,7 @@ public class StoreRegistry {
         
         for (Store store : stores.values()) {
             try {
-                List<Product> storeProducts = store.getProducts();
+                List<Product> storeProducts = store.getProductList();
                 if (storeProducts != null && !storeProducts.isEmpty()) {
                     allProducts.addAll(storeProducts);
                 }
@@ -65,17 +66,19 @@ public class StoreRegistry {
         
         return allProducts;
     }
-    public void addStore(String userName, String storeName) {
-    	
- 
+    public boolean addStore(String userName, String storeName) {
+    	if(stores.containsKey(storeName)) {
+    		return false;
+    	}else 
+    	{
     	   userToStore.put(userName, storeName);
     	    Store store = new Store(storeName);
     	    stores.put(storeName, store);	
-    	
+    	    
+    	    return true;
+    	}
     	
     }
-    
- 
 
 	public Map<String, String> getUserTostore() {
 		return userToStore;
@@ -91,6 +94,48 @@ public class StoreRegistry {
 
 	public void setUserToStore(Map<String, String> userToStore) {
 		this.userToStore = userToStore;
-	}    
+	}
+	
+	public List<Product> searchProductsByKeyword(String keyword) {
+	    List<Product> matchingProducts = new ArrayList<>();
+	    
+	    if (keyword == null || keyword.trim().isEmpty()) {
+	        return matchingProducts; // Return empty list for null or empty keyword
+	    }
+	    
+	    String searchKeyword = keyword.trim().toLowerCase();
+	    
+	    for (Store store :stores.values()) {
+	        if (store.getProducts() != null) {
+	            for (Product product : store.getProductList()) {
+	                if (matchesKeyword(product, searchKeyword)) {
+	                    matchingProducts.add(product);
+	                }
+	            }
+	        }
+	    }
+	    
+	    return matchingProducts;
+	}
+
+	private boolean matchesKeyword(Product product, String keyword) {
+	    if (product == null) {
+	        return false;
+	    }
+	    
+	    // Search in product name
+	    if (product.getProductName() != null && 
+	        product.getProductName().toLowerCase().contains(keyword)) {
+	        return true;
+	    }
+	    
+	    // Search in store name (if you want to include this)
+	    if (product.getStoreName() != null && 
+	        product.getStoreName().toLowerCase().contains(keyword)) {
+	        return true;
+	    }
+	    
+	    return false;
+	}
 
 }

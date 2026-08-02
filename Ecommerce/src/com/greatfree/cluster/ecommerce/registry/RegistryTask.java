@@ -1,4 +1,4 @@
-package com.greatfree.cluster.ecommerce.v1.registry;
+package com.greatfree.cluster.ecommerce.registry;
 
 /*     */ import java.util.Calendar;
 /*     */ import java.util.logging.Logger;

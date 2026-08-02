@@ -1,14 +1,15 @@
-package com.greatfree.cluster.ecommerce.v1.child.app;
+package com.greatfree.cluster.ecommerce.app;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.greatfree.cluster.ecommerce.v1.data.Cart;
+import com.greatfree.cluster.ecommerce.data.Cart;
+
+
 
 public class CartRegistry {
-  
+	  
     private static CartRegistry instance;
     
     private final Map<String, Cart> carts = new ConcurrentHashMap<>();
@@ -30,12 +31,14 @@ public class CartRegistry {
     
     
     // Get cart by ID (only if exists on THIS node)
-    public Cart getCart(String ClientID) {
-        return carts.get(ClientID);
+    public Cart getCart(String username) {
+        return carts.get(username);
     }
     
-    public void createCart(String userName) {
+    public boolean createCart(String userName) {
+
     	carts.put(userName, new Cart(userName));
+    	return true;
     }
     
     public Cart getOrCreateCart(String userName) {
@@ -48,8 +51,8 @@ public class CartRegistry {
     }
     
     // Check if cart exists on this node
-    public boolean hasCart(String ClientID) {
-        return carts.containsKey(ClientID);
+    public boolean hasCart(String username) {
+        return carts.containsKey(username);
     }
     
     // Get all carts on this node (for monitoring)

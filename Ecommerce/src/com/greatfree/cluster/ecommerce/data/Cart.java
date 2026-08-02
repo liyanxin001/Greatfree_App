@@ -1,4 +1,4 @@
-package com.greatfree.cluster.ecommerce.v1.data;
+package com.greatfree.cluster.ecommerce.data;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -17,48 +17,34 @@ public class Cart implements Serializable {
 	}
 	
 	// Add product to cart
-    public void addItem(Product product, int quantity) {
-        if (product == null) {
-            throw new IllegalArgumentException("Product cannot be null");
-        }
+    public boolean addItem(String productName, CartItem item) {
+
         
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Quantity must be positive");
-        }
+       int quantity = item.getQuantity();
         
-        if (quantity > product.getStockQuantity()) {
-            throw new IllegalArgumentException("Insufficient stock. Available: " + product.getStockQuantity());
-        }
         
-        String productName = product.getProductName();
         if (items.containsKey(productName)) {
             CartItem existingItem = items.get(productName);
-            int newQuantity = existingItem.getQuantity() + quantity;
-            
-            if (newQuantity > product.getStockQuantity()) {
-                throw new IllegalArgumentException("Cannot add. Would exceed available stock.");
-            }
+         
+
             
             existingItem.increaseQuantity(quantity);
         } else {
-            items.put(productName, new CartItem(product, quantity));
+            items.put(productName, item);
         }
         
-        // Update product stock
-        product.setStockQuantity(product.getStockQuantity() - quantity);
+       return true;  
     }
     
     
     // Remove item from cart
-    public void removeItem(String productName) {
-        if (items.containsKey(productName)) {
-            CartItem item = items.get(productName);
-            // Restore stock
-            Product product = item.getProduct();
-            product.setStockQuantity(product.getStockQuantity() + item.getQuantity());
-            
-            items.remove(productName);
-        }
+    public boolean removeItem(String productName) {
+    	items.remove(productName);
+        return true;
+    }
+    
+    public int getItemQuantity(String productName) {
+    	return items.get(productName).getQuantity();
     }
     
     // Update item quantity
@@ -129,9 +115,10 @@ public class Cart implements Serializable {
         items.clear();
     }
     //Checkout
-    public void checkout() {
+    public boolean checkout() {
     	
     	items.clear();
+    	return true;
     }
     // Get all cart items
     public Map<String, CartItem> getItems() {

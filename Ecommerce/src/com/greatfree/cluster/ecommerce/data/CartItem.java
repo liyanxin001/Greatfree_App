@@ -1,4 +1,4 @@
-package com.greatfree.cluster.ecommerce.v1.data;
+package com.greatfree.cluster.ecommerce.data;
 
 import java.io.Serializable;
 

@@ -1,13 +1,13 @@
-package com.greatfree.cluster.ecommerce.v1.client;
+package com.greatfree.cluster.ecommerce.v2.client;
 
 import java.io.IOException;
 
 import org.greatfree.util.Tools;
 
 import com.greatfree.cluster.ecommerce.data.Product;
-import com.greatfree.cluster.ecommerce.v1.message.PutOnSaleNotification;
-import com.greatfree.cluster.ecommerce.v1.message.RemoveFromSaleNotification;
-import com.greatfree.cluster.ecommerce.v1.message.UpdateStockQuantityNotification;
+import com.greatfree.cluster.ecommerce.v2.message.PutOnSaleNotification;
+import com.greatfree.cluster.ecommerce.v2.message.RemoveFromSaleNotification;
+import com.greatfree.cluster.ecommerce.v2.message.UpdateStockQuantityNotification;
 
 import edu.greatfree.framework.cluster.group.client.MenuOptions;
 import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
@@ -41,7 +41,7 @@ final class StoreUI
 		    	double price = Double.parseDouble(Tools.INPUT.nextLine());
 		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
 		    		  CL().getRootAddress().getPort(), new PutOnSaleNotification(new Product(productName_1, 
-		    		  quantity, price, storeName), storeName));
+		    		  quantity, price, storeName)));
 		    	break;
 		    	
 		    case StoreMenuOptions.REMOVE_FROM_SALE:
@@ -58,7 +58,7 @@ final class StoreUI
 		    	int newStockQuantity = Tools.INPUT.nextInt();
 		    	Tools.INPUT.nextLine();
 		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
-		    		  CL().getRootAddress().getPort(), new UpdateStockQuantityNotification(productName_3, storeName, newStockQuantity));
+		    		  CL().getRootAddress().getPort(), new UpdateStockQuantityNotification(newStockQuantity, storeName, productName_3));
 		    	break;
 		    	
 		    case MenuOptions.QUIT:

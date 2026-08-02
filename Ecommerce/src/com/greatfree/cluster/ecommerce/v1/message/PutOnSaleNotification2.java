@@ -5,7 +5,7 @@ import com.greatfree.cluster.ecommerce.data.Product;
 import edu.greatfree.cluster.message.ClusterNotification;
 import edu.greatfree.cluster.message.NotificationType;
 
-public class PutOnSaleNotification extends ClusterNotification {
+public class PutOnSaleNotification2 extends ClusterNotification {
 	
 	private static final long serialVersionUID = 5972347217293143974L;
 	private String storeName;
@@ -14,7 +14,7 @@ public class PutOnSaleNotification extends ClusterNotification {
     
 	
 
-	public PutOnSaleNotification(Product product, String storeName) {
+	public PutOnSaleNotification2(Product product, String storeName) {
 		super(NotificationType.BROADCAST_NOTIFICATION, AppID.PUT_ON_SALE_NOTIFICATION);
 	
 		this.product = product;
