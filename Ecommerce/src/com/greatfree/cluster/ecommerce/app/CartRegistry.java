@@ -15,10 +15,6 @@ public class CartRegistry {
     private final Map<String, Cart> carts = new ConcurrentHashMap<>();
     private final Map<String, String> userToCartMap = new ConcurrentHashMap<>();
     
-//    private CartRegistry() {
-//        // Private constructor for singleton
-//        startCleanupTask();
-//    }
     
     public static CartRegistry CR() {
         if (instance == null) {

@@ -64,8 +64,7 @@ final class MarketChildTask extends ChildTask{
 			   log.info("ADD_TO_CART_NOTIFICATION received @" + Calendar.getInstance().getTime());
 			   AddToCartNotification atcr = (AddToCartNotification) notification;
 			   CartRegistry.CR().getOrCreateCart(atcr.getUserName()).addItem(atcr.getProductName(), atcr.getItem());
-			   
-			   
+			   			   
 			   
 		   case AppID.UPDATE_STOCK_QUANTITY_NOTIFICATION:
 			   log.info("UPDATE_STOCK_QUANTITY_NOTIFICATION received @" + Calendar.getInstance().getTime());

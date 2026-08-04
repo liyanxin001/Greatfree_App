@@ -1,4 +1,4 @@
-package com.greatfree.cluster.ecommerce.v1;
+package com.greatfree.cluster.ecommerce;
 
 import org.greatfree.util.Tools;
 

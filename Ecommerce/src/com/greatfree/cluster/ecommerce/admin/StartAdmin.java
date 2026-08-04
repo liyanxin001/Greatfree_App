@@ -1,4 +1,4 @@
-package com.greatfree.cluster.ecommerce.v1.admin;
+package com.greatfree.cluster.ecommerce.admin;
 
 /*    */ import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
 /*    */ import edu.greatfree.framework.cluster.multicast.message.ShutdownChildrenNotification;
