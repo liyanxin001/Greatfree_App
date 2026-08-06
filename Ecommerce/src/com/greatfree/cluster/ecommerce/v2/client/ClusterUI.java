@@ -117,7 +117,7 @@ final class ClusterUI {
 		    	 while(shoppingOption != ShoppingMenuOptions.QUIT) 
 		    	 {
 		    		 List<SearchForProductsResponse> sfpr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
-				    	      this.rootAddress.getPort(), new SearchForProductsRequest(userName, keyword),
+				    	      this.rootAddress.getPort(), new SearchForProductsRequest( keyword),
 				    	      SearchForProductsResponse.class);
 		    		 System.out.println("\n==========SEARCH RESULTS==========");
 		    		 for(SearchForProductsResponse entry: sfpr) 
