@@ -1,10 +1,11 @@
 package com.greatfree.cluster.ecommerce.v1.message;
 
-import edu.greatfree.cluster.message.ClusterNotification;
+
+import edu.greatfree.cluster.message.ClusterRequest;
 import edu.greatfree.cluster.message.NotificationType;
 
 
-public class CreateStoreNotification extends ClusterNotification {
+public class CreateStoreRequest extends ClusterRequest {
 	
 	
 	private static final long serialVersionUID = -6335641991934876395L;
@@ -12,8 +13,8 @@ public class CreateStoreNotification extends ClusterNotification {
 	private String userName;
 	private String storeName;
 	
-	public CreateStoreNotification(String userName, String storeName) {
-		super(NotificationType.BROADCAST_NOTIFICATION, AppID.CREATE_STORE_NOTIFICATION);
+	public CreateStoreRequest(String userName, String storeName) {
+		super(NotificationType.BROADCAST_NOTIFICATION, AppID.CREATE_STORE_REQUEST);
 		this.setUserName(userName);
 		this.setStoreName(storeName);
 	}

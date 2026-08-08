@@ -1,6 +1,8 @@
 package com.greatfree.cluster.ecommerce.v2.message;
 
 
+import com.greatfree.cluster.ecommerce.v1.message.AppID;
+
 import edu.greatfree.cluster.message.ClusterNotification;
 
 

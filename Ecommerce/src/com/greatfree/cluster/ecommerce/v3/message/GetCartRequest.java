@@ -1,4 +1,4 @@
-package com.greatfree.cluster.ecommerce.v2.message;
+package com.greatfree.cluster.ecommerce.v3.message;
 
 import com.greatfree.cluster.ecommerce.v1.message.AppID;
 

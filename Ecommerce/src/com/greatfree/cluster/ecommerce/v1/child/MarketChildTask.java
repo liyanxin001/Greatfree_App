@@ -7,12 +7,12 @@ import java.util.logging.Logger;
 
 import org.greatfree.exceptions.RemoteReadException;
 
-import com.greatfree.cluster.ecommerce.app.CartRegistry;
-import com.greatfree.cluster.ecommerce.app.StoreRegistry;
+import com.greatfree.cluster.ecommerce.child.app.CartRepository;
+import com.greatfree.cluster.ecommerce.child.app.ProductRepository;
 import com.greatfree.cluster.ecommerce.v1.message.AddToCartNotification;
 import com.greatfree.cluster.ecommerce.v1.message.AppID;
-import com.greatfree.cluster.ecommerce.v1.message.CreateStoreNotification;
-
+import com.greatfree.cluster.ecommerce.v1.message.CreateStoreRequest;
+import com.greatfree.cluster.ecommerce.v1.message.CreateStoreResponse;
 import com.greatfree.cluster.ecommerce.v1.message.GetAllProductsRequest;
 import com.greatfree.cluster.ecommerce.v1.message.GetAllProductsResponse;
 import com.greatfree.cluster.ecommerce.v1.message.GetCartRequest;
@@ -51,32 +51,28 @@ final class MarketChildTask extends ChildTask{
 		   case AppID.PUT_ON_SALE_NOTIFICATION:
 			   log.info("PUT_ON_SALE_NOTIFICATION received @" + Calendar.getInstance().getTime());
 			   PutOnSaleNotification posn = (PutOnSaleNotification) notification;
-			   StoreRegistry.SR().getStore(posn.getStoreName()).addProduct(posn.getProduct());
+			   ProductRepository.PR().getStore(posn.getStoreName()).addProduct(posn.getProduct());
                break;
                
 		   case AppID.REMOVE_FROM_SALE_NOTIFICATION:
 			   log.info("REMOVE_FROM_SALE_NOTIFICATION received @" + Calendar.getInstance().getTime());
 			   RemoveFromSaleNotification rfsn = (RemoveFromSaleNotification) notification;
-			   StoreRegistry.SR().getStore(rfsn.getStoreName()).removeProduct(rfsn.getProductName());
+			   ProductRepository.PR().getStore(rfsn.getStoreName()).removeProduct(rfsn.getProductName());
 			   break;
 			   
 		   case AppID.ADD_TO_CART_NOTIFICATION:
 			   log.info("ADD_TO_CART_NOTIFICATION received @" + Calendar.getInstance().getTime());
 			   AddToCartNotification atcr = (AddToCartNotification) notification;
-			   CartRegistry.CR().getOrCreateCart(atcr.getUserName()).addItem(atcr.getProductName(), atcr.getItem());
+			   CartRepository.CR().getOrCreateCart(atcr.getUserName()).addItem(atcr.getProductName(), atcr.getItem());
 			   			   
 			   
 		   case AppID.UPDATE_STOCK_QUANTITY_NOTIFICATION:
 			   log.info("UPDATE_STOCK_QUANTITY_NOTIFICATION received @" + Calendar.getInstance().getTime());
 			   UpdateStockQuantityNotification usqn = (UpdateStockQuantityNotification) notification;
-			   StoreRegistry.SR().getStore(usqn.getStoreName()).updateStockQuantity(usqn.getProductName(),usqn.getNewStockQuantity());			      
+			   ProductRepository.PR().getStore(usqn.getStoreName()).updateStockQuantity(usqn.getProductName(),usqn.getNewStockQuantity());			      
 			   break;
 			   
-		   case AppID.CREATE_STORE_NOTIFICATION:
-			   log.info("CREATE_STORE_NOTIFICATION received @" + Calendar.getInstance().getTime());
-			   CreateStoreNotification csn = (CreateStoreNotification) notification;
-			   StoreRegistry.SR().addStore(csn.getUserName(), csn.getStoreName());
-			   break;
+
 			   
 		   case ClusterAppID.SHUTDOWN_ROOT_NOTIFICATION:
 			   log.info("SHUTDOWN_ROOT_NOTIFICATION received @" +Calendar.getInstance().getTime());
@@ -96,32 +92,39 @@ final class MarketChildTask extends ChildTask{
 	{
 		switch(request.getAppID()) 
 		{
+		
+		   case AppID.CREATE_STORE_REQUEST:
+			   log.info("CREATE_STORE_NOTIFICATION received @" + Calendar.getInstance().getTime());
+			   CreateStoreRequest csn = (CreateStoreRequest) request;
+			   return new CreateStoreResponse(ProductRepository.PR().addStore(csn.getUserName(), csn.getStoreName()), csn.getCollaboratorKey());
+			  
+			   
 		    case AppID.GET_ALL_PRODUCTS_REQUEST:
 		    	log.info("GET_ALL_PRODUCTS_REQUEST @" + Calendar.getInstance().getTime());
 		    	GetAllProductsRequest gapr = (GetAllProductsRequest) request;
-		    	return new GetAllProductsResponse(StoreRegistry.SR().getAllProducts(),gapr.getCollaboratorKey());
+		    	return new GetAllProductsResponse(ProductRepository.PR().getAllProducts(),gapr.getCollaboratorKey());
 		    			    	
 		    case AppID.GET_STORE_REQUEST:
 		    	log.info("GET_STORE_REQUEST @" + Calendar.getInstance().getTime());
 		    	GetStoreRequest getsr = (GetStoreRequest) request;
-		    	return new GetStoreResponse(StoreRegistry.SR().getStore(getsr.getStoreName()),getsr.getCollaboratorKey());
+		    	return new GetStoreResponse(ProductRepository.PR().getStore(getsr.getStoreName()),getsr.getCollaboratorKey());
 
 		    	
 		    case AppID.GET_CART_REQUEST:
 		    	log.info("GET_CART_REQUEST received @" + Calendar.getInstance().getTime());
 		    	GetCartRequest gcr = (GetCartRequest) request;
-		    	return new GetCartResponse(CartRegistry.CR().getCart(gcr.getUserName()),gcr.getCollaboratorKey());
+		    	return new GetCartResponse(CartRepository.CR().getCart(gcr.getUserName()),gcr.getCollaboratorKey());
 		    	 	
 		    case AppID.UPDATE_QUANTITY_REQUEST:
 		    	log.info("UPDATE_QUANTITY_REQUEST received @" + Calendar.getInstance().getTime());
 		    	UpdateQuantityRequest uqr = (UpdateQuantityRequest) request;
-		    	CartRegistry.CR().getCart(uqr.getuserName()).updateQuantity(uqr.getProductName(), uqr.getQuantity());
+		    	CartRepository.CR().getCart(uqr.getuserName()).updateQuantity(uqr.getProductName(), uqr.getQuantity());
 		    	return new UpdateQuantityResponse(true, uqr.getCollaboratorKey());
 		    	
 		    case AppID.PAY_REQUEST:
 		    	log.info("PAY_REQUEST received @" + Calendar.getInstance().getTime());
 		    	PayRequest pr = (PayRequest) request;
-		    	CartRegistry.CR().getCart(pr.getUserName()).checkout();
+		    	CartRepository.CR().getCart(pr.getUserName()).checkout();
 		    	return new PayResponse(true, pr.getCollaboratorKey());
 		}
       return null;

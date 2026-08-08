@@ -1,4 +1,4 @@
-package com.greatfree.cluster.ecommerce.app;
+package com.greatfree.cluster.ecommerce.child.app;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,17 +11,18 @@ import com.greatfree.cluster.ecommerce.data.Store;
 
 
 
-public class StoreRegistry {
+public class ProductRepository {
 	
 	private Map<String, Store> stores = new ConcurrentHashMap<>();
 	private Map<String, String> userToStore = new ConcurrentHashMap<>();
 	
-	private static StoreRegistry instance = new StoreRegistry();
 	
-	public static StoreRegistry SR() {
+	private static ProductRepository instance = new ProductRepository();
+	
+	public static ProductRepository PR() {
 		   if (instance == null) {
 		       
-		     instance = new StoreRegistry();
+		     instance = new ProductRepository();
 		     return instance;
 		   } 
 		 
@@ -115,6 +116,7 @@ public class StoreRegistry {
 	        }
 	    }
 	    
+	  
 	    return matchingProducts;
 	}
 

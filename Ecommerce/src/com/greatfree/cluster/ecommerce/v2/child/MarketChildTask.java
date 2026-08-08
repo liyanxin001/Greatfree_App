@@ -7,11 +7,10 @@ import java.util.logging.Logger;
 
 import org.greatfree.exceptions.RemoteReadException;
 
-import com.greatfree.cluster.ecommerce.app.CartRegistry;
-import com.greatfree.cluster.ecommerce.app.StoreRegistry;
 import com.greatfree.cluster.ecommerce.v2.message.AddToCartNotification;
-
-import com.greatfree.cluster.ecommerce.v2.message.AppID;
+import com.greatfree.cluster.ecommerce.child.app.CartRepository;
+import com.greatfree.cluster.ecommerce.child.app.ProductRepository;
+import com.greatfree.cluster.ecommerce.v1.message.AppID;
 
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreRequest;
 import com.greatfree.cluster.ecommerce.v2.message.CreateStoreResponse;
@@ -55,25 +54,25 @@ final class MarketChildTask extends ChildTask{
 		    case AppID.PUT_ON_SALE_NOTIFICATION:
 		    	log.info("PUT_ON_SALE_NOTIFICATION received @" + Calendar.getInstance().getTime());
 				PutOnSaleNotification posn = (PutOnSaleNotification) notification;
-				StoreRegistry.SR().getStore(posn.getProduct().getStoreName()).addProduct(posn.getProduct());
+				ProductRepository.PR().getStore(posn.getProduct().getStoreName()).addProduct(posn.getProduct());
 	            break;
 	            
 		    case AppID.REMOVE_FROM_SALE_NOTIFICATION:
 		    	log.info("REMOVE_FROM_SALE_NOTIFICATION received @" + Calendar.getInstance().getTime());
 				RemoveFromSaleNotification rfsn = (RemoveFromSaleNotification) notification;
-				StoreRegistry.SR().getStore(rfsn.getStoreName()).removeProduct(rfsn.getProductName());
+				ProductRepository.PR().getStore(rfsn.getStoreName()).removeProduct(rfsn.getProductName());
 				break;
 			
 		    case AppID.UPDATE_STOCK_QUANTITY_NOTIFICATION:
 		    	log.info("UPDATE_STOCK_QUANTITY_NOTIFICATION received @" + Calendar.getInstance().getTime());
 		    	UpdateStockQuantityNotification usqn = (UpdateStockQuantityNotification) notification;
-		    	StoreRegistry.SR().getStore(usqn.getStoreName()).getProductByName(usqn.getProductName()).setStockQuantity(usqn.getNewStockQuantity());
+		    	ProductRepository.PR().getStore(usqn.getStoreName()).getProductByName(usqn.getProductName()).setStockQuantity(usqn.getNewStockQuantity());
 		    	break;
 		    	
 		    case AppID.ADD_TO_CART_NOTIFICATION:
 		    	log.info("ADD_TO_CART_NOTIFICATION received @" + Calendar.getInstance().getTime());
 		        AddToCartNotification atcn = (AddToCartNotification) notification;
-		        CartRegistry.CR().getOrCreateCart(atcn.getUserName()).addItem(atcn.getProductName(), atcn.getItem());
+		        CartRepository.CR().getOrCreateCart(atcn.getUserName()).addItem(atcn.getProductName(), atcn.getItem());
 		        break;
 		    
 		    case ClusterAppID.SHUTDOWN_ROOT_NOTIFICATION:
@@ -98,32 +97,32 @@ final class MarketChildTask extends ChildTask{
 		    case AppID.CREATE_STORE_REQUEST:
 		    	log.info("CREATE_STORE_REQUEST @" + Calendar.getInstance().getTime());
 		    	CreateStoreRequest csr = (CreateStoreRequest) request;
-		    	return new CreateStoreResponse(StoreRegistry.SR().addStore(csr.getOwner(), csr.getStoreName()), csr.getCollaboratorKey());
+		    	return new CreateStoreResponse(ProductRepository.PR().addStore(csr.getOwner(), csr.getStoreName()), csr.getCollaboratorKey());
 		    	
 		    case AppID.GET_STORE_REQUEST:	
 		    	log.info("GET_STORE_REQUEST @" + Calendar.getInstance().getTime());
 		    	GetStoreRequest getsr = (GetStoreRequest) request;
-		    	return new GetStoreResponse(StoreRegistry.SR().getStore(getsr.getStoreName()),getsr.getCollaboratorKey());	    	
+		    	return new GetStoreResponse(ProductRepository.PR().getStore(getsr.getStoreName()),getsr.getCollaboratorKey());	    	
 
 		    case AppID.WITHDRAW_FROM_STORE_REQUEST:
 		    	log.info("WITHDRAW_FROM_STORE @" + Calendar.getInstance().getTime());
 		    	WithdrawFromStoreRequest wfsr =  (WithdrawFromStoreRequest) request;
-		    	return new WithdrawFromStoreResponse(StoreRegistry.SR().getStore(wfsr.getStoreName()).withdarwProduct(wfsr.getProductName(), wfsr.getQuantity()), wfsr.getCollaboratorKey());
+		    	return new WithdrawFromStoreResponse(ProductRepository.PR().getStore(wfsr.getStoreName()).withdarwProduct(wfsr.getProductName(), wfsr.getQuantity()), wfsr.getCollaboratorKey());
 		    
 		    case AppID.SEARCH_FOR_PRODUCTS_REQUEST:
 		    	log.info("SEARCH_FOR_PRODUCTS_REQUEST @" + Calendar.getInstance().getTime());
 		        SearchForProductsRequest sfpr = (SearchForProductsRequest) request;
-		        return new SearchForProductsResponse(StoreRegistry.SR().searchProductsByKeyword(sfpr.getKeyword()), sfpr.getCollaboratorKey());
+		        return new SearchForProductsResponse(ProductRepository.PR().searchProductsByKeyword(sfpr.getKeyword()), sfpr.getCollaboratorKey());
 		    	
 		    case AppID.GET_CART_REQUEST:
 		    	log.info("GET_CART_REQUEST @" + Calendar.getInstance().getTime());
 		    	GetCartRequest gcr = (GetCartRequest) request;
-		    	return new GetCartResponse(CartRegistry.CR().getCart(gcr.getUserName()), gcr.getCollaboratorKey());
+		    	return new GetCartResponse(CartRepository.CR().getCart(gcr.getUserName()), gcr.getCollaboratorKey());
 		    	
 		    case AppID.PAY_REQUEST:
 		    	log.info("PAY_REQUEST @" + Calendar.getInstance().getTime());
 		    	PayRequest pr = (PayRequest) request;
-		    	return new PayResponse(CartRegistry.CR().getCart(pr.getUserName()).checkout(), pr.getCollaboratorKey());
+		    	return new PayResponse(CartRepository.CR().getCart(pr.getUserName()).checkout(), pr.getCollaboratorKey());
 		}
 		return null;
 	}
@@ -135,8 +134,8 @@ final class MarketChildTask extends ChildTask{
 		    case AppID.REMOVE_FROM_CART_NOTIFICATION:
 		    	log.info("REMOVE_FORM_CART_NOTIFICTAION received @" + Calendar.getInstance().getTime());
 		    	RemoveFromCartNotification rfcn  = (RemoveFromCartNotification) notification;
-		    	CartRegistry.CR().getCart(rfcn.getUserName()).removeItem(rfcn.getProductName());
-		    	return new InterRemoveFromCartNotification(rfcn, CartRegistry.CR().getCart(rfcn.getUserName()).getItemQuantity(rfcn.getProductName()));
+		    	CartRepository.CR().getCart(rfcn.getUserName()).removeItem(rfcn.getProductName());
+		    	return new InterRemoveFromCartNotification(rfcn, CartRepository.CR().getCart(rfcn.getUserName()).getItemQuantity(rfcn.getProductName()));
 		}
 		return null;
 	}
@@ -155,7 +154,7 @@ final class MarketChildTask extends ChildTask{
 		    	log.info("REMOVE_FROM_CART_NOTIFICATION received @" + Calendar.getInstance().getTime());
 		        InterRemoveFromCartNotification irfcn = (InterRemoveFromCartNotification) notification;
 		        RemoveFromCartNotification rfcn = (RemoveFromCartNotification) irfcn.getNotification();
-		        StoreRegistry.SR().getStore(rfcn.getStoreName()).addProductQuantity(rfcn.getProductName(), irfcn.getQuantity());
+		        ProductRepository.PR().getStore(rfcn.getStoreName()).addProductQuantity(rfcn.getProductName(), irfcn.getQuantity());
 		        break;
 		}
 		

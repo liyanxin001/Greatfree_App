@@ -1,36 +1,46 @@
-package com.greatfree.cluster.ecommerce.data;
+package com.greatfree.cluster.ecommerce.v3.data;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+
+import com.greatfree.cluster.ecommerce.data.CartItem;
+import com.greatfree.cluster.ecommerce.data.Product;
 
 public class Cart implements Serializable {
 
 	private static final long serialVersionUID = 1066498182968266724L;
 	
 	private Map<String, CartItem> items;
+	private Map<Integer, String> ItemIndex;
 	private String userName;
+	private int count;
 	
 	public Cart(String userName) {
-		this.items = new HashMap<>();
+		this.items = new LinkedHashMap<>();
+		this.ItemIndex = new HashMap<>();
 		this.userName = userName;
+		this.count = 0;
 	}
 	
-	// Add product to cart
-    public boolean addItem(String productName, CartItem item) {
+
+    public boolean addItem(CartItem item) {
 
         
        int quantity = item.getQuantity();
+       String productKey = item.getProduct().getKey();
         
-        
-        if (items.containsKey(productName)) {
-            CartItem existingItem = items.get(productName);
-         
-
-            
+        if (items.containsKey(productKey)) 
+        {
+            CartItem existingItem = items.get(productKey);
             existingItem.increaseQuantity(quantity);
-        } else {
-            items.put(productName, item);
+        } 
+        else 
+        { 	
+            items.put(productKey, item);
+            count++;
+            ItemIndex.put(count, productKey);
         }
         
        return true;  
@@ -38,18 +48,18 @@ public class Cart implements Serializable {
     
     
     // Remove item from cart
-    public boolean removeItem(String productName) {
-    	items.remove(productName);
+    public boolean removeItem(String productKey) {
+    	items.remove(productKey);
         return true;
     }
     
-    public int getItemQuantity(String productName) {
-    	return items.get(productName).getQuantity();
+    public int getItemQuantity(String productKey) {
+    	return items.get(productKey).getQuantity();
     }
     
     // Update item quantity
-    public void updateQuantity(String productName, int newQuantity) {
-        if (!items.containsKey(productName)) {
+    public void updateQuantity(String productKey, int newQuantity) {
+        if (!items.containsKey(productKey)) {
             throw new IllegalArgumentException("Product not in cart");
         }
         
@@ -57,7 +67,7 @@ public class Cart implements Serializable {
             throw new IllegalArgumentException("Quantity cannot be negative");
         }
         
-        CartItem item = items.get(productName);
+        CartItem item = items.get(productKey);
         Product product = item.getProduct();
         
         // Calculate stock adjustment
@@ -71,7 +81,7 @@ public class Cart implements Serializable {
         product.setStockQuantity(product.getStockQuantity() - quantityDifference);
         
         if (newQuantity == 0) {
-            removeItem(productName);
+            removeItem(productKey);
         } else {
             item.setQuantity(newQuantity);
         }
@@ -84,8 +94,6 @@ public class Cart implements Serializable {
             .sum();
     }
     
-
-
     
     // Get number of items in cart
     public int getItemCount() {
@@ -137,9 +145,10 @@ public class Cart implements Serializable {
         System.out.println("---------------------");
         
         
-        items.values().forEach(item -> {
-            System.out.println(item.toString());
-        });
+        int counter = 1;
+        for (CartItem item : items.values()) {
+            System.out.printf("%d. %s%n", counter++, item.toString());
+        }
         
         System.out.println("---------------------");
         System.out.printf("Total: $%.2f%n", getTotal());

@@ -1,10 +1,13 @@
-package com.greatfree.cluster.ecommerce.data;
+package com.greatfree.cluster.ecommerce.v3.data;
 
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.greatfree.cluster.ecommerce.data.CartItem;
+import com.greatfree.cluster.ecommerce.data.Product;
 
 public class Store implements Serializable {
 

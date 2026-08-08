@@ -1,4 +1,4 @@
-package com.greatfree.cluster.ecommerce.app;
+package com.greatfree.cluster.ecommerce.child.app;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,18 +8,18 @@ import com.greatfree.cluster.ecommerce.data.Cart;
 
 
 
-public class CartRegistry {
+public class CartRepository {
 	  
-    private static CartRegistry instance;
+    private static CartRepository instance;
     
     private final Map<String, Cart> carts = new ConcurrentHashMap<>();
     private final Map<String, String> userToCartMap = new ConcurrentHashMap<>();
     
     
-    public static CartRegistry CR() {
+    public static CartRepository CR() {
         if (instance == null) {
         	
-            instance = new CartRegistry();
+            instance = new CartRepository();
             return instance;
         }
         return instance;
