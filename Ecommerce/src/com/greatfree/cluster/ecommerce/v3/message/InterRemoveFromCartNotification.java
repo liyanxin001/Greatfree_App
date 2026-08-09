@@ -8,7 +8,7 @@ public class InterRemoveFromCartNotification extends InterChildrenNotification{
 	
 	private static final long serialVersionUID = 7827647751933467150L;
 
-	private int quantity;
+	private int RestoredQuantity;
 
 	public InterRemoveFromCartNotification(RemoveFromCartNotification notification, int quantity) {
 		super(notification);
@@ -16,11 +16,11 @@ public class InterRemoveFromCartNotification extends InterChildrenNotification{
 	}
 
 	public int getQuantity() {
-		return quantity;
+		return RestoredQuantity;
 	}
 
 	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+		this.RestoredQuantity = quantity;
 	}
 
 }

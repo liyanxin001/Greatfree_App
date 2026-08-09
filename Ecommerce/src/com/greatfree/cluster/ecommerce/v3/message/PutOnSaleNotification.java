@@ -11,10 +11,11 @@ public class PutOnSaleNotification extends IntercastNotification {
 	private static final long serialVersionUID = 6746523863552626659L;
 	
 	private Product product;
+	
 
 	public PutOnSaleNotification(Product product) {
 		super(product.getStoreName(), product.getKey(), AppID.PUT_ON_SALE_NOTIFICATION);
-		// TODO Auto-generated constructor stub
+		this.product = product;
 	}
 
 	public Product getProduct() {

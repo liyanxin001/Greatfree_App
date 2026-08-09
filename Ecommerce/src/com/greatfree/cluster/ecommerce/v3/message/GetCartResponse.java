@@ -1,6 +1,6 @@
 package com.greatfree.cluster.ecommerce.v3.message;
 
-import com.greatfree.cluster.ecommerce.data.Cart;
+import com.greatfree.cluster.ecommerce.v3.data.Cart;
 import com.greatfree.cluster.ecommerce.v1.message.AppID;
 
 import edu.greatfree.multicast.message.MulticastResponse;

@@ -10,7 +10,6 @@ public class CreateStoreRequest extends ClusterRequest{
 	private static final long serialVersionUID = -4578503194680002353L;
 	
 	
-	
 	private String storeName;
 	private String owner;
 

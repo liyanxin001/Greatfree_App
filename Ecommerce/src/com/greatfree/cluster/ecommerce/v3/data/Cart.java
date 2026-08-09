@@ -14,13 +14,11 @@ public class Cart implements Serializable {
 	
 	private Map<String, CartItem> items;
 	private Map<Integer, String> ItemIndex;
-	private String userName;
 	private int count;
 	
 	public Cart(String userName) {
 		this.items = new LinkedHashMap<>();
 		this.ItemIndex = new HashMap<>();
-		this.userName = userName;
 		this.count = 0;
 	}
 	
@@ -157,13 +155,6 @@ public class Cart implements Serializable {
 
 
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 
 
 }
