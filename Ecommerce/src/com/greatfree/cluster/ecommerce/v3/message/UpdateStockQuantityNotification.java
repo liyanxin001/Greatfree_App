@@ -37,12 +37,12 @@ public class UpdateStockQuantityNotification extends IntercastNotification{
 		this.storeName = storeName;
 	}
 
-	public String getProductName() {
+	public String getProductKey() {
 		return productKey;
 	}
 
-	public void setProductName(String productName) {
-		this.productKey = productName;
+	public void setProductKey(String productKey) {
+		this.productKey = productKey;
 	}
 
 }

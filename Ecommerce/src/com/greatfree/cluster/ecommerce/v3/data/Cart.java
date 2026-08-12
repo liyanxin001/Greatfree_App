@@ -23,9 +23,10 @@ public class Cart implements Serializable {
 	}
 	
 
-    public boolean addItem(CartItem item) {
-
-        
+    public boolean addItem(CartItem item) {	
+    	if(item == null) {
+    		return false;
+    	}   
        int quantity = item.getQuantity();
        String productKey = item.getProduct().getKey();
         

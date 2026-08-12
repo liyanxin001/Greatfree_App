@@ -6,10 +6,19 @@ import edu.greatfree.cluster.message.InterChildrenNotification;
 public class InterUpdateStockQuantityNotification extends InterChildrenNotification{
 
 	private static final long serialVersionUID = 31713898096038201L;
-
-	public InterUpdateStockQuantityNotification(UpdateStockQuantityNotification request) {
+	
+	private boolean isRegistered;
+    
+	public InterUpdateStockQuantityNotification(UpdateStockQuantityNotification request, boolean isRegistered) {
 		super(request);
-		// TODO Auto-generated constructor stub
+	}
+
+	public boolean isRegistered() {
+		return isRegistered;
+	}
+
+	public void setRegistered(boolean isRegistered) {
+		this.isRegistered = isRegistered;
 	}
 
 }

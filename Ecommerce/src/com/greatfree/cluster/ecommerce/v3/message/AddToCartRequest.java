@@ -1,5 +1,6 @@
 package com.greatfree.cluster.ecommerce.v3.message;
 
+import com.greatfree.cluster.ecommerce.data.Product;
 import com.greatfree.cluster.ecommerce.v1.message.AppID;
 
 import edu.greatfree.cluster.message.IntercastRequest;
@@ -9,13 +10,14 @@ public class AddToCartRequest extends IntercastRequest{
 	private static final long serialVersionUID = 2082783540379937014L;
 	
 	private int quantity;
-	private String productKey;
+	private Product product;
 	private String userName;
 
-	public AddToCartRequest(String productKey, String userName, int quantity, String storeName) {
-		super(productKey, userName, AppID.WITHDRAW_FROM_STORE_REQUEST);
-		this.productKey = productKey;
+	public AddToCartRequest(Product product, String userName, int quantity) {
+		super(product.getKey(), userName, AppID.WITHDRAW_FROM_STORE_REQUEST);
+		this.product = product;
 		this.quantity = quantity;
+		this.userName = userName;
 	}
 
 	public int getQuantity() {
@@ -27,13 +29,6 @@ public class AddToCartRequest extends IntercastRequest{
 	}
 
 
-	public String getProductKey() {
-		return productKey;
-	}
-
-	public void setProductKey(String productKey) {
-		this.productKey = productKey;
-	}
 
 	public String getUserName() {
 		return userName;
@@ -41,6 +36,14 @@ public class AddToCartRequest extends IntercastRequest{
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 }

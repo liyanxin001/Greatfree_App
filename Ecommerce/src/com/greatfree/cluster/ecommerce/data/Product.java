@@ -43,6 +43,8 @@ public class Product implements Serializable {
         this.stockQuantity = quantity;
     }
     
+    
+    
     public double getPrice() {
         return price;
     }
@@ -58,11 +60,17 @@ public class Product implements Serializable {
             price, 
             storeName);
     }
+    
+ 
 
 	public void increaseQuantity(int quantity) {
 		this.stockQuantity += quantity;
 		
 	}
+	public void decreaseQuantity(int quantity) {
+		this.stockQuantity -= quantity;
+	}
+	
 	public String getKey() {
 		return key;
 	}

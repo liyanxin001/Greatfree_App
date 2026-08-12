@@ -8,7 +8,7 @@ public class ProductRegistryNotification extends ClusterNotification{
 	private static final long serialVersionUID = -2740757715442812L;
 	
 	private String productKey;
-	private String productName;
+	private String productName; 
 
 	public ProductRegistryNotification(String productKey, String productName) {
 		super(RequestType.BROADCAST_REQUEST, TRAppID.PRODUCT_REGISTRY_NOTIFICATION);
