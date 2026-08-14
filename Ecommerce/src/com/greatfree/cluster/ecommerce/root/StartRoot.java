@@ -17,7 +17,7 @@ final class StartRoot {
         
         System.out.println("Root starting up ...");
         
-        UnaryRoot.CLUSTER().start(ClusterProfile.getLightRootSpec("Root", 8000, "192.168.101.17", 8941),new RootTask[] { new MarketRootTask() });
+        UnaryRoot.CLUSTER().start(ClusterProfile.getLightRootSpec("Root", 8000, "192.168.1.25", 8941),new RootTask[] { new MarketRootTask() });
         
         System.out.println("Root started ...");
         
