@@ -99,7 +99,7 @@ final class ClusterUI {
 		     case HomeMenuOptions.GO_TO_STORE:
 		    	 int storeOption = StoreMenuOptions.NO_OPTION;
 		    	 String optionStr;
-		    	 boolean isOwner = true;
+		    	 boolean isOwner = false;
 		    	 while (storeOption != StoreMenuOptions.QUIT)
 		    	 {
 		    		 List<String> productKeys = new ArrayList<String>();
@@ -132,16 +132,21 @@ final class ClusterUI {
 	                	 List<GetProductsResponse> gpr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
 					    	      this.rootAddress.getPort(), new GetProductsRequest(storeName, productKeys),
 					    	      GetProductsResponse.class);
-		                 for(GetProductsResponse entry: gpr) 
-		                 {
-		                	 products = entry.getProducts();
-		                	 break;
-		                 }
+	                	 for (GetProductsResponse entry : gpr) {
+	                		    Map<Integer, Product> fetchedProducts = entry.getProducts();
+	                		    if (fetchedProducts != null) {
+	                		        products.putAll(fetchedProducts);
+	                		    }
+	                		    break;  
+	                		}
 		                 System.out.println("\n=== Your Store ===");
-		                 for (Map.Entry<Integer, Product> entry : products.entrySet()) 
-	                	 {
-	                		 System.out.println(entry.getKey() + ". " + entry.getValue().toString());
-	                	 }                	 
+		                 if (products != null && !products.isEmpty()) {
+		                	    for (Map.Entry<Integer, Product> entry : products.entrySet()) {
+		                	        System.out.println(entry.getKey() + ". " + entry.getValue().toString());
+		                	    }
+		                	} else {
+		                	    System.out.println("Your store is empty.");
+		                	}          	 
 	                 }
 	                 else 
 	                 {
