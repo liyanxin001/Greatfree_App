@@ -11,7 +11,7 @@ import com.greatfree.cluster.ecommerce.v3.message.PutOnSaleNotification;
 import com.greatfree.cluster.ecommerce.v3.message.RemoveFromSaleNotification;
 import com.greatfree.cluster.ecommerce.v3.message.UpdateStockQuantityNotification;
 
-import edu.greatfree.framework.cluster.group.client.MenuOptions;
+
 import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
 
 final class StoreUI 
