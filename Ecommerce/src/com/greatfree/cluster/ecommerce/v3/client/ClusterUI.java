@@ -99,7 +99,7 @@ final class ClusterUI {
 		     case HomeMenuOptions.GO_TO_STORE:
 		    	 int storeOption = StoreMenuOptions.NO_OPTION;
 		    	 String optionStr;
-		    	 boolean isOwner = false;
+		    	 boolean isOwner = true;
 		    	 while (storeOption != StoreMenuOptions.QUIT)
 		    	 {
 		    		 List<String> productKeys = new ArrayList<String>();

@@ -65,7 +65,7 @@ final class StoreUI
 		    		  storeName, productName_3));
 		    	break;
 		    	
-		    case MenuOptions.QUIT:
+		    case StoreMenuOptions.QUIT:
 		    	break;
 		}
 	}
