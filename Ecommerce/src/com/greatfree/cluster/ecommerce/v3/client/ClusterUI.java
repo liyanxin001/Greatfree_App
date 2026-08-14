@@ -140,7 +140,7 @@ final class ClusterUI {
 		    	                List<GetProductsResponse> gpr = ClusterClient.MULTI().read(
 		    	                    this.rootAddress.getIP(),
 		    	                    this.rootAddress.getPort(),
-		    	                    new GetProductsRequest(storeName, productKeys),
+		    	                    new GetProductsRequest(randomSource, productKeys),
 		    	                    GetProductsResponse.class
 		    	                );
 		    	                
