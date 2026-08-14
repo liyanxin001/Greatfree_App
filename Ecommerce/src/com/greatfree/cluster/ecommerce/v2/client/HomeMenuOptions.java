@@ -4,9 +4,9 @@ public final class HomeMenuOptions {
 	
 	
 	public final static int NO_OPTION = -1;
-	public final static int SEARCH_FOR_PRODUCTS = 1;
-	public final static int CREATE_STORE = 2;
-    public final static int GO_TO_STORE = 3;
+	public final static int SEARCH_FOR_PRODUCTS = 3;
+	public final static int CREATE_STORE = 1;
+    public final static int GO_TO_STORE = 2;
     
     public final static int QUIT = 0;
 }
