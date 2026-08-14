@@ -127,31 +127,37 @@ final class ClusterUI {
 	                 if (!isOwner) {
 	                     break; 
 	                 }
-	                 if(productKeys.size() > 0) 
-	                 {
-	                	 List<GetProductsResponse> gpr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
-					    	      this.rootAddress.getPort(), new GetProductsRequest(storeName, productKeys),
-					    	      GetProductsResponse.class);
-	                	 for (GetProductsResponse entry : gpr) {
-	                		    Map<Integer, Product> fetchedProducts = entry.getProducts();
-	                		    if (fetchedProducts != null) {
-	                		        products.putAll(fetchedProducts);
-	                		    }
-	                		    break;  
-	                		}
-		                 System.out.println("\n=== Your Store ===");
-		                 if (products != null && !products.isEmpty()) {
-		                	    for (Map.Entry<Integer, Product> entry : products.entrySet()) {
-		                	        System.out.println(entry.getKey() + ". " + entry.getValue().toString());
-		                	    }
-		                	} else {
-		                	    System.out.println("Your store is empty.");
-		                	}          	 
-	                 }
-	                 else 
-	                 {
-	                	 System.out.println("Your store is empty.");
-	                 }     
+	                 if (productKeys.size() > 0) {
+	                	    List<GetProductsResponse> gpr = ClusterClient.MULTI().read(
+	                	        this.rootAddress.getIP(),
+	                	        this.rootAddress.getPort(),
+	                	        new GetProductsRequest(storeName, productKeys),
+	                	        GetProductsResponse.class
+	                	    );
+	                	    
+	                	    System.out.println("DEBUG: gpr size = " + gpr.size());  // ← ADD THIS
+	                	    
+	                	    for (GetProductsResponse entry : gpr) {
+	                	        Map<Integer, Product> fetchedProducts = entry.getProducts();
+	                	        System.out.println("DEBUG: fetchedProducts = " + fetchedProducts);  // ← ADD THIS
+	                	        System.out.println("DEBUG: fetchedProducts size = " + (fetchedProducts != null ? fetchedProducts.size() : "null"));  // ← ADD THIS
+	                	        
+	                	        if (fetchedProducts != null) {
+	                	            products.putAll(fetchedProducts);
+	                	            System.out.println("DEBUG: products size after putAll = " + products.size());  // ← ADD THIS
+	                	        }
+	                	        break;
+	                	    }
+	                	    
+	                	    System.out.println("\n=== Your Store ===");
+	                	    if (!products.isEmpty()) {
+	                	        for (Map.Entry<Integer, Product> entry : products.entrySet()) {
+	                	            System.out.println(entry.getKey() + ". " + entry.getValue().toString());
+	                	        }
+	                	    } else {
+	                	        System.out.println("Your store is empty.");
+	                	    }
+	                	}
 			    	 StoreUI.printMenu(storeName);
 			    	 optionStr = Tools.INPUT.nextLine();
 			    	 try 
