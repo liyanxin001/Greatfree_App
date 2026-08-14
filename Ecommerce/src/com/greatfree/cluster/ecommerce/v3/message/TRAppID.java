@@ -11,6 +11,6 @@ public class TRAppID {
 	public final static int ADD_TO_CART_REQUEST = 90007;
 	public final static int ADD_TO_CART_RESPONSE = 90008;
 	public final static int PLACE_ORDER_NOTIFICATION =90009;
-	public final static int LATEST_ORDER_REQUEST = 90010;
-	public final static int LATEST_ORDER_RESPONSE = 90011;
+	public final static int LATEST_ORDERS_REQUEST = 90010;
+	public final static int LATEST_ORDERS_RESPONSE = 90011;
 }

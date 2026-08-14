@@ -11,12 +11,14 @@ public class GetStoreRequest extends ClusterRequest{
 	
 	
 	private static final long serialVersionUID = -8750413280374412693L;
-
+	
+    private String userName;
 	private String storeName;
 
-	public GetStoreRequest(String storeName) {
+	public GetStoreRequest(String userName, String storeName) {
 		super(storeName, AppID.GET_STORE_REQUEST);
 		this.storeName = storeName;
+		this.userName = userName;
 	}
 
 	public String getStoreName() {
@@ -25,6 +27,14 @@ public class GetStoreRequest extends ClusterRequest{
 
 	public void setStoreName(String storeName) {
 		this.storeName = storeName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

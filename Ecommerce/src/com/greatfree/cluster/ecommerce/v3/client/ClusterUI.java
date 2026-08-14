@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.greatfree.concurrency.Scheduler;
 import org.greatfree.exceptions.NullClassConversionException;
 import org.greatfree.exceptions.RemoteReadException;
 import org.greatfree.util.IPAddress;
@@ -27,6 +28,8 @@ import com.greatfree.cluster.ecommerce.v3.message.SearchForProductKeysRequest;
 import com.greatfree.cluster.ecommerce.v3.message.SearchForProductKeysResponse;
 
 import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
+import edu.greatfree.mncs.client.ClientConfig;
+
 
 final class ClusterUI {
 	
@@ -63,9 +66,9 @@ final class ClusterUI {
 	
 	public void printMenu(String storeName) {
 		System.out.println(HomeMenu.MENU_HEAD);
-		System.out.println(HomeMenu.SEARCH_FOR_PRODUCTS);
 		System.out.println(HomeMenu.CREATE_STORE + storeName);
 		System.out.println(HomeMenu.GO_TO_STORE + storeName);
+		System.out.println(HomeMenu.SEARCH_FOR_PRODUCTS);
 		System.out.println(HomeMenu.QUIT);
 		System.out.println(HomeMenu.MENU_TAIL);
 		System.out.println(HomeMenu.INPUT_PROMPT);
@@ -77,17 +80,17 @@ final class ClusterUI {
 		{
 		     case HomeMenuOptions.CREATE_STORE:
 		    	 List<CreateStoreResponse> csr = ClusterClient.MULTI().read(this.rootAddress.getIP(), 
-		    		  this.rootAddress.getPort(), new CreateStoreRequest(storeName), 
+		    		  this.rootAddress.getPort(), new CreateStoreRequest(userName, storeName), 
 		    		  CreateStoreResponse.class);
 		    	 for(CreateStoreResponse entry : csr)
 		    	 {
 		    		 if(entry.isSucceeded())
 		    		 {
-		    			 System.out.println("Your store has been created!");
+		    			 System.out.println("Creating store status: true");
 		    		 }
 		    		 else
 		    		 {
-		    			 System.out.println("storeName already exists.");
+		    			 System.out.println("Action failed. Used name of store /You already created a store.");
 		    		 }	 
 		    		 break; 
 		    	 }
@@ -96,21 +99,36 @@ final class ClusterUI {
 		     case HomeMenuOptions.GO_TO_STORE:
 		    	 int storeOption = StoreMenuOptions.NO_OPTION;
 		    	 String optionStr;
-		    	 
+		    	 boolean isOwner = false;
+		    	 Scheduler.PERIOD().init(ClientConfig.SCHEDULER_POOL_SIZE, ClientConfig.SCHEDULER_KEEP_ALIVE_TIME);
+		 		 Scheduler.PERIOD().submit(new ClusterChecker(userName, storeName), ClientConfig.CHAT_POLLING_DELAY, ClientConfig.CHAT_POLLING_PERIOD);
 		    	 while (storeOption != StoreMenuOptions.QUIT)
 		    	 {
 		    		 List<String> productKeys = new ArrayList<String>();
 		    		 Map<Integer, Product> products = new HashMap<>();
 		    		 List<GetStoreResponse> gsr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
-				    	      this.rootAddress.getPort(), new GetStoreRequest(storeName),
+				    	      this.rootAddress.getPort(), new GetStoreRequest(userName, storeName),
 				    	      GetStoreResponse.class);	 
 	                 for(GetStoreResponse entry: gsr)
 	                 {
-	                	 if(entry.getProductKeys()!=null) 
-		    			 {
-		    				 productKeys.addAll(entry.getProductKeys());                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-		    			 }	
-	                 }	              
+	                	 if (!entry.isOwner()) 
+	                	 {
+	                         System.out.println("You are not the owner of this store.");
+	                         isOwner = false;
+	                         break; 
+	                     } 
+	                	 else 
+	                     {
+	                         isOwner = true;
+	                         if (entry.getProductKeys() != null) 
+	                         {
+	                             productKeys.addAll(entry.getProductKeys());
+	                         }
+	                     }
+	                 }	  
+	                 if (!isOwner) {
+	                     break; 
+	                 }
 	                 if(productKeys.size() > 0) 
 	                 {
 	                	 List<GetProductsResponse> gpr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
@@ -130,7 +148,7 @@ final class ClusterUI {
 	                 else 
 	                 {
 	                	 System.out.println("Your store is empty.");
-	                 }
+	                 }     
 			    	 StoreUI.printMenu(storeName);
 			    	 optionStr = Tools.INPUT.nextLine();
 			    	 try 
@@ -145,9 +163,10 @@ final class ClusterUI {
 						System.out.println("Wrong Option");
 					 }
 		    	 }
+		    	 Scheduler.PERIOD().shutdown(ClientConfig.SCHEDULER_SHUTDOWN_TIMEOUT);
 		    	 break;
 		    	 
-		     case HomeMenuOptions.START_SHOPPING:
+		     case HomeMenuOptions.SEARCH_FOR_PRODUCTS:
 		    	 
 		    	 int shoppingOption = ShoppingMenuOptions.NO_OPTION; 
 		    	 while(shoppingOption != ShoppingMenuOptions.QUIT) 

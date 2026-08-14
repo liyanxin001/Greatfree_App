@@ -27,8 +27,8 @@ import com.greatfree.cluster.ecommerce.v3.message.InterPutOnSaleNotification;
 import com.greatfree.cluster.ecommerce.v3.message.InterRemoveFromCartNotification;
 import com.greatfree.cluster.ecommerce.v3.message.InterRemoveFromSaleNotification;
 import com.greatfree.cluster.ecommerce.v3.message.InterUpdateStockQuantityNotification;
-import com.greatfree.cluster.ecommerce.v3.message.LatestOrderRequest;
-import com.greatfree.cluster.ecommerce.v3.message.LatestOrderResponse;
+import com.greatfree.cluster.ecommerce.v3.message.LatestOrdersRequest;
+import com.greatfree.cluster.ecommerce.v3.message.LatestOrdersResponse;
 import com.greatfree.cluster.ecommerce.v2.message.PayRequest;
 import com.greatfree.cluster.ecommerce.v3.message.PayResponse;
 import com.greatfree.cluster.ecommerce.v3.message.PlaceOrderNotification;
@@ -103,12 +103,12 @@ public class MarketChildTask  extends ChildTask{
 		    case AppID.CREATE_STORE_REQUEST:
 		    	log.info("CREATE_STORE_REQUEST received @" + Calendar.getInstance().getTime());
 		    	CreateStoreRequest csr = (CreateStoreRequest) request;
-		    	return new CreateStoreResponse(ProductRepository.PR().registerStore(csr.getStoreName()), csr.getCollaboratorKey());
+		    	return new CreateStoreResponse(ProductRepository.PR().registerStore(csr.getUserName(), csr.getStoreName()), csr.getCollaboratorKey());
 		    	
 		    case AppID.GET_STORE_REQUEST:	
 		    	log.info("GET_STORE_REQUEST received @" + Calendar.getInstance().getTime());
 		    	GetStoreRequest gsr = (GetStoreRequest) request;
-		    	return new GetStoreResponse(ProductRepository.PR().getStoreToProductKeys().get(gsr.getStoreName()), gsr.getCollaboratorKey());
+		    	return new GetStoreResponse(ProductRepository.PR().isOwner(gsr.getUserName(), gsr.getStoreName()), ProductRepository.PR().getStore(gsr.getUserName(), gsr.getStoreName()), gsr.getCollaboratorKey());
 		    
 		    case TRAppID.SEARCH_FOR_PRODUCTS_KEYS_REQUEST:
 		    	log.info("SEARCH_FOR_PRODUCTS_KEYS_REQUEST received @" + Calendar.getInstance().getTime());
@@ -125,10 +125,10 @@ public class MarketChildTask  extends ChildTask{
 		    	PayRequest pr = (PayRequest) request;
 		    	return new PayResponse(CartRepository.CR().checkOut(pr.getUserName()), pr.getCollaboratorKey());
 		    	
-		    case TRAppID.LATEST_ORDER_REQUEST:
+		    case TRAppID.LATEST_ORDERS_REQUEST:
 		    	log.info("LATEST_ORDER_REQUEST @" + Calendar.getInstance().getTime());
-		    	LatestOrderRequest lor = (LatestOrderRequest) request;
-		    	return new LatestOrderResponse(ProductRepository.PR().getOrders(lor.getStoreName(), lor.getTimeStamp()), lor.getCollaboratorKey());
+		    	LatestOrdersRequest lor = (LatestOrdersRequest) request;
+		    	return new LatestOrdersResponse(ProductRepository.PR().getOrders(lor.getUserName(), lor.getStoreName(), lor.getTimeStamp()), lor.getCollaboratorKey());
 		    	
 		}
 		return null;

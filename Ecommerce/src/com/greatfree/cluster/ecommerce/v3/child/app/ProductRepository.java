@@ -22,16 +22,18 @@ public final class ProductRepository {
 	private final static Logger log = Logger.getLogger("com.greatfree.cluster.ecommerce.v3.app");
 	
 	private Map<String, Product > products;
+	private Map<String, String> userToStore;
 	private Map<String, List<String>> storeToProductKeys;
-	private Map<String, String> productKeysToName;
+	private Map<String, String> productKeyToName;
 	private Map<String, List<Order>> orders;
 	
    	private ProductRepository() 
    	{
    		this.products = new ConcurrentHashMap<String, Product>();
+   		this.userToStore = new ConcurrentHashMap<String, String>();
    		this.storeToProductKeys = new ConcurrentHashMap<String, List<String>>();
-   		this.productKeysToName = new ConcurrentHashMap<String, String>();
-   		this.setOrders(new ConcurrentHashMap<String, List<Order>>());
+   		this.productKeyToName = new ConcurrentHashMap<String, String>();
+   		this.orders = new ConcurrentHashMap<String, List<Order>>();
    	}
 	
 	private static ProductRepository instance = new ProductRepository();
@@ -56,19 +58,19 @@ public final class ProductRepository {
 	}
 
 	public Map<String, String> getProductKeysToName() {
-		return productKeysToName;
+		return productKeyToName;
 	}
 	
 	public void registerProduct(String productKey, String productName) {
-		this.productKeysToName.put(productKey, productName);
+		this.productKeyToName.put(productKey, productName);
 	}
 	
 	public void UnregistryProducts(String productKey) {
-		this.productKeysToName.remove(productKey);
+		this.productKeyToName.remove(productKey);
 	}
 	
 	public boolean isRegistered(String producKey) {
-		if(this.productKeysToName.containsKey(producKey)) {
+		if(this.productKeyToName.containsKey(producKey)) {
 			return true;
 		}else {
 			return false;
@@ -82,17 +84,46 @@ public final class ProductRepository {
 		this.storeToProductKeys.get(storeName).remove(productKey);
 	}
 	
-	public Map<String, List<String>> getStoreToProductKeys() {
-		return storeToProductKeys;
+	public boolean isOwner(String userName, String storeName) 
+	{
+		if(userToStore.get(userName) == storeName) 
+		{
+			return true;
+		}
+		else 
+		{
+			return false;
+		}		
+	}
+	public List<String> getStore(String userName, String storeName) 
+	{
+		if(userToStore.get(userName) == storeName) 
+		{
+			return storeToProductKeys.get(storeName);
+		}
+		else
+		{
+			return null;	
+		}
+	 	
 	}
 	
-	public boolean registerStore(String storeName) {
-		if(!storeToProductKeys.containsKey(storeName)) {
-			storeToProductKeys.put(storeName, new ArrayList<>());
-			return true;
+	public boolean registerStore(String userName, String storeName) {
+		
+		if(!userToStore.containsKey(userName))
+		{
+			if(!storeToProductKeys.containsKey(storeName)) {
+				userToStore.put(userName, storeName);
+				storeToProductKeys.put(storeName, new ArrayList<>());
+				return true;
+			}else {
+				return false;
+			}
+				
 		}else {
 			return false;
 		}
+			
 	}
 	public void addProduct(Product product) {
 		this.products.put(product.getKey(), product);
@@ -123,7 +154,7 @@ public final class ProductRepository {
 	    
 	    String keywordLower = keyword.toLowerCase();  
 	    
-	    for (Map.Entry<String, String> entry : productKeysToName.entrySet()) {
+	    for (Map.Entry<String, String> entry : productKeyToName.entrySet()) {
 	        String productName = entry.getValue();
 	        if (productName != null && productName.toLowerCase().contains(keywordLower)) {
 	            matchingKeys.add(entry.getKey());
@@ -152,9 +183,11 @@ public final class ProductRepository {
 	    return result;
 	}
 	
-	public List<Order> getOrders(String storeName, Date timeStamp) {
-	    log.info("timeStamp = " + String.valueOf(timeStamp));
-	   
+	public List<Order> getOrders(String userName, String storeName, Date timeStamp) {
+	    log.info("timeStamp = " + String.valueOf(timeStamp) + " from " + userName);
+	    
+	    if(isOwner(userName, storeName))
+	    {   
 	      if (this.orders.containsKey(storeName)) {
 	        
 	        int lastIndex = this.orders.get(storeName).size() - 1;
@@ -174,8 +207,7 @@ public final class ProductRepository {
 	              log.info("" + currentIndex + ") chat's time = " + currentIndex);
 	              if (this.orders.get(storeName).get(currentIndex).getTime().before(timeStamp) || this.orders.get(storeName).get(currentIndex).getTime().equals(timeStamp))
 	              {
-	                break;
-	               
+	                break;    
 	              }
 	            }
 	            while (currentIndex >= 0);
@@ -183,7 +215,7 @@ public final class ProductRepository {
 	          } 
 	        } 
 	      } 
-	    
+	    }
 	    return null;
 	  }
 
@@ -197,6 +229,14 @@ public final class ProductRepository {
 	
 	public void addOrder(String storeName, Order order) {
 		this.orders.get(storeName).add(order);
+	}
+
+	public Map<String, String> getUserToStore() {
+		return userToStore;
+	}
+
+	public void setUserToStore(Map<String, String> userToStore) {
+		this.userToStore = userToStore;
 	}
 
 }

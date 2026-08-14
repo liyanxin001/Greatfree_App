@@ -50,7 +50,8 @@ final class StoreUI
 		    	System.out.println("Which product do you want to Remove?");
 		    	int number = Integer.parseInt(Tools.INPUT.nextLine());
 		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
-		    		  CL().getRootAddress().getPort(), new RemoveFromSaleNotification( products.get(number).getKey(), storeName));
+		    		  CL().getRootAddress().getPort(), new RemoveFromSaleNotification( products.get(number).getKey(), 
+		    		   storeName));
 		    	break;
 		    	
 		    case StoreMenuOptions.UPDATE_STOCK_QUANTITY:
@@ -60,15 +61,13 @@ final class StoreUI
 		    	int newStockQuantity = Tools.INPUT.nextInt();
 		    	Tools.INPUT.nextLine();
 		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
-		    		  CL().getRootAddress().getPort(), new UpdateStockQuantityNotification(newStockQuantity, storeName, productName_3));
+		    		  CL().getRootAddress().getPort(), new UpdateStockQuantityNotification(newStockQuantity, 
+		    		  storeName, productName_3));
 		    	break;
 		    	
 		    case MenuOptions.QUIT:
 		    	break;
 		}
-		
-		
-		
 	}
      
    

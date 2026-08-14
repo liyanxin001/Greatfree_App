@@ -16,11 +16,10 @@ import com.greatfree.cluster.ecommerce.v3.message.AddToCartResponse;
 import com.greatfree.cluster.ecommerce.v3.message.GetCartRequest;
 import com.greatfree.cluster.ecommerce.v3.message.GetCartResponse;
 import com.greatfree.cluster.ecommerce.v2.message.PayRequest;
-import com.greatfree.cluster.ecommerce.v2.message.PayResponse;
-
+import com.greatfree.cluster.ecommerce.v3.message.PayResponse;
+import com.greatfree.cluster.ecommerce.v3.message.PlaceOrderNotification;
 import com.greatfree.cluster.ecommerce.v3.message.RemoveFromCartNotification;
-
-
+import com.greatfree.cluster.ecommerce.v3.data.Order;
 import com.greatfree.cluster.ecommerce.v3.message.AddToCartRequest;
 
 import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
@@ -70,7 +69,9 @@ final class ShoppingUI {
 		    case ShoppingMenuOptions.REMOVE_FROM_CART:
 		    	System.out.println("Which item?(enter the number)");
 		    	int number_2 = Integer.parseInt(Tools.INPUT.nextLine());
-		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.CL().getRootAddress().getPort(), new RemoveFromCartNotification(userName,  products.get(number_2).getKey()));
+		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), 
+		    			ClusterUI.CL().getRootAddress().getPort(), new RemoveFromCartNotification(userName,  
+		    			products.get(number_2).getKey()));
 		    	break;
 		    	
 		    case ShoppingMenuOptions.CHECK_CART:
@@ -88,10 +89,17 @@ final class ShoppingUI {
 		    	List<PayResponse> pr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
 		    		 ClusterUI.CL().getRootAddress().getPort(), new PayRequest(userName),
 		    		 PayResponse.class);
+		    	List<Order> orders = null;
 		    	for(PayResponse entry : pr) 
 		    	{
-		    		System.out.println("Checking out status:" + entry.isSucceeded());
+		    		orders =entry.getOrders();
 		    		break;
+		    	}
+		    	for(Order order : orders)
+		    	{
+		    		ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), 
+			    			ClusterUI.CL().getRootAddress().getPort(), new PlaceOrderNotification(  
+			    			order));
 		    	}
 		    	break;
 		    case ShoppingMenuOptions.QUIT:

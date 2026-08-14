@@ -12,11 +12,13 @@ public class GetStoreResponse extends MulticastResponse{
 	
 	private static final long serialVersionUID = 2643775483987591008L;
 	
+	private boolean isOwner;
 	private List<String> productKeys;
 
-	public GetStoreResponse(List<String> productKeys, String collaboratorKey) {
+	public GetStoreResponse(boolean isOwner,List<String> productKeys, String collaboratorKey) {
 		super(AppID.GET_STORE_RESPONSE, collaboratorKey);
-		this.setProductKeys(productKeys);
+		this.isOwner = isOwner;
+		this.productKeys = productKeys;
 	}
 
 	public List<String> getProductKeys() {
@@ -25,6 +27,14 @@ public class GetStoreResponse extends MulticastResponse{
 
 	public void setProductKeys(List<String> productKeys) {
 		this.productKeys = productKeys;
+	}
+
+	public boolean isOwner() {
+		return isOwner;
+	}
+
+	public void setOwner(boolean isOwner) {
+		this.isOwner = isOwner;
 	}
 
 

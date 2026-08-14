@@ -107,7 +107,7 @@ final class ClusterUI {
 		    	 }
 		    	 break;
 		    	 
-		     case HomeMenuOptions.START_SHOPPING:
+		     case HomeMenuOptions.SEARCH_FOR_PRODUCTS:
 		    	 System.out.println("\n==========SEARCH BAR==========");
 		    	 System.out.println("Enter the keyword:");
 		    	 String keyword = Tools.INPUT.nextLine();
