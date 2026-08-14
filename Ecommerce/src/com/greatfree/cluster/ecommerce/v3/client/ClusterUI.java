@@ -28,7 +28,7 @@ import com.greatfree.cluster.ecommerce.v3.message.SearchForProductKeysRequest;
 import com.greatfree.cluster.ecommerce.v3.message.SearchForProductKeysResponse;
 
 import edu.greatfree.framework.cluster.multicast.client.ClusterClient;
-import edu.greatfree.mncs.client.ClientConfig;
+
 
 
 final class ClusterUI {
@@ -100,8 +100,6 @@ final class ClusterUI {
 		    	 int storeOption = StoreMenuOptions.NO_OPTION;
 		    	 String optionStr;
 		    	 boolean isOwner = false;
-		    	 Scheduler.PERIOD().init(ClientConfig.SCHEDULER_POOL_SIZE, ClientConfig.SCHEDULER_KEEP_ALIVE_TIME);
-		 		 Scheduler.PERIOD().submit(new ClusterChecker(userName, storeName), ClientConfig.CHAT_POLLING_DELAY, ClientConfig.CHAT_POLLING_PERIOD);
 		    	 while (storeOption != StoreMenuOptions.QUIT)
 		    	 {
 		    		 List<String> productKeys = new ArrayList<String>();
@@ -163,7 +161,7 @@ final class ClusterUI {
 						System.out.println("Wrong Option");
 					 }
 		    	 }
-		    	 Scheduler.PERIOD().shutdown(ClientConfig.SCHEDULER_SHUTDOWN_TIMEOUT);
+		    	
 		    	 break;
 		    	 
 		     case HomeMenuOptions.SEARCH_FOR_PRODUCTS:

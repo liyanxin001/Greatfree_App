@@ -86,7 +86,7 @@ public final class ProductRepository {
 	
 	public boolean isOwner(String userName, String storeName) 
 	{
-		if(userToStore.get(userName) == storeName) 
+		if(userToStore.get(userName).equals(storeName)) 
 		{
 			return true;
 		}
