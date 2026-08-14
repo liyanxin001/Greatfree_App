@@ -152,7 +152,7 @@ final class ClusterUI {
 			    	 try 
 			    	 {
 			    		 storeOption = Integer.parseInt(optionStr);
-				    	 System.out.println("Your choice:" + option);
+				    	 System.out.println("Your choice:" + storeOption);
 						 StoreUI.execute(storeName, userName, storeOption, products);
 					 } 
 			    	 catch (NumberFormatException e) 

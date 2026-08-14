@@ -84,28 +84,30 @@ public final class ProductRepository {
 		this.storeToProductKeys.get(storeName).remove(productKey);
 	}
 	
-	public boolean isOwner(String userName, String storeName) 
-	{
-		if(userToStore.get(userName).equals(storeName)) 
-		{
-			return true;
-		}
-		else 
-		{
-			return false;
-		}		
+	public boolean isOwner(String userName, String storeName) {
+	    if (userName == null || storeName == null) {
+	        return false;
+	    }
+	    
+	    String ownedStore = userToStore.get(userName);
+	    if (ownedStore == null) {
+	        return false;
+	    }
+	    
+	    return ownedStore.equals(storeName);
 	}
-	public List<String> getStore(String userName, String storeName) 
-	{
-		if(userToStore.get(userName) == storeName) 
-		{
-			return storeToProductKeys.get(storeName);
-		}
-		else
-		{
-			return null;	
-		}
-	 	
+	
+	public List<String> getStore(String userName, String storeName) {
+	   
+	    String ownedStore = userToStore.get(userName);
+	    if (ownedStore != null && ownedStore.equals(storeName)) {
+	      
+	        List<String> products = storeToProductKeys.get(storeName);
+	        return products != null ? products : new ArrayList<>();
+	    } else {
+
+	        return new ArrayList<>();
+	    }
 	}
 	
 	public boolean registerStore(String userName, String storeName) {
