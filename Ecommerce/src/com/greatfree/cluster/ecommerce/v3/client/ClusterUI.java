@@ -158,7 +158,7 @@ final class ClusterUI {
 			    	 catch (NumberFormatException e) 
 			    	 {
 						storeOption = StoreMenuOptions.NO_OPTION;
-						System.out.println("Wrong Option");
+						System.out.println("WrongA Option");
 					 }
 		    	 }
 		    	
