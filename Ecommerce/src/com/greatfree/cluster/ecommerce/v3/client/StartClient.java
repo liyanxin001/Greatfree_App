@@ -45,7 +45,7 @@ final class StartClient {
 					| InterruptedException e)
 			{			
 				option = HomeMenuOptions.NO_OPTION;
-				System.out.println("WrongB option");
+				System.out.println("WrongBI option");
 			}
 		}
 		Scheduler.PERIOD().shutdown(ClientConfig.SCHEDULER_SHUTDOWN_TIMEOUT);
