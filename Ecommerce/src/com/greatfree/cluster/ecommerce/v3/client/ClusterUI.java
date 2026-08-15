@@ -108,7 +108,6 @@ final class ClusterUI {
 	    	                this.rootAddress.getPort(), new GetStoreRequest(userName, storeName),
 	    	                GetStoreResponse.class ); 
 	    	            for (GetStoreResponse entry : gsr) {
-	    	                System.out.println("DEBUG: entry.isOwner() = " + entry.isOwner()); 
 	    	                if (!entry.isOwner()) {
 	    	                    System.out.println("You are not the owner of this store.");
 	    	                    isOwner = false;
@@ -220,7 +219,7 @@ final class ClusterUI {
 		    		 {
 			    		 shoppingOption = Integer.parseInt(Tools.INPUT.nextLine());
 			    		 System.out.println("Your choice:" + option);
-			    		 ShoppingUI.execute(userName, shoppingOption, products);	 
+			    		 ShoppingUI.execute(userName, storeName, shoppingOption, products);	 
 		    		 }
 		    		 catch(NumberFormatException e)
 		    		 {

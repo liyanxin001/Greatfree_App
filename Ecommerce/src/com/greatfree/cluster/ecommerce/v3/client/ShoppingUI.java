@@ -39,7 +39,7 @@ final class ShoppingUI {
 	     System.out.println("Input an option:");			
 	}
 	
-	public static void execute(String userName, int option, Map<Integer, Product> products) throws ClassNotFoundException, RemoteReadException, IOException, NullClassConversionException, InterruptedException
+	public static void execute(String userName, String storeName, int option, Map<Integer, Product> products) throws ClassNotFoundException, RemoteReadException, IOException, NullClassConversionException, InterruptedException
 	{
 		switch(option)
 		{
@@ -49,7 +49,11 @@ final class ShoppingUI {
 		    	int number_1 = Integer.parseInt(Tools.INPUT.nextLine());
 		    	System.out.println("How many?");
 		        int quantity = Integer.parseInt(Tools.INPUT.nextLine());
-		       
+		        
+		        if(products.get(number_1).getStoreName().equals(storeName)) {
+		        	System.out.println("You can't purchase products from your own store.");
+		        	break;
+		        }		       
 		    	List<AddToCartResponse> wfsr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
 		    		 ClusterUI.CL().getRootAddress().getPort(), new AddToCartRequest(products.get(number_1),userName, quantity),
 		    		 AddToCartResponse.class); 
@@ -60,7 +64,7 @@ final class ShoppingUI {
 		    			System.out.println("Added to cart successfully.");
 
 		    		}else {
-		    			System.out.println("Action failed.");
+		    			System.out.println("Invaild amount.");
 		    		}
 		    		break;
 		    	}
