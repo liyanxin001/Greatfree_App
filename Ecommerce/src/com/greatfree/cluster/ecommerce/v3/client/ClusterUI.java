@@ -191,6 +191,18 @@ final class ClusterUI {
 			    			 List<GetProductsResponse> gpr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
 						    	      this.rootAddress.getPort(), new GetProductsRequest(randomSource, productKeys),
 						    	      GetProductsResponse.class);
+			    			 System.out.println("Product keys sent: " + productKeys);
+			    			 System.out.println("Number of responses: " + (gpr != null ? gpr.size() : 0));
+
+			    			 for (GetProductsResponse entry : gpr) {
+			    			     if (entry != null) {
+			    			         System.out.println("Response entry - getProducts() is null? " + (entry.getProducts() == null));
+			    			         if (entry.getProducts() != null) {
+			    			             System.out.println("Products map size: " + entry.getProducts().size());
+			    			             System.out.println("Products map contents: " + entry.getProducts());
+			    			         }
+			    			     }
+			    			 }
 			    			 
 			    			 int currentKey = 1;
 			    			 for (GetProductsResponse entry : gpr) {
