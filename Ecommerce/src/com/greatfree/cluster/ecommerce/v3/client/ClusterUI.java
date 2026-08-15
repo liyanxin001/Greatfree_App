@@ -210,6 +210,7 @@ final class ClusterUI {
 			    			 else 
 			    			 {
 			    				 System.out.println("No results");
+			    				 hasResults = false;
 			    			 }
 			    		 } 
 			    		 else 
