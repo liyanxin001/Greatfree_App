@@ -176,6 +176,7 @@ final class ClusterUI {
 				                shoppingOption = ShoppingMenuOptions.QUIT;
 				                break;
 				         }
+				    	 
 				    	 List<SearchForProductKeysResponse> sfpr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
 					    	      this.rootAddress.getPort(), new SearchForProductKeysRequest(randomSource, keyword),
 					    	      SearchForProductKeysResponse.class);
@@ -230,6 +231,9 @@ final class ClusterUI {
 			                 System.out.println("No results found. Please try a different keyword.");
 			             }
 		    		 }
+		    		 if( shoppingOption == ShoppingMenuOptions.QUIT) {
+			    		 break;
+			    	 }
 		    		 try 
 		    		 {
 			    		 shoppingOption = Integer.parseInt(Tools.INPUT.nextLine());

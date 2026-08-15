@@ -12,7 +12,7 @@ public class ProductRegistryNotification extends ClusterNotification{
 
 	public ProductRegistryNotification(String productKey, String productName) {
 		super(RequestType.BROADCAST_REQUEST, TRAppID.PRODUCT_REGISTRY_NOTIFICATION);
-		this.productKey = productName;
+		this.productKey = productKey;
 		this.productName = productName;
 	}
 
