@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.greatfree.concurrency.Scheduler;
 import org.greatfree.exceptions.NullClassConversionException;
 import org.greatfree.exceptions.RemoteReadException;
 import org.greatfree.util.IPAddress;
@@ -97,86 +96,65 @@ final class ClusterUI {
 		    	 break;
 		    	 
 		     case HomeMenuOptions.GO_TO_STORE:
-		    	    try {
-		    	        int storeOption = StoreMenuOptions.NO_OPTION;
-		    	        String optionStr;
-		    	        boolean isOwner = false;
-		    	        
-		    	        while (storeOption != StoreMenuOptions.QUIT) {
-		    	            System.out.println("DEBUG: Entered loop iteration"); // ← SEE IF THIS PRINTS
-		    	            
-		    	            List<String> productKeys = new ArrayList<>();
-		    	            Map<Integer, Product> products = new HashMap<>();
-		    	            
-		    	            System.out.println("DEBUG: About to call GetStoreRequest"); // ← SEE IF THIS PRINTS
-		    	            
-		    	            List<GetStoreResponse> gsr = ClusterClient.MULTI().read(
-		    	                this.rootAddress.getIP(),
-		    	                this.rootAddress.getPort(),
-		    	                new GetStoreRequest(userName, storeName),
-		    	                GetStoreResponse.class
-		    	            );
-		    	            
-		    	            System.out.println("DEBUG: GetStoreRequest returned, size = " + gsr.size()); // ← SEE IF THIS PRINTS
-		    	            
-		    	            for (GetStoreResponse entry : gsr) {
-		    	                System.out.println("DEBUG: entry.isOwner() = " + entry.isOwner()); // ← SEE IF THIS PRINTS
-		    	                if (!entry.isOwner()) {
-		    	                    System.out.println("You are not the owner of this store.");
-		    	                    isOwner = false;
-		    	                    break;
-		    	                } else {
-		    	                    isOwner = true;
-		    	                    if (entry.getProductKeys() != null) {
-		    	                        productKeys.addAll(entry.getProductKeys());
-		    	                    }
-		    	                }
-		    	            }
-		    	            
-		    	            if (!isOwner) {
-		    	                break;
-		    	            }
-		    	            if (!productKeys.isEmpty()) {
-		    	                List<GetProductsResponse> gpr = ClusterClient.MULTI().read(
-		    	                    this.rootAddress.getIP(),
-		    	                    this.rootAddress.getPort(),
-		    	                    new GetProductsRequest(randomSource, productKeys),
-		    	                    GetProductsResponse.class
-		    	                );
-		    	                
-		    	                for (GetProductsResponse entry : gpr) {
-		    	                    Map<Integer, Product> fetchedProducts = entry.getProducts();
-		    	                    if (fetchedProducts != null) {
-		    	                        products = fetchedProducts;
-		    	                    }
-		    	                    break;
-		    	                }
-		    	            }
-		    	            if (products != null && !products.isEmpty()) {
-		    	                System.out.println("\n=== Your Store ===");
-		    	                for (Map.Entry<Integer, Product> entry : products.entrySet()) {
-		    	                    System.out.println(entry.getKey() + ". " + entry.getValue().toString());
-		    	                }
-		    	            } else {
-		    	                System.out.println("Your store is empty.");
-		    	            }
-		    	            
-		    	            StoreUI.printMenu(storeName);
-		    	            optionStr = Tools.INPUT.nextLine();
-		    	            try {
-		    	                storeOption = Integer.parseInt(optionStr);
-		    	                System.out.println("Your choice: " + storeOption);
-		    	                StoreUI.execute(storeName, userName, storeOption, products != null ? products : new HashMap<>());
-		    	            } catch (NumberFormatException e) {
-		    	                storeOption = StoreMenuOptions.NO_OPTION;
-		    	                System.out.println("Wrong Option");
-		    	            }
-		    	           
-		    	        }
-		    	    } catch (Exception e) {
-		    	        System.out.println("ERROR in GO_TO_STORE:");
-		    	        e.printStackTrace(); // ← This will print the actual exception
-		    	    }
+		    	 int storeOption = StoreMenuOptions.NO_OPTION;
+	    	        String optionStr;
+	    	        boolean isOwner = false;
+	    	        
+	    	        while (storeOption != StoreMenuOptions.QUIT) {
+	    	            List<String> productKeys = new ArrayList<>();
+	    	            Map<Integer, Product> products = new HashMap<>();
+	    	            
+	    	            List<GetStoreResponse> gsr = ClusterClient.MULTI().read( this.rootAddress.getIP(),
+	    	                this.rootAddress.getPort(), new GetStoreRequest(userName, storeName),
+	    	                GetStoreResponse.class ); 
+	    	            for (GetStoreResponse entry : gsr) {
+	    	                System.out.println("DEBUG: entry.isOwner() = " + entry.isOwner()); 
+	    	                if (!entry.isOwner()) {
+	    	                    System.out.println("You are not the owner of this store.");
+	    	                    isOwner = false;
+	    	                    break;
+	    	                } else {
+	    	                    isOwner = true;
+	    	                    if (entry.getProductKeys() != null) {
+	    	                        productKeys.addAll(entry.getProductKeys());
+	    	                    }
+	    	                }
+	    	            }
+	    	            
+	    	            if (!isOwner) {
+	    	                break;
+	    	            }
+	    	            if (!productKeys.isEmpty()) {
+	    	                List<GetProductsResponse> gpr = ClusterClient.MULTI().read( this.rootAddress.getIP(), 
+	    	                		this.rootAddress.getPort(),   new GetProductsRequest(randomSource, productKeys),
+	    	                    GetProductsResponse.class );		    	                
+	    	                for (GetProductsResponse entry : gpr) {
+	    	                    Map<Integer, Product> fetchedProducts = entry.getProducts();
+	    	                    if (fetchedProducts != null) {
+	    	                        products = fetchedProducts;
+	    	                    }
+	    	                    break;
+	    	                }
+	    	            }
+	    	            if (products != null && !products.isEmpty()) {
+	    	                System.out.println("\n=== Your Store ===");
+	    	                for (Map.Entry<Integer, Product> entry : products.entrySet()) {
+	    	                    System.out.println(entry.getKey() + ". " + entry.getValue().toString());
+	    	                }
+	    	            } else {
+	    	                System.out.println("Your store is empty.");
+	    	            }
+	    	            StoreUI.printMenu(storeName);
+	    	            optionStr = Tools.INPUT.nextLine();
+	    	            try {
+	    	                storeOption = Integer.parseInt(optionStr);
+	    	                System.out.println("Your choice: " + storeOption);
+	    	                StoreUI.execute(storeName, userName, storeOption, products != null ? products : new HashMap<>());
+	    	            } catch (NumberFormatException e) {
+	    	                storeOption = StoreMenuOptions.NO_OPTION;
+	    	                System.out.println("Wrong Option");
+	    	            }   	           
+	    	        }
 		    	    break;
 		    	 
 		     case HomeMenuOptions.SEARCH_FOR_PRODUCTS:

@@ -3,16 +3,16 @@ package com.greatfree.cluster.ecommerce.v3.child;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.LinkedHashMap;
+
 import java.util.List;
-import java.util.Map;
+
 import java.util.logging.Logger;
 
 import org.greatfree.exceptions.RemoteReadException;
 
 import com.greatfree.cluster.ecommerce.v3.child.app.CartRepository;
 import com.greatfree.cluster.ecommerce.v3.child.app.ProductRepository;
-import com.greatfree.cluster.ecommerce.data.Product;
+
 import com.greatfree.cluster.ecommerce.v1.message.AppID;
 import com.greatfree.cluster.ecommerce.v3.message.AddToCartRequest;
 import com.greatfree.cluster.ecommerce.v3.message.AddToCartResponse;
@@ -223,53 +223,35 @@ public class MarketChildTask  extends ChildTask{
 	@Override
 	public List<MulticastResponse> processRequest(InterChildrenRequest request)
 	{
-		List<MulticastResponse> responses;
-		switch(request.getAppID()) 
-		{
-		
-		      case TRAppID.ADD_TO_CART_REQUEST:
-		    	  log.info("ADD_TO_CART_REQUEST @" + Calendar.getInstance().getTime());
-		    	  InterAddToCartRequest iacr = (InterAddToCartRequest) request;
-		    	  responses = new ArrayList<MulticastResponse>();
-		    	  AddToCartRequest atr = (AddToCartRequest) iacr.getRequest();
-		    	  responses.add(new AddToCartResponse(CartRepository.CR().getOrCreateCart(atr.getUserName()).addItem(iacr.getItem()), request.getCollaboratorKey()));
-		    	  return responses;
-		    	  
-		      case TRAppID.GET_PRODUCTS_REQUEST:
-		    	  try {
-		    	        log.info("GET_PRODUCTS_REQUEST @" + Calendar.getInstance().getTime());
-		    	        InterGetProductsRequest igpr = (InterGetProductsRequest) request;
-		    	        responses = new ArrayList<MulticastResponse>();
-		    	        GetProductsRequest gpr = (GetProductsRequest) igpr.getRequest();
-		    	        
-		    	        // ✅ DEBUG: Print what's being requested
-		    	        System.out.println("DEBUG: productKeys = " + gpr.getProductKeys());
-		    	        
-		    	        Map<Integer, Product> productMap = ProductRepository.PR().getMatchingProducts(gpr.getProductKeys());
-		    	        
-		    	        // ✅ DEBUG: Print what's being returned
-		    	        System.out.println("DEBUG: productMap size = " + productMap.size());
-		    	        
-		    	        responses.add(new GetProductsResponse(productMap, request.getCollaboratorKey()));
-		    	        return responses;
-		    	    } catch (Exception e) {
-		    	        // ✅ This will show you the actual error
-		    	        System.err.println("ERROR in GET_PRODUCTS_REQUEST:");
-		    	        e.printStackTrace();
-		    	        responses = new ArrayList<>();
-		    	        responses.add(new GetProductsResponse(new LinkedHashMap<>(), request.getCollaboratorKey()));
-		    	        return responses;
-		    	    }
-		
-		}
-		return null;
+		return null;		
 	}
 
 	@Override
-	public List<MulticastResponse> processRequest(InterChildrenRequest paramInterChildrenRequest,
-			List<String> paramList) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MulticastResponse> processRequest(InterChildrenRequest request,
+			List<String> paramList) 
+	{
+		List<MulticastResponse> responses;
+		switch(request.getAppID()) 
+		{
+	
+	      case TRAppID.ADD_TO_CART_REQUEST:
+	    	  log.info("ADD_TO_CART_REQUEST @" + Calendar.getInstance().getTime());
+	    	  InterAddToCartRequest iacr = (InterAddToCartRequest) request;
+	    	  responses = new ArrayList<MulticastResponse>();
+	    	  AddToCartRequest atr = (AddToCartRequest) iacr.getRequest();
+	    	  responses.add(new AddToCartResponse(CartRepository.CR().getOrCreateCart(atr.getUserName()).addItem(iacr.getItem()), request.getCollaboratorKey()));
+	    	  return responses;
+	    	  
+	      case TRAppID.GET_PRODUCTS_REQUEST:
+	    	    log.info("GET_PRODUCTS_REQUEST @" + Calendar.getInstance().getTime());
+	    	    InterGetProductsRequest igpr = (InterGetProductsRequest) request;
+	    	    responses = new ArrayList<MulticastResponse>();
+	    	    GetProductsRequest gpr = (GetProductsRequest) igpr.getRequest();
+	    	    responses.add(new GetProductsResponse(ProductRepository.PR().getMatchingProducts(gpr.getProductKeys()), request.getCollaboratorKey())); 
+	    	    return responses;
+
+	    	}
+	    	return null;		
 	}
 
 	@Override
