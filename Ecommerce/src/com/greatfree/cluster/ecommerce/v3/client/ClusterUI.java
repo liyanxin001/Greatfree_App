@@ -199,26 +199,28 @@ final class ClusterUI {
 			    			     }
 			    			 }
 			    			 hasResults = true;
-			             } 
+			    			 if(!products.isEmpty()) 
+			    			 {
+			    				 System.out.println("\n==========SEARCH RESULTS==========");
+				    			 for (Map.Entry<Integer, Product> entry : products.entrySet()) {
+				    				    System.out.println(entry.getKey() + ". " + entry.getValue().toString());		    
+			    			 }
+				    			 ShoppingUI.printMenu();
+			                 } 
+			    			 else 
+			    			 {
+			    				 System.out.println("No results");
+			    			 }
+			    		 } 
 			    		 else 
 			    		 {
 			                 System.out.println("No results found. Please try a different keyword.");
-			             }		    	 		    	 		    	 
+			             }
 		    		 }
-		    		 if (shoppingOption == ShoppingMenuOptions.QUIT) 
-		    		 {
-		    	            break;
-		    	     }
-		    		 System.out.println("\n==========SEARCH RESULTS==========");
-	    			 for (Map.Entry<Integer, Product> entry : products.entrySet()) {
-	    				    System.out.println(entry.getKey() + ". " + entry.getValue().toString());
-	    			 }	
-		    		 	  
-		    		 ShoppingUI.printMenu();
 		    		 try 
 		    		 {
 			    		 shoppingOption = Integer.parseInt(Tools.INPUT.nextLine());
-			    		 System.out.println("Your choice:" + option);
+			    		 System.out.println("Your choice:" + shoppingOption);
 			    		 ShoppingUI.execute(userName, storeName, shoppingOption, products);	 
 		    		 }
 		    		 catch(NumberFormatException e)
@@ -230,10 +232,7 @@ final class ClusterUI {
 		    	 break;
 		}
 		
-		
-		
 	}
 	
-	
-	
 }
+

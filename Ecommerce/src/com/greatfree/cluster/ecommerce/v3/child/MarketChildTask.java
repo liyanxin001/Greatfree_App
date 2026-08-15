@@ -249,7 +249,6 @@ public class MarketChildTask  extends ChildTask{
 	    	    GetProductsRequest gpr = (GetProductsRequest) igpr.getRequest();
 	    	    responses.add(new GetProductsResponse(ProductRepository.PR().getMatchingProducts(gpr.getProductKeys()), request.getCollaboratorKey())); 
 	    	    return responses;
-
 	    	}
 	    	return null;		
 	}
