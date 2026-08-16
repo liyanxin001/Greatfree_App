@@ -128,8 +128,11 @@ public final class ProductRepository {
 			
 	}
 	public void addProduct(Product product) {
-		this.products.put(product.getKey(), product);
+		if(!(product == null)) {
+			this.products.put(product.getKey(), product);
+		}
 	}
+		
 	
 	public void removeProduct(String productKey) {
 		this.products.remove(productKey);
@@ -138,7 +141,7 @@ public final class ProductRepository {
 	public CartItem packItem(String productKey, int quantity) {
 		
 	    Product product = this.products.get(productKey)	;
-	    if(product.getStockQuantity() < quantity) {
+	    if(product.getStockQuantity() > quantity) {
 	    	product.decreaseQuantity(quantity);
 	    	return new CartItem(product, quantity);
 	    }else {
