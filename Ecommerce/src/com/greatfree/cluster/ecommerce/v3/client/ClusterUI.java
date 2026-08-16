@@ -159,12 +159,11 @@ final class ClusterUI {
 		     case HomeMenuOptions.SEARCH_FOR_PRODUCTS:
 		    	 
 		    	 int shoppingOption = ShoppingMenuOptions.NO_OPTION; 
+		    	 boolean hasResults = false;
 		    	 while(shoppingOption != ShoppingMenuOptions.QUIT) 
 		    	 {
 		    		 List<String> productKeys = new ArrayList<String>();
-		    		 Map<Integer, Product> products = new LinkedHashMap<>();
-		    		 boolean hasResults = false;
-		    		 
+		    		 Map<Integer, Product> products = new LinkedHashMap<>();	    				    		 
 		    		 while(!hasResults) 
 		    		 {
 		    			 System.out.println("\n==========SEARCH BAR==========");
@@ -212,25 +211,26 @@ final class ClusterUI {
 			    			     }
 			    			 }
 			    			 hasResults = true;
-			    			 if(!products.isEmpty()) 
-			    			 {
-			    				 System.out.println("\n==========SEARCH RESULTS==========");
-				    			 for (Map.Entry<Integer, Product> entry : products.entrySet()) {
-				    				    System.out.println(entry.getKey() + ". " + entry.getValue().toString());		    
-			    			 }
-				    			 ShoppingUI.printMenu();
-			                 } 
-			    			 else 
-			    			 {
-			    				 System.out.println("No results");
-			    				 hasResults = false;
-			    			 }
+			    			
 			    		 } 
 			    		 else 
 			    		 {
 			                 System.out.println("No results found. Please try a different keyword.");
 			             }
 		    		 }
+		    		 if(!products.isEmpty()) 
+	    			 {
+	    				 System.out.println("\n==========SEARCH RESULTS==========");
+		    			 for (Map.Entry<Integer, Product> entry : products.entrySet()) {
+		    				    System.out.println(entry.getKey() + ". " + entry.getValue().toString());		    
+	    			 }
+		    			 ShoppingUI.printMenu();
+	                 } 
+	    			 else 
+	    			 {
+	    				 System.out.println("No results");
+	    				 hasResults = false;
+	    			 }
 		    		 if( shoppingOption == ShoppingMenuOptions.QUIT) {
 			    		 break;
 			    	 }

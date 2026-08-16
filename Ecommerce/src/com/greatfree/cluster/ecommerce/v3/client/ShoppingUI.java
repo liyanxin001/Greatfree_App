@@ -106,6 +106,13 @@ final class ShoppingUI {
 		    		if(!(entry.getOrders() == null))
 		    		{
 		    			orders =entry.getOrders();
+		    			for(Order order : orders)
+				    	{
+				    		ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), 
+					    			ClusterUI.CL().getRootAddress().getPort(), new PlaceOrderNotification(  
+					    			order));
+				    	}
+		    			break;
 		    		}
 		    		else 
 		    		{
@@ -113,12 +120,7 @@ final class ShoppingUI {
 		    		}
 		    		break;
 		    	}
-		    	for(Order order : orders)
-		    	{
-		    		ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), 
-			    			ClusterUI.CL().getRootAddress().getPort(), new PlaceOrderNotification(  
-			    			order));
-		    	}
+		    	
 		    	break;
 		    case ShoppingMenuOptions.QUIT:
 		    	 break;
