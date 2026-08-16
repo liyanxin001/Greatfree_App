@@ -84,8 +84,8 @@ public class MarketChildTask  extends ChildTask{
 		    	ProductRepository.PR().addOrder(pon.getOrder().getProduct().getStoreName(), pon.getOrder());
 		    	break;
 			
-		    case ClusterAppID.SHUTDOWN_ROOT_NOTIFICATION:
-				log.info("SHUTDOWN_ROOT_NOTIFICATION received @" +Calendar.getInstance().getTime());
+		    case ClusterAppID.SHUTDOWN_CHILDREN_NOTIFICATION:
+				log.info("SHUTDOWN_CHILDREN_NOTIFICATION received @" +Calendar.getInstance().getTime());
 				try 
 				{
 			    UnaryChild.CLUSTER().stop();
@@ -233,8 +233,7 @@ public class MarketChildTask  extends ChildTask{
 		    	  AddToCartRequest atr = (AddToCartRequest) iacr.getRequest();
 		    	  responses.add(new AddToCartResponse(CartRepository.CR().getOrCreateCart(atr.getUserName()).addItem(iacr.getItem()), request.getCollaboratorKey()));
 		    	  return responses;
-	    	  
-		
+	    	  		
 		}
 		return null;		
 	}
