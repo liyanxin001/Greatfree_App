@@ -17,7 +17,7 @@ public class RemoveFromCartNotification extends IntercastNotification{
     public RemoveFromCartNotification(String userName, String productKey) {
 		super(userName, productKey, AppID.REMOVE_FROM_CART_NOTIFICATION);
 		this.userName = userName;
-		this.setProductKey(productKey);
+		this.productKey = productKey;
 	}
 
 

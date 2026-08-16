@@ -18,7 +18,6 @@ public class GetStoreRequest extends ClusterRequest{
 	public GetStoreRequest(String userName, String storeName) {
 		super(storeName, AppID.GET_STORE_REQUEST);
 		this.storeName = storeName;
-		this.userName = userName;
 	}
 
 	public String getStoreName() {

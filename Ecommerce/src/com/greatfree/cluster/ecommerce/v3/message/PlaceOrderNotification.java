@@ -12,7 +12,7 @@ public class PlaceOrderNotification extends ClusterNotification{
 
 	public PlaceOrderNotification(Order order) {
 		super(order.getProduct().getStoreName() , TRAppID.PLACE_ORDER_NOTIFICATION);
-		this.setOrder(order);
+		this.order = order;
 	}
 
 	public Order getOrder() {

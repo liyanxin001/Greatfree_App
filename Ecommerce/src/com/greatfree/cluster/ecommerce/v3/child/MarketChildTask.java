@@ -223,6 +223,19 @@ public class MarketChildTask  extends ChildTask{
 	@Override
 	public List<MulticastResponse> processRequest(InterChildrenRequest request)
 	{
+		List<MulticastResponse> responses;
+		switch(request.getAppID()) 
+		{
+		      case TRAppID.ADD_TO_CART_REQUEST:
+		    	  log.info("ADD_TO_CART_REQUEST @" + Calendar.getInstance().getTime());
+		    	  InterAddToCartRequest iacr = (InterAddToCartRequest) request;
+		    	  responses = new ArrayList<MulticastResponse>();
+		    	  AddToCartRequest atr = (AddToCartRequest) iacr.getRequest();
+		    	  responses.add(new AddToCartResponse(CartRepository.CR().getOrCreateCart(atr.getUserName()).addItem(iacr.getItem()), request.getCollaboratorKey()));
+		    	  return responses;
+	    	  
+		
+		}
 		return null;		
 	}
 
@@ -232,25 +245,17 @@ public class MarketChildTask  extends ChildTask{
 	{
 		List<MulticastResponse> responses;
 		switch(request.getAppID()) 
-		{
-	
-	      case TRAppID.ADD_TO_CART_REQUEST:
-	    	  log.info("ADD_TO_CART_REQUEST @" + Calendar.getInstance().getTime());
-	    	  InterAddToCartRequest iacr = (InterAddToCartRequest) request;
-	    	  responses = new ArrayList<MulticastResponse>();
-	    	  AddToCartRequest atr = (AddToCartRequest) iacr.getRequest();
-	    	  responses.add(new AddToCartResponse(CartRepository.CR().getOrCreateCart(atr.getUserName()).addItem(iacr.getItem()), request.getCollaboratorKey()));
-	    	  return responses;
-	    	  
-	      case TRAppID.GET_PRODUCTS_REQUEST:
-	    	    log.info("GET_PRODUCTS_REQUEST @" + Calendar.getInstance().getTime());
-	    	    InterGetProductsRequest igpr = (InterGetProductsRequest) request;
-	    	    responses = new ArrayList<MulticastResponse>();
-	    	    GetProductsRequest gpr = (GetProductsRequest) igpr.getRequest();
-	    	    responses.add(new GetProductsResponse(ProductRepository.PR().getMatchingProducts(gpr.getProductKeys()), request.getCollaboratorKey())); 
-	    	    return responses;
-	    	}
-	    	return null;		
+		{   	  
+	          case TRAppID.GET_PRODUCTS_REQUEST:
+	        	   log.info("GET_PRODUCTS_REQUEST @" + Calendar.getInstance().getTime());
+		    	    InterGetProductsRequest igpr = (InterGetProductsRequest) request;
+		    	    responses = new ArrayList<MulticastResponse>();
+		    	    GetProductsRequest gpr = (GetProductsRequest) igpr.getRequest();
+		    	    responses.add(new GetProductsResponse(ProductRepository.PR().getMatchingProducts(gpr.getProductKeys()), request.getCollaboratorKey())); 
+		    	    return responses;
+		  }
+		    	
+		return null;		
 	}
 
 	@Override

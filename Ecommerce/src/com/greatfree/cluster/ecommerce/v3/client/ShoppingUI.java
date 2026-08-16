@@ -84,7 +84,14 @@ final class ShoppingUI {
 		    		 GetCartResponse.class);
 		    	for(GetCartResponse entry : gcr)
 		    	{
-		    		entry.getCart().displayCart();
+		    		if(!(entry.getCart() == null)) 
+		    		{
+		    			entry.getCart().displayCart();
+		    		}
+		    		else 
+		    		{
+		    			System.out.println("Your cart is empty.");
+		    		}
 		    		break;
 		    	}
 		    	break;
@@ -96,7 +103,14 @@ final class ShoppingUI {
 		    	List<Order> orders = null;
 		    	for(PayResponse entry : pr) 
 		    	{
-		    		orders =entry.getOrders();
+		    		if(!(entry.getOrders() == null))
+		    		{
+		    			orders =entry.getOrders();
+		    		}
+		    		else 
+		    		{
+		    			System.out.println("Your cart is empty.");
+		    		}
 		    		break;
 		    	}
 		    	for(Order order : orders)
