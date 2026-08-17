@@ -160,10 +160,10 @@ final class ClusterUI {
 		    	 
 		    	 int shoppingOption = ShoppingMenuOptions.NO_OPTION; 
 		    	 boolean hasResults = false;
+	    		 List<String> productKeys = new ArrayList<String>();
+	    		 Map<Integer, Product> products = new LinkedHashMap<>();	  
 		    	 while(shoppingOption != ShoppingMenuOptions.QUIT) 
-		    	 {
-		    		 List<String> productKeys = new ArrayList<String>();
-		    		 Map<Integer, Product> products = new LinkedHashMap<>();	    				    		 
+		    	 {				    		 
 		    		 while(!hasResults) 
 		    		 {
 		    			 System.out.println("\n==========SEARCH BAR==========");
@@ -174,8 +174,7 @@ final class ClusterUI {
 				    	 {
 				                shoppingOption = ShoppingMenuOptions.QUIT;
 				                break;
-				         }
-				    	 
+				         }				    	 
 				    	 List<SearchForProductKeysResponse> sfpr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
 					    	      this.rootAddress.getPort(), new SearchForProductKeysRequest(randomSource, keyword),
 					    	      SearchForProductKeysResponse.class);
@@ -188,36 +187,23 @@ final class ClusterUI {
 			    		 }
 			    		 if(productKeys.size() > 0) 
 			    		 {
-			    			 List<GetProductsResponse> gpr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
-						    	      this.rootAddress.getPort(), new GetProductsRequest(randomSource, productKeys),
-						    	      GetProductsResponse.class);
-			    			 System.out.println("Product keys sent: " + productKeys);
-			    			 System.out.println("Number of responses: " + (gpr != null ? gpr.size() : 0));
-
-			    			 for (GetProductsResponse entry : gpr) {
-			    			     if (entry != null) {
-			    			         System.out.println("Response entry - getProducts() is null? " + (entry.getProducts() == null));
-			    			         if (entry.getProducts() != null) {
-			    			             System.out.println("Products map size: " + entry.getProducts().size());
-			    			             System.out.println("Products map contents: " + entry.getProducts());
-			    			         }
-			    			     }
-			    			 }
-			    			 
-			    			 int currentKey = 1;
-			    			 for (GetProductsResponse entry : gpr) {
-			    			     for (Product product : entry.getProducts().values()) {
-			    			         products.put(currentKey++, product);
-			    			     }
-			    			 }
-			    			 hasResults = true;
-			    			
+			    			 hasResults = true;			    			
 			    		 } 
 			    		 else 
 			    		 {
 			                 System.out.println("No results found. Please try a different keyword.");
 			             }
-		    		 }
+		    		 }		    		 
+		    		 List<GetProductsResponse> gpr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
+				    	      this.rootAddress.getPort(), new GetProductsRequest(randomSource, productKeys),
+				    	      GetProductsResponse.class);
+	    			 
+	    			 int currentKey = 1;
+	    			 for (GetProductsResponse entry : gpr) {
+	    			     for (Product product : entry.getProducts().values()) {
+	    			         products.put(currentKey++, product);
+	    			     }
+	    			 }
 		    		 if(!products.isEmpty()) 
 	    			 {
 	    				 System.out.println("\n==========SEARCH RESULTS==========");
@@ -231,9 +217,6 @@ final class ClusterUI {
 	    				 System.out.println("No results");
 	    				 hasResults = false;
 	    			 }
-		    		 if( shoppingOption == ShoppingMenuOptions.QUIT) {
-			    		 break;
-			    	 }
 		    		 try 
 		    		 {
 			    		 shoppingOption = Integer.parseInt(Tools.INPUT.nextLine());

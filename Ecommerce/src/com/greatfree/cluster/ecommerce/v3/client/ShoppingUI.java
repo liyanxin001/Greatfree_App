@@ -1,6 +1,7 @@
 package com.greatfree.cluster.ecommerce.v3.client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -100,9 +101,11 @@ final class ShoppingUI {
 		    	List<PayResponse> pr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
 		    		 ClusterUI.CL().getRootAddress().getPort(), new PayRequest(userName),
 		    		 PayResponse.class);
-		    	List<Order> orders = null;
+		    	System.out.println("Debugging: Response received is" + pr.size());
+		    	List<Order> orders = new ArrayList<>();
 		    	for(PayResponse entry : pr) 
 		    	{
+		    		System.out.println("Debugging: Orders size is " + entry.getOrders().size());
 		    		if(!(entry.getOrders() == null))
 		    		{
 		    			orders =entry.getOrders();

@@ -25,8 +25,8 @@ final class StartClient {
 		
 		ClusterClient.MULTI().init();
 		ClusterUI.CL().init();
-		Scheduler.PERIOD().init(ClientConfig.SCHEDULER_POOL_SIZE, ClientConfig.SCHEDULER_KEEP_ALIVE_TIME);
-		Scheduler.PERIOD().submit(new ClusterChecker(userName, storeName), ClientConfig.CHAT_POLLING_DELAY, ClientConfig.CHAT_POLLING_PERIOD);
+		//Scheduler.PERIOD().init(ClientConfig.SCHEDULER_POOL_SIZE, ClientConfig.SCHEDULER_KEEP_ALIVE_TIME);
+		//Scheduler.PERIOD().submit(new ClusterChecker(userName, storeName), ClientConfig.CHAT_POLLING_DELAY, ClientConfig.CHAT_POLLING_PERIOD);
 		
 		String optionStr;
 		int option = HomeMenuOptions.NO_OPTION;
@@ -48,7 +48,7 @@ final class StartClient {
 				System.out.println("WrongBI option");
 			}
 		}
-		Scheduler.PERIOD().shutdown(ClientConfig.SCHEDULER_SHUTDOWN_TIMEOUT);
+		//Scheduler.PERIOD().shutdown(ClientConfig.SCHEDULER_SHUTDOWN_TIMEOUT);
 		ClusterClient.MULTI().dispose();
 		
 	}	

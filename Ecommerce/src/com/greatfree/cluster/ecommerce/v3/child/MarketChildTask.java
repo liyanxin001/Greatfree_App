@@ -126,7 +126,9 @@ public class MarketChildTask  extends ChildTask{
 		    case AppID.PAY_REQUEST:
 		    	log.info("PAY_REQUESTreceived @" + Calendar.getInstance().getTime());
 		    	PayRequest pr = (PayRequest) request;
+		    	System.out.println("Debugging: cart size before checkout is" + CartRepository.CR().getCart(pr.getUserName()).getItems().values().size());
 		    	return new PayResponse(CartRepository.CR().checkOut(pr.getUserName()), pr.getCollaboratorKey());
+
 		    	
 		    case TRAppID.LATEST_ORDERS_REQUEST:
 		    	log.info("LATEST_ORDER_REQUEST @" + Calendar.getInstance().getTime());

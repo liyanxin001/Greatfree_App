@@ -50,9 +50,10 @@ public class CartRepository {
     	List<Order> orderList = new ArrayList<>();
     	for(CartItem item: cartList) {
     		orderList.add(new Order(userName, item.getQuantity(), item.getProduct(), Calendar.getInstance().getTime()));
-    	}
+    	}   
     	carts.get(userName).clear();
     	return orderList;
+    	
     }
   
 }    
