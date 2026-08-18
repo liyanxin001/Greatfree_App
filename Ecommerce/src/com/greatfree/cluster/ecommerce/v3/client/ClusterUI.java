@@ -136,7 +136,7 @@ final class ClusterUI {
 	    	                }
 	    	            }
 	    	            if (products != null && !products.isEmpty()) {
-	    	                System.out.println("\n=== Your Store ===");
+	    	                System.out.println("\n========== Your Store ==========");
 	    	                for (Map.Entry<Integer, Product> entry : products.entrySet()) {
 	    	                    System.out.println(entry.getKey() + ". " + entry.getValue().toString());
 	    	                }

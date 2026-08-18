@@ -45,10 +45,10 @@ final class StoreUI
 		    	double price = Double.parseDouble(Tools.INPUT.nextLine());
 		    	
 		    	Product product = new Product(productName_1,  quantity, price, storeName);
+		    	
 		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
 			    	  CL().getRootAddress().getPort(), new ProductRegistryNotification(product.getKey(), 
 			    		   product.getProductName()));
-		    	
 		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
 		    		  CL().getRootAddress().getPort(), new PutOnSaleNotification(product
 		    				  ));
@@ -62,7 +62,6 @@ final class StoreUI
 		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
 		    		  CL().getRootAddress().getPort(), new RemoveProductRegistryNotification( products.get(number).getKey()
 		    		  ));
-		    	
 		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), ClusterUI.
 			    		  CL().getRootAddress().getPort(), new RemoveFromSaleNotification( products.get(number).getKey(), 
 			    		   storeName));

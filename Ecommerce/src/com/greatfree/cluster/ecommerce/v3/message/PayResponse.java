@@ -15,7 +15,7 @@ public class PayResponse extends MulticastResponse{
 
 	public PayResponse(List<Order> orders, String collaboratorKey) {
 		super(AppID.PAY_RESPONSE, collaboratorKey);
-		
+		this.orders = orders;
 	}
 
 	public List<Order> getOrders() {

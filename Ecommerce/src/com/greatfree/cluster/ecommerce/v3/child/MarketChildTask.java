@@ -128,8 +128,7 @@ public class MarketChildTask  extends ChildTask{
 		    	PayRequest pr = (PayRequest) request;
 		    	System.out.println("Debugging: cart size before checkout is" + CartRepository.CR().getCart(pr.getUserName()).getItems().values().size());
 		    	return new PayResponse(CartRepository.CR().checkOut(pr.getUserName()), pr.getCollaboratorKey());
-
-		    	
+	
 		    case TRAppID.LATEST_ORDERS_REQUEST:
 		    	log.info("LATEST_ORDER_REQUEST @" + Calendar.getInstance().getTime());
 		    	LatestOrdersRequest lor = (LatestOrdersRequest) request;
@@ -160,7 +159,7 @@ public class MarketChildTask  extends ChildTask{
 		    	log.info("REMOVE_FROM_SALE_NOTIFICATION received @" + Calendar.getInstance().getTime());
 		    	RemoveFromSaleNotification rfsn = (RemoveFromSaleNotification) notification;
 		    	ProductRepository.PR().removeRegistryFromStore(rfsn.getStoreName(), rfsn.getProductKey());
-		    	return new InterRemoveFromSaleNotification(rfsn, !ProductRepository.PR().isRegistered(rfsn.getProductKey()));
+		    	return new InterRemoveFromSaleNotification(rfsn, ProductRepository.PR().isRegistered(rfsn.getProductKey()));
 		    	
 		    case AppID.UPDATE_STOCK_QUANTITY_NOTIFICATION:
 		    	log.info("UPDATE_STOCK_QUANTITY_NOTIFICATION @" + Calendar.getInstance().getTime());

@@ -105,7 +105,7 @@ final class ShoppingUI {
 		    	List<Order> orders = new ArrayList<>();
 		    	for(PayResponse entry : pr) 
 		    	{
-		    		System.out.println("Debugging: Orders size is " + entry.getOrders().size());
+		    		System.out.println("Debugging: Orders size is " + entry.getOrders().size());//108
 		    		if(!(entry.getOrders() == null))
 		    		{
 		    			orders =entry.getOrders();
