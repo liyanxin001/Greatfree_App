@@ -181,7 +181,7 @@ public class MarketChildTask  extends ChildTask{
 		      case TRAppID.ADD_TO_CART_REQUEST:
 		    	  log.info("ADD_TO_CART_REQUEST @" + Calendar.getInstance().getTime());
 		    	  AddToCartRequest atcr  = (AddToCartRequest) request;
-		          return new InterAddToCartRequest(atcr, ProductRepository.PR().packItem(atcr.getProduct().getKey(), atcr.getQuantity()));
+		          return new InterAddToCartRequest(atcr, ProductRepository.PR().packItem(atcr.getKey(), atcr.getQuantity()));
 		
 		}
 		return null;

@@ -56,7 +56,7 @@ final class ShoppingUI {
 		        	break;
 		        }		       
 		    	List<AddToCartResponse> wfsr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
-		    		 ClusterUI.CL().getRootAddress().getPort(), new AddToCartRequest(products.get(number_1),userName, quantity),
+		    		 ClusterUI.CL().getRootAddress().getPort(), new AddToCartRequest(products.get(number_1).getKey(),userName, quantity),
 		    		 AddToCartResponse.class); 
 		    	
 		    	for(AddToCartResponse entry: wfsr) 
