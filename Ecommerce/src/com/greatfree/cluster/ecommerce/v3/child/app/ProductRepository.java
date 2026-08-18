@@ -114,14 +114,15 @@ public final class ProductRepository {
 		
 		if(!userToStore.containsKey(userName))
 		{
-			if(!storeToProductKeys.containsKey(storeName)) {
-				userToStore.put(userName, storeName);
-				storeToProductKeys.put(storeName, new ArrayList<>());
-				return true;
-			}else {
-				return false;
+			userToStore.put(userName, storeName);
+			if(!storeToProductKeys.containsKey(storeName)) {	
+				storeToProductKeys.put(storeName, new ArrayList<>());			
 			}
-				
+			if(!orders.containsKey(storeName)) {
+				orders.put(storeName, new ArrayList<>());			
+			}
+			return true;
+			
 		}else {
 			return false;
 		}
