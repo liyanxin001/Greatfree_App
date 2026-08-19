@@ -56,7 +56,7 @@ final class ShoppingUI {
 		        	break;
 		        }
 		        if(products.get(number_1).getKey() == null) {
-		        	System.out.println("The key is null!");
+		        	System.out.println("WTF?The key is null!");
 		        }
 		    	List<AddToCartResponse> wfsr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
 		    		 ClusterUI.CL().getRootAddress().getPort(), new AddToCartRequest(products.get(number_1).getKey(),userName, quantity),
