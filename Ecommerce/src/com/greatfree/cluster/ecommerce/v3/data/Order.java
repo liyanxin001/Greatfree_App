@@ -27,7 +27,7 @@ public class Order implements Serializable{
 	
 	@Override
 	public String toString() {
-		return userName + "bought" + amount + product.getProductName() + "!" + time;
+	    return userName + " bought " + amount + " " + product.getProductName() + "! " + time;
 	}
 
 	public String getUserName() {
