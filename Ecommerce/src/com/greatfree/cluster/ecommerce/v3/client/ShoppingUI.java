@@ -54,7 +54,10 @@ final class ShoppingUI {
 		        if(products.get(number_1).getStoreName().equals(storeName)) {
 		        	System.out.println("You can't purchase products from your own store.");
 		        	break;
-		        }		       
+		        }
+		        if(products.get(number_1).getKey() == null) {
+		        	System.out.println("The key is null!");
+		        }
 		    	List<AddToCartResponse> wfsr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
 		    		 ClusterUI.CL().getRootAddress().getPort(), new AddToCartRequest(products.get(number_1).getKey(),userName, quantity),
 		    		 AddToCartResponse.class); 
