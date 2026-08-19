@@ -55,6 +55,9 @@ final class ShoppingUI {
 		        	System.out.println("You can't purchase products from your own store.");
 		        	break;
 		        }
+		        if(products.get(number_1) ==null) {
+		        	System.out.println("WTFFFFFFF");
+		        }
 		        if(products.get(number_1).getKey() == null) {
 		        	System.out.println("WTF?The key is null!");
 		        }
