@@ -51,7 +51,7 @@ final class ClusterChecker implements Runnable {
                         this.latestOrderTime = entry.getOrders().get(0).getTime();
                     }
                     
-                    System.out.println("latestChatTime = " + String.valueOf(this.latestOrderTime));
+                    System.out.println("latestOrderTime = " + String.valueOf(this.latestOrderTime));
                     
                     for (int i = entry.getOrders().size() - 1; i >= 0; i--) {
                         System.out.println(entry.getOrders().get(i));

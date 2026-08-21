@@ -101,11 +101,11 @@ final class ShoppingUI {
 		    	List<PayResponse> pr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
 		    		 ClusterUI.CL().getRootAddress().getPort(), new PayRequest(userName),
 		    		 PayResponse.class);
-		    	System.out.println("Debugging: Response received is" + pr.size());
+		    
 		    	List<Order> orders = new ArrayList<>();
 		    	for(PayResponse entry : pr) 
 		    	{
-		    		System.out.println("Debugging: Orders size is " + entry.getOrders().size());//108
+		    		System.out.println("Order placed: " + entry.getOrders().size());//108
 		    		if(!(entry.getOrders() == null))
 		    		{
 		    			orders =entry.getOrders();
