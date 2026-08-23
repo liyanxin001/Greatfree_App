@@ -45,6 +45,10 @@ public class Cart implements Serializable {
        return true;  
     }
     
+    public Map<Integer, String> getIndex(){
+    	return this.ItemIndex;
+    }
+    
     
     // Remove item from cart
     public boolean removeItem(String productKey) {

@@ -40,7 +40,7 @@ final class ShoppingUI {
 	     System.out.println("Input an option:");			
 	}
 	
-	public static void execute(String userName, String storeName, int option, Map<Integer, Product> products) throws ClassNotFoundException, RemoteReadException, IOException, NullClassConversionException, InterruptedException
+	public static void execute(String userName, String storeName, int option, Map<Integer, Product> searchResults, Map<Integer, String> cartItemIndex) throws ClassNotFoundException, RemoteReadException, IOException, NullClassConversionException, InterruptedException
 	{
 		switch(option)
 		{
@@ -51,32 +51,43 @@ final class ShoppingUI {
 		    	System.out.println("How many?");
 		        int quantity = Integer.parseInt(Tools.INPUT.nextLine());
 		        
-		        if(products.get(number_1).getStoreName().equals(storeName)) {
+		        if(searchResults.get(number_1).getStoreName().equals(storeName)) {
 		        	System.out.println("You can't purchase products from your own store.");
 		        	break;
 		        }
-		    	List<AddToCartResponse> wfsr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
-		    		 ClusterUI.CL().getRootAddress().getPort(), new AddToCartRequest(products.get(number_1), userName, quantity),
-		    		 AddToCartResponse.class); 
-		    	
-		    	for(AddToCartResponse entry: wfsr) 
-		    	{
-		    		if(entry.isSucceeded()) {
-		    			System.out.println("Added to cart successfully.");
+		        if(searchResults.get(number_1).getKey() == null) {
+		        	
+		        	System.out.println("The key the is null!!!!!!!!");
+		        }else {
+		        	List<AddToCartResponse> wfsr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
+				    		 ClusterUI.CL().getRootAddress().getPort(), new AddToCartRequest(searchResults.get(number_1).getKey(), userName, quantity),
+				    		 AddToCartResponse.class); 
+				    	
+				    	for(AddToCartResponse entry: wfsr) 
+				    	{
+				    		if(entry.isSucceeded()) {
+				    			System.out.println("Added to cart successfully.");
 
-		    		}else {
-		    			System.out.println("Invaild amount.");
-		    		}
-		    		break;
-		    	}
+				    		}else {
+				    			System.out.println("Invaild amount.");
+				    		}
+				    		break;
+				    	}
+		        	      	
+		        }
+		    	
 		    	break;
 		    	
 		    case ShoppingMenuOptions.REMOVE_FROM_CART:
 		    	System.out.println("Which item?(enter the number)");
 		    	int number_2 = Integer.parseInt(Tools.INPUT.nextLine());
-		    	ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), 
-		    			ClusterUI.CL().getRootAddress().getPort(), new RemoveFromCartNotification(userName,  
-		    			products.get(number_2).getKey()));
+		    	if(cartItemIndex.get(number_2) == null) {
+		    		System.out.println("Invaild number. Please check your cart first.");
+		    	}else {
+		    		ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), 
+			    			ClusterUI.CL().getRootAddress().getPort(), new RemoveFromCartNotification(userName,  
+			    			cartItemIndex.get(number_2)));
+		    	}    	
 		    	break;
 		    	
 		    case ShoppingMenuOptions.CHECK_CART:
@@ -88,7 +99,8 @@ final class ShoppingUI {
 		    		if(!(entry.getCart() == null)) 
 		    		{
 		    			entry.getCart().displayCart();
-		    		}
+		    			cartItemIndex = entry.getCart().getIndex();
+		    		}	    		
 		    		else 
 		    		{
 		    			System.out.println("Your cart is empty.");

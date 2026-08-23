@@ -161,7 +161,8 @@ final class ClusterUI {
 		    	 int shoppingOption = ShoppingMenuOptions.NO_OPTION; 
 		    	 boolean hasResults = false;
 	    		 List<String> productKeys = new ArrayList<String>();
-	    		 Map<Integer, Product> products = new LinkedHashMap<>();	  
+	    		 Map<Integer, String> cartItemIndex = new HashMap<>();
+	    		 Map<Integer, Product> searchResults = new LinkedHashMap<>();	  
 		    	 while(shoppingOption != ShoppingMenuOptions.QUIT) 
 		    	 {				    		 
 		    		 while(!hasResults) 
@@ -201,13 +202,13 @@ final class ClusterUI {
 	    			 int currentKey = 1;
 	    			 for (GetProductsResponse entry : gpr) {
 	    			     for (Product product : entry.getProducts().values()) {
-	    			         products.put(currentKey++, product);
+	    			         searchResults.put(currentKey++, product);
 	    			     }
 	    			 }
-		    		 if(!products.isEmpty()) 
+		    		 if(!searchResults.isEmpty()) 
 	    			 {
 	    				 System.out.println("\n==========SEARCH RESULTS==========");
-		    			 for (Map.Entry<Integer, Product> entry : products.entrySet()) {
+		    			 for (Map.Entry<Integer, Product> entry : searchResults.entrySet()) {
 		    				    System.out.println(entry.getKey() + ". " + entry.getValue().toString());		    
 	    			 }
 		    			 ShoppingUI.printMenu();
@@ -221,7 +222,7 @@ final class ClusterUI {
 		    		 {
 			    		 shoppingOption = Integer.parseInt(Tools.INPUT.nextLine());
 			    		 System.out.println("Your choice:" + shoppingOption);
-			    		 ShoppingUI.execute(userName, storeName, shoppingOption, products);	 
+			    		 ShoppingUI.execute(userName, storeName, shoppingOption, searchResults ,cartItemIndex);	 
 		    		 }
 		    		 catch(NumberFormatException e)
 		    		 {
