@@ -31,10 +31,10 @@ final class ShoppingUI {
 	public static void printMenu() 
 	{
 		 System.out.println("\n========== Menu Head ===========");
-	     System.out.println("\t1) Add item to your cart");
-	     System.out.println("\t2) Remove item from your cart");
-	     System.out.println("\t3) Check your cart");
-	     System.out.println("\t4) Check out");
+	     System.out.println("\t1) Add Item to Cart");
+	     System.out.println("\t2) Remove Item from Cart");
+	     System.out.println("\t3) Check Cart");
+	     System.out.println("\t4) Check Out");
 	     System.out.println("\t0) Quit"); 
 	     System.out.println("========== Menu Tail ===========\n");
 	     System.out.println("Input an option:");			

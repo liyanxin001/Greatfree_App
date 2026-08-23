@@ -23,9 +23,9 @@ final class StoreUI
 	public static void printMenu(String storeName)
 	{
 		 System.out.println("\n========== Menu Head ===========");
-	     System.out.println("\t1) Add product to your store: " + storeName);
-	     System.out.println("\t2) Remove product from your store: " + storeName);
-	     System.out.println("\t3) Update stock quantity");
+	     System.out.println("\t1) Add Product to Store: " + storeName);
+	     System.out.println("\t2) Remove Product from Store: " + storeName);
+	     System.out.println("\t3) Update Stock Quantity");
 	     System.out.println("\t0) Quit");
 	     System.out.println("========== Menu Tail ===========\n");
 	     System.out.println("Input an option:");
