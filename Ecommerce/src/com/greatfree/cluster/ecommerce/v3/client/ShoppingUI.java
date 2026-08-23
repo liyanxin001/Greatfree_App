@@ -55,26 +55,20 @@ final class ShoppingUI {
 		        	System.out.println("You can't purchase products from your own store.");
 		        	break;
 		        }
-		        if(searchResults.get(number_1).getKey() == null) {
-		        	
-		        	System.out.println("The key the is null!!!!!!!!");
-		        }else {
-		        	List<AddToCartResponse> wfsr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
-				    		 ClusterUI.CL().getRootAddress().getPort(), new AddToCartRequest(searchResults.get(number_1).getKey(), userName, quantity),
-				    		 AddToCartResponse.class); 
-				    	
-				    	for(AddToCartResponse entry: wfsr) 
-				    	{
-				    		if(entry.isSucceeded()) {
-				    			System.out.println("Added to cart successfully.");
+		        List<AddToCartResponse> wfsr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
+			    		 ClusterUI.CL().getRootAddress().getPort(), new AddToCartRequest(searchResults.get(number_1), userName, quantity),
+			    		 AddToCartResponse.class); 
+			    	
+			    	for(AddToCartResponse entry: wfsr) 
+			    	{
+			    		if(entry.isSucceeded()) {
+			    			System.out.println("Added to cart successfully.");
 
-				    		}else {
-				    			System.out.println("Invaild amount.");
-				    		}
-				    		break;
-				    	}
-		        	      	
-		        }
+			    		}else {
+			    			System.out.println("Invaild amount.");
+			    		}
+			    		break;
+			    	}	
 		    	
 		    	break;
 		    	
