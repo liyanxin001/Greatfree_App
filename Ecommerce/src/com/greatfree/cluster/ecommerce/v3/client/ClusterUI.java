@@ -65,8 +65,8 @@ final class ClusterUI {
 	
 	public void printMenu(String storeName) {
 		System.out.println(HomeMenu.MENU_HEAD);
-		System.out.println(HomeMenu.CREATE_STORE + storeName);
-		System.out.println(HomeMenu.GO_TO_STORE + storeName);
+		System.out.println(HomeMenu.CREATE_STORE  +  storeName);
+		System.out.println(HomeMenu.GO_TO_STORE  +  storeName);
 		System.out.println(HomeMenu.SEARCH_FOR_PRODUCTS);
 		System.out.println(HomeMenu.QUIT);
 		System.out.println(HomeMenu.MENU_TAIL);
