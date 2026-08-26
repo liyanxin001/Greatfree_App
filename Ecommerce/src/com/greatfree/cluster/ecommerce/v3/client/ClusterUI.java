@@ -12,6 +12,7 @@ import org.greatfree.exceptions.RemoteReadException;
 import org.greatfree.util.IPAddress;
 import org.greatfree.util.Tools;
 
+import com.greatfree.cluster.ecommerce.data.CartItem;
 import com.greatfree.cluster.ecommerce.data.Product;
 import com.greatfree.cluster.ecommerce.v2.client.HomeMenu;
 import com.greatfree.cluster.ecommerce.v2.client.HomeMenuOptions;
@@ -160,8 +161,8 @@ final class ClusterUI {
 		    	 
 		    	 int shoppingOption = ShoppingMenuOptions.NO_OPTION; 
 		    	 boolean hasResults = false;	     
-		    	 List<String> productKeys = new ArrayList<String>();
-	    		 Map<Integer, String> cartItemIndex = new HashMap<>();	 
+		    	 List<String> productKeys = new ArrayList<String>();	 
+		    	 Map<Integer, CartItem> cartItems = new LinkedHashMap<>();
 		    	 while(shoppingOption != ShoppingMenuOptions.QUIT) 
 		    	 {				
 		    		 Map<Integer, Product> searchResults = new LinkedHashMap<>();	  
@@ -223,7 +224,7 @@ final class ClusterUI {
 		    		 {
 			    		 shoppingOption = Integer.parseInt(Tools.INPUT.nextLine());
 			    		 System.out.println("Your choice:" + shoppingOption);
-			    		 ShoppingUI.execute(userName, storeName, shoppingOption, searchResults ,cartItemIndex);	 
+			    		 ShoppingUI.execute(userName, storeName, shoppingOption, searchResults, cartItems);	 
 		    		 }
 		    		 catch(NumberFormatException e)
 		    		 {

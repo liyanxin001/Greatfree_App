@@ -1,7 +1,7 @@
 package com.greatfree.cluster.ecommerce.v3.data;
 
 import java.io.Serializable;
-import java.util.HashMap;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -12,82 +12,39 @@ public class Cart implements Serializable {
 
 	private static final long serialVersionUID = 1066498182968266724L;
 	
-	private Map<String, CartItem> items;
-	private Map<Integer, String> ItemIndex;
+	private Map<Integer, CartItem> items;
+
 	private int count;
 	
 	public Cart(String userName) {
 		this.items = new LinkedHashMap<>();
-		this.ItemIndex = new HashMap<>();
+
 		this.count = 0;
 	}
 	
 
     public boolean addItem(CartItem item) {	
     	if(item == null) {
-    		return false;
     	}   
-       int quantity = item.getQuantity();
-       String productKey = item.getProduct().getKey();
+        count++;
+        items.put(count, item);
         
-        if (items.containsKey(productKey)) 
-        {
-            CartItem existingItem = items.get(productKey);
-            existingItem.increaseQuantity(quantity);
-        } 
-        else 
-        { 	
-            items.put(productKey, item);
-            count++;
-            ItemIndex.put(count, productKey);
-        }
-        
-       return true;  
+               return true;  
     }
     
-    public Map<Integer, String> getIndex(){
-    	return this.ItemIndex;
+    public Map<Integer, CartItem> getItems(){
+    	return this.items;
     }
     
     
     // Remove item from cart
-    public boolean removeItem(String productKey) {
-    	items.remove(productKey);
+    public boolean removeItem(int number) {
+    	items.remove(number);
         return true;
     }
     
-    public int getItemQuantity(String productKey) {
-    	return items.get(productKey).getQuantity();
-    }
-    
-    // Update item quantity
-    public void updateQuantity(String productKey, int newQuantity) {
-        if (!items.containsKey(productKey)) {
-            throw new IllegalArgumentException("Product not in cart");
-        }
-        
-        if (newQuantity < 0) {
-            throw new IllegalArgumentException("Quantity cannot be negative");
-        }
-        
-        CartItem item = items.get(productKey);
-        Product product = item.getProduct();
-        
-        // Calculate stock adjustment
-        int quantityDifference = newQuantity - item.getQuantity();
-        
-        if (quantityDifference > product.getStockQuantity()) {
-            throw new IllegalArgumentException("Insufficient stock");
-        }
-        
-        // Update product stock
-        product.setStockQuantity(product.getStockQuantity() - quantityDifference);
-        
-        if (newQuantity == 0) {
-            removeItem(productKey);
-        } else {
-            item.setQuantity(newQuantity);
-        }
+    public int getItemQuantity(int number) {
+    	return items.get(number).getQuantity();
     }
     
     // Get Total
@@ -96,8 +53,7 @@ public class Cart implements Serializable {
             .mapToDouble(CartItem::getTotalPrice)
             .sum();
     }
-    
-    
+     
     // Get number of items in cart
     public int getItemCount() {
         return items.values().stream()
@@ -131,11 +87,8 @@ public class Cart implements Serializable {
     	items.clear();
     	return true;
     }
-    // Get all cart items
-    public Map<String, CartItem> getItems() {
-        return new HashMap<>(items); // Return copy to preserve encapsulation
-    }
-    
+
+
     // Display cart contents
     public void displayCart() {
         if (isEmpty()) {

@@ -2,6 +2,7 @@ package com.greatfree.cluster.ecommerce.v3.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.greatfree.exceptions.NullClassConversionException;
 import org.greatfree.exceptions.RemoteReadException;
 import org.greatfree.util.Tools;
 
+import com.greatfree.cluster.ecommerce.data.CartItem;
 import com.greatfree.cluster.ecommerce.data.Product;
 import com.greatfree.cluster.ecommerce.v2.client.ShoppingMenuOptions;
 
@@ -40,7 +42,7 @@ final class ShoppingUI {
 	     System.out.println("Input an option:");			
 	}
 	
-	public static void execute(String userName, String storeName, int option, Map<Integer, Product> searchResults, Map<Integer, String> cartItemIndex) throws ClassNotFoundException, RemoteReadException, IOException, NullClassConversionException, InterruptedException
+	public static void execute(String userName, String storeName, int option, Map<Integer, Product> searchResults, Map<Integer, CartItem> cartItems) throws ClassNotFoundException, RemoteReadException, IOException, NullClassConversionException, InterruptedException
 	{
 		switch(option)
 		{
@@ -74,27 +76,27 @@ final class ShoppingUI {
 		    	
 		    case ShoppingMenuOptions.REMOVE_FROM_CART:
 		    	System.out.println("Which item?(enter the number)");
-		    	int number_2 = Integer.parseInt(Tools.INPUT.nextLine());
-		    	if(cartItemIndex.get(number_2) == null) {
+		    	int number_2 = Integer.parseInt(Tools.INPUT.nextLine());	
+		    	if(cartItems.get(number_2) == null) {
 		    		System.out.println("Invaild number. Please check your cart first.");
 		    	}else {
 		    		ClusterClient.MULTI().syncNotify(ClusterUI.CL().getRootAddress().getIP(), 
-			    			ClusterUI.CL().getRootAddress().getPort(), new RemoveFromCartNotification(userName,  
-			    			cartItemIndex.get(number_2)));
+			    			ClusterUI.CL().getRootAddress().getPort(), new RemoveFromCartNotification(userName, number_2,  
+			    			cartItems.get(number_2).getProduct().getKey()));
 		    	}    	
 		    	break;
 		    	
 		    case ShoppingMenuOptions.CHECK_CART:
-		    	List<GetCartResponse> gcr = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
+		    	List<GetCartResponse> gcr_2 = ClusterClient.MULTI().read(ClusterUI.CL().getRootAddress().getIP(),
 		    		 ClusterUI.CL().getRootAddress().getPort(), new GetCartRequest(userName), 
 		    		 GetCartResponse.class);
-		    	for(GetCartResponse entry : gcr)
+		    	for(GetCartResponse entry : gcr_2)
 		    	{
 		    		if(!(entry.getCart() == null)) 
 		    		{
 		    			entry.getCart().displayCart();
-		    			cartItemIndex.clear();
-		    			cartItemIndex.putAll(entry.getCart().getIndex());
+		    			cartItems.clear();
+		    			cartItems.putAll(entry.getCart().getItems());
 		    		}	    		
 		    		else 
 		    		{
