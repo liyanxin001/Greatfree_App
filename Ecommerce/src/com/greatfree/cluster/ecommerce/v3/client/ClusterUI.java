@@ -159,12 +159,12 @@ final class ClusterUI {
 		     case HomeMenuOptions.SEARCH_FOR_PRODUCTS:
 		    	 
 		    	 int shoppingOption = ShoppingMenuOptions.NO_OPTION; 
-		    	 boolean hasResults = false;
-	    		 List<String> productKeys = new ArrayList<String>();
+		    	 boolean hasResults = false;	 
 	    		 Map<Integer, String> cartItemIndex = new HashMap<>();
-	    		 Map<Integer, Product> searchResults = new LinkedHashMap<>();	  
 		    	 while(shoppingOption != ShoppingMenuOptions.QUIT) 
-		    	 {				    		 
+		    	 {		
+		    		 List<String> productKeys = new ArrayList<String>();
+		    		 Map<Integer, Product> searchResults = new LinkedHashMap<>();	  
 		    		 while(!hasResults) 
 		    		 {
 		    			 System.out.println("\n==========SEARCH BAR==========");
