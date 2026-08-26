@@ -152,7 +152,7 @@ public class MarketChildTask  extends ChildTask{
 		    case AppID.REMOVE_FROM_CART_NOTIFICATION:
 		    	log.info("REMOVE_FORM_CART_NOTIFICTAION received @" + Calendar.getInstance().getTime());
 		    	RemoveFromCartNotification rfcn  = (RemoveFromCartNotification) notification;
-		    	CartRepository.CR().getCart(rfcn.getUserName()).removeItem(rfcn.getKey());
+		    	CartRepository.CR().getCart(rfcn.getUserName()).removeItem(rfcn.getProductKey());
 		    	return new InterRemoveFromCartNotification(rfcn, CartRepository.CR().getCart(rfcn.getUserName()).getItemQuantity(rfcn.getProductKey()));
 		    	
 		    case AppID.REMOVE_FROM_SALE_NOTIFICATION:
