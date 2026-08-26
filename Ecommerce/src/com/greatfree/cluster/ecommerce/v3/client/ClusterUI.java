@@ -194,7 +194,8 @@ final class ClusterUI {
 			    		 {
 			                 System.out.println("No results found. Please try a different keyword.");
 			             }
-		    		 }		    		 
+		    		 }
+		    		 
 		    		 List<GetProductsResponse> gpr = ClusterClient.MULTI().read(this.rootAddress.getIP(),
 				    	      this.rootAddress.getPort(), new GetProductsRequest(randomSource, productKeys),
 				    	      GetProductsResponse.class);
