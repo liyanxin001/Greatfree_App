@@ -93,7 +93,8 @@ final class ShoppingUI {
 		    		if(!(entry.getCart() == null)) 
 		    		{
 		    			entry.getCart().displayCart();
-		    			cartItemIndex = entry.getCart().getIndex();
+		    			cartItemIndex.clear();
+		    			cartItemIndex.putAll(entry.getCart().getIndex());
 		    		}	    		
 		    		else 
 		    		{
