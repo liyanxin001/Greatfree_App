@@ -125,12 +125,11 @@ public class MarketChildTask  extends ChildTask{
 		    	
 		    case AppID.PAY_REQUEST:
 		    	log.info("PAY_REQUESTreceived @" + Calendar.getInstance().getTime());
-		    	PayRequest pr = (PayRequest) request;
-		    	System.out.println("Debugging: cart size before checkout is" + CartRepository.CR().getCart(pr.getUserName()).getItems().values().size());
+		    	PayRequest pr = (PayRequest) request;	   
 		    	return new PayResponse(CartRepository.CR().checkOut(pr.getUserName()), pr.getCollaboratorKey());
 	
 		    case TRAppID.LATEST_ORDERS_REQUEST:
-		    	log.info("LATEST_ORDER_REQUEST @" + Calendar.getInstance().getTime());
+		    	log.info("LATEST_ORDER_REQUEST received @" + Calendar.getInstance().getTime());
 		    	LatestOrdersRequest lor = (LatestOrdersRequest) request;
 		    	return new LatestOrdersResponse(ProductRepository.PR().getOrders(lor.getUserName(), lor.getStoreName(), lor.getTimeStamp()), lor.getCollaboratorKey());
 		    	
@@ -163,7 +162,7 @@ public class MarketChildTask  extends ChildTask{
 		    	return new InterRemoveFromSaleNotification(rfsn, ProductRepository.PR().isRegistered(rfsn.getProductKey()));
 		    	
 		    case AppID.UPDATE_STOCK_QUANTITY_NOTIFICATION:
-		    	log.info("UPDATE_STOCK_QUANTITY_NOTIFICATION @" + Calendar.getInstance().getTime());
+		    	log.info("UPDATE_STOCK_QUANTITY_NOTIFICATION received @" + Calendar.getInstance().getTime());
 		    	UpdateStockQuantityNotification usqn = (UpdateStockQuantityNotification) notification;
 		    	return new InterUpdateStockQuantityNotification(usqn, ProductRepository.PR().isRegistered(usqn.getKey()));
 		}
@@ -175,12 +174,12 @@ public class MarketChildTask  extends ChildTask{
 		switch(request.getAppID()) 
 		{
 		      case TRAppID.GET_PRODUCTS_REQUEST:
-		    	  log.info("GET_PRODUCTS_KEYS_REQUEST @" + Calendar.getInstance().getTime());
+		    	  log.info("GET_PRODUCTS_KEYS_REQUEST received @" + Calendar.getInstance().getTime());
 		    	  GetProductsRequest gpr = (GetProductsRequest) request;
 		    	  return new InterGetProductsRequest(gpr);
 		      
 		      case TRAppID.ADD_TO_CART_REQUEST:
-		    	  log.info("ADD_TO_CART_REQUEST @" + Calendar.getInstance().getTime());
+		    	  log.info("ADD_TO_CART_REQUEST received @" + Calendar.getInstance().getTime());
 		    	  AddToCartRequest atcr  = (AddToCartRequest) request;
 		          return new InterAddToCartRequest(atcr, ProductRepository.PR().packItem(atcr.getProduct().getKey(), atcr.getQuantity()));
 		
@@ -193,21 +192,27 @@ public class MarketChildTask  extends ChildTask{
 		switch(notification.getAppID()) 
 		{
 		      case AppID.PUT_ON_SALE_NOTIFICATION:
-		    	  log.info("PUT_ON_SLAE_NOTIFICATION @" + Calendar.getInstance().getTime());
+		    	  log.info("PUT_ON_SLAE_NOTIFICATION received @" + Calendar.getInstance().getTime());
 		    	  InterPutOnSaleNotification iposn = (InterPutOnSaleNotification) notification;
 		    	  PutOnSaleNotification posn = (PutOnSaleNotification) iposn.getNotification();
 		          ProductRepository.PR().addProduct(posn.getProduct());
 		          break;
 		          
 		      case AppID.REMOVE_FROM_SALE_NOTIFICATION:
-		    	  log.info("REMOVE_FROM_SALE_NOTIFICATION @" + Calendar.getInstance().getTime());
-		    	  InterRemoveFromSaleNotification irfs = (InterRemoveFromSaleNotification) notification;
-		          RemoveFromSaleNotification rfsn = (RemoveFromSaleNotification) irfs.getNotification();
+		    	  log.info("REMOVE_FROM_SALE_NOTIFICATION received @" + Calendar.getInstance().getTime());
+		    	  InterRemoveFromSaleNotification irfsn = (InterRemoveFromSaleNotification) notification;
+		          RemoveFromSaleNotification rfsn = (RemoveFromSaleNotification) irfsn.getNotification();
 		          ProductRepository.PR().removeProduct(rfsn.getProductKey());
 		          break;
+		     
+		      case AppID.REMOVE_FROM_CART_NOTIFICATION:
+		    	  log.info("REMOVE_FROM_CART_NOTIFICATION @ received" + Calendar.getInstance().getTime());
+		    	  InterRemoveFromCartNotification irfcn = (InterRemoveFromCartNotification) notification;
+		    	  RemoveFromCartNotification rfcn = (RemoveFromCartNotification) irfcn.getNotification();
+		    	  ProductRepository.PR().getProduct(rfcn.getProductKey()).increaseQuantity(irfcn.getQuantity());
 		          
 		      case AppID.UPDATE_STOCK_QUANTITY_NOTIFICATION:
-		    	  log.info("UPDATESTOCK_QUANTITY_NOTIFICATION @" + Calendar.getInstance().getTime());
+		    	  log.info("UPDATESTOCK_QUANTITY_NOTIFICATION @ received" + Calendar.getInstance().getTime());
 		    	  InterUpdateStockQuantityNotification iusqn = (InterUpdateStockQuantityNotification) notification;
 		    	  UpdateStockQuantityNotification usqn = (UpdateStockQuantityNotification) iusqn.getNotification();
 		    	  ProductRepository.PR().getProduct(usqn.getProductKey()).setStockQuantity(usqn.getNewStockQuantity());
@@ -229,7 +234,7 @@ public class MarketChildTask  extends ChildTask{
 		switch(request.getAppID()) 
 		{
 		      case TRAppID.ADD_TO_CART_REQUEST:
-		    	  log.info("ADD_TO_CART_REQUEST @" + Calendar.getInstance().getTime());
+		    	  log.info("ADD_TO_CART_REQUEST received @" + Calendar.getInstance().getTime());
 		    	  InterAddToCartRequest iacr = (InterAddToCartRequest) request;
 		    	  responses = new ArrayList<MulticastResponse>();
 		    	  AddToCartRequest atr = (AddToCartRequest) iacr.getRequest();
@@ -248,7 +253,7 @@ public class MarketChildTask  extends ChildTask{
 		switch(request.getAppID()) 
 		{   	  
 	          case TRAppID.GET_PRODUCTS_REQUEST:
-	        	   log.info("GET_PRODUCTS_REQUEST @" + Calendar.getInstance().getTime());
+	        	   log.info("GET_PRODUCTS_REQUEST received @" + Calendar.getInstance().getTime());
 		    	    InterGetProductsRequest igpr = (InterGetProductsRequest) request;
 		    	    responses = new ArrayList<MulticastResponse>();
 		    	    GetProductsRequest gpr = (GetProductsRequest) igpr.getRequest();
